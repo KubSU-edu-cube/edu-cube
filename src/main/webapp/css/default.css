@@ -1,0 +1,330 @@
+/* === reset === */
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+html, body, div, span, h1, h2, h3, h4, h5, h6, ul, ol, li, dl, dd, dt, a,
+table, caption, tr, td, th, i, b, em, ins, dfn, del, kbd, var, cite, code, samp,
+form, fieldset, legend, embed, object, textarea, select, input, button {
+    font: normal 100%/1 Arial, Verdana, sans-serif;
+    vertical-align: baseline;
+
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    text-indent: 2em;
+}
+
+table {
+    border: none;
+    border-collapse: collapse;
+    border-spacing: 0;
+
+    empty-cells: show;
+}
+
+th, td {
+    text-align: left;
+    vertical-align: top;
+}
+
+ul {
+    list-style-type: none;
+}
+
+em, i {
+    font-style: italic;
+}
+
+strong, b {
+    font-weight: bold;
+}
+
+/* === abstract === */
+
+.clear {
+    overflow: hidden;
+    clear: both;
+}
+
+.none {
+    display: none;
+    visibility: hidden;
+}
+
+.nobr {
+    white-space: nowrap;
+}
+
+.noheight {
+    height: 0;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.center {
+    text-align: center;
+}
+
+/* === links === */
+
+:link, :visited {
+    color: #069;
+}
+
+.a_gray:link, .a_gray:visited {
+    color: #999;
+}
+
+:link:hover, :visited:hover,
+:link:focus, :visited:focus,
+:link:active, :visited:active,
+.a_gray:link:hover, .a_gray:visited:hover,
+.a_gray:link:focus, .a_gray:visited:focus,
+.a_gray:link:active, .a_gray:visited:active {
+    text-decoration: none;
+}
+
+/* === content === */
+
+body {
+    color: #000;
+
+    font-size: 75%; /* 12px */
+    line-height: 1.333em; /* 16px */
+
+    position: relative;
+    background: #b0a7a8 url("../img/main_bkg_gradient.png") repeat-x;
+}
+
+.button {
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.05, #CCC2BC), color-stop(0.7, #FAF4E9)) !important;
+    background-image: -moz-linear-gradient(center bottom, #CCC2BC 5%, #FAF4E9 70%) !important;
+    border-color: #333333 !important;
+    border-width: 1.2px !important;
+    display: inline-block;
+    padding: 5px 10px 6px;
+    color: #333333 !important;
+    text-decoration: none;
+    line-height: 1;
+    margin-right: 10px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-box-shadow: 0 3px 1px #999;
+    -webkit-box-shadow: 0 3px 1px #999; /*text-shadow: 0 1px 1px #222;*/
+    border-bottom: 1px solid #222;
+    position: relative;
+    cursor: pointer;
+}
+
+.button:active {
+    bottom: -1px;
+    -moz-box-shadow: 0 2px 1px #999 !important;
+    -webkit-box-shadow: 0 2px 1px #999 !important;
+}
+
+.button:hover {
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.05, #DBD8D7), color-stop(0.7, #FAF8F5)) !important;
+    background-image: -moz-linear-gradient(center bottom, #DBD8D7 5%, #FAF8F5 70%) !important;
+    color: #333333 !important;
+}
+
+.input_field {
+    background-color: white;
+    border-color: #333333 !important;
+    border-width: 1.2px !important;
+    -moz-box-shadow: 0 3px 1px #999;
+    -webkit-box-shadow: 0 3px 1px #999;
+    -moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
+    display: inline-block;
+    padding: 3px 10px 6px;
+    color: #333333;
+    text-decoration: none;
+    line-height: 1;
+    position: relative
+}
+
+.header {
+    background: transparent url(../img/header_gradient.png) repeat-x;
+    position: relative;
+    z-index: 2;
+    min-width: 1100px;
+    margin: 0;
+    padding: 1px 0 0 0;
+    height: 154px;
+    width: 100%;
+}
+
+.img_books {
+    background: transparent url(../img/books.png) no-repeat;
+    height: 141px;
+    width: 163px;
+    float: left;
+}
+
+.default_font, #left_box_text ul li, #left_box_text b, #left_box_text p {
+    font-family: "Book Antiqua", Cursive !important;
+    list-style-type: disc;
+    font-size: 13px;
+}
+
+#left_box_text li {
+    margin-left: 2em;
+}
+
+.text_and_menu {
+    float: left;
+    margin-left: 70px;
+}
+
+.menu {
+    background: transparent url(../img/menu_bkg.png) no-repeat;
+    height: 52px;
+    width: 842px;
+    min-width: 850px;
+}
+
+.menu_item {
+    overflow: hidden;
+    float: left;
+    margin-top: 11px;
+}
+
+.btn_course {
+    background: transparent url(../img/btn_course.png) no-repeat;
+    margin-left: 4px;
+    width: 110px;
+    height: 21px;
+    vertical-align: middle;
+    display: block;
+}
+
+.btn_course:active {
+    background-position: 0px 2px;
+}
+
+.btn_prepod {
+    background: transparent url(../img/btn_prepod.png) no-repeat;
+    margin-left: 4px;
+    width: 234px;
+    height: 21px;
+    vertical-align: middle;
+    display: block;
+}
+
+.btn_prepod:active {
+    background-position: 0px 2px;
+}
+
+.btn_tests {
+    background: transparent url(../img/btn_tests.png) no-repeat;
+    width: 106px;
+    height: 21px;
+    vertical-align: middle;
+    display: block;
+}
+
+.btn_tests:active {
+    background-position: 0px 2px;
+}
+
+.btn_certif {
+    background: transparent url(../img/btn_certif.png) no-repeat;
+    width: 204px;
+    height: 21px;
+    vertical-align: middle;
+    display: block;
+}
+
+.btn_certif:active {
+    background-position: 0px 2px;
+}
+
+.btn_about {
+    background: transparent url(../img/btn_about.png) no-repeat;
+    width: 170px;
+    height: 21px;
+    vertical-align: middle;
+    display: block;
+}
+
+.btn_about:active {
+    background-position: 0px 2px;
+}
+
+.header_text {
+    background: transparent url(../img/header_text.png) no-repeat;
+    width: 824px;
+    height: 89px;
+}
+
+.left_box {
+    background: transparent url(../img/left_box_bkg.png) no-repeat;
+    margin-left: 20px;
+    width: 464px;
+    height: 798px;
+    position: relative;
+    z-index: 1;
+    top: -15px;
+    float: left;
+}
+
+.left_box_text {
+    font-family: "Book Antiqua", Cursive;
+    line-height: 1.2em;
+    margin: 0 17px 0 17px;
+    font-size: small;
+    color: white;
+    float: left;
+}
+
+.left_box_girl {
+    float: right;
+    width: 221px;
+    height: 436px;
+    margin: 23px -10px 0 0;
+}
+
+.login_box {
+    background: transparent url(../img/login_box_bkg.png) no-repeat;
+    position: relative;
+    margin: 40px 0 0 479px;
+    width: 689px;
+    height: 153px;
+}
+
+.login_box_text {
+    float: left;
+    width: 260px;
+    margin: 20px 20px 0 20px;
+}
+
+.login_box_form {
+    margin: 20px 20px 0 0;
+    float: right;
+}
+
+.login_content {
+    background: transparent url(../img/students_books.png) right bottom no-repeat;
+    height: 550px;
+    width: 750px;
+    position: relative;
+    margin: 30px 0 0 490px;
+}
+
+.footer {
+    position: absolute;
+    margin: 15px 0 15px 25px;
+    display: block;
+}

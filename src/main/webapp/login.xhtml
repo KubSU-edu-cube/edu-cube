@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
+        xmlns:m="http://www.w3.org/1998/Math/MathML">
+
+<h:head>
+    <title>Система дистанционного обучения EduCube</title>
+    <meta http-equiv="content-type" content="text/xhtml; charset=UTF-8"/>
+
+    <link href="css/default.css" rel="stylesheet" type="text/css"/>
+</h:head>
+
+<h:body>
+    <div id="header" class="header">
+        <div id="img_books" class="img_books"/>
+        <div id="text_and_menu" class="text_and_menu">
+            <div id="menu" class="menu">
+                <ul class="clear">
+                    <li class="menu_item"><a class="btn_course" href="#"></a></li>
+                    <li class="menu_item"><a class="btn_prepod" href="#"></a></li>
+                    <li class="menu_item"><a class="btn_tests" href="#"></a></li>
+                    <li class="menu_item"><a class="btn_certif" href="#"></a></li>
+                    <li class="menu_item"><a class="btn_about" href="#"></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="left_box" class="left_box">
+        <div id="left_box_text" class="left_box_text">
+            <div><p>
+                <b>Дистанционное обучение (ДО)</b> — совокупность технологий, обеспечивающих доставку обучаемым основного объема изучаемого материала, интерактивное взаимодействие обучаемых и преподавателей в процессе обучения, предоставление обучаемым возможности самостоятельной работы по освоению изучаемого материала, а также в процессе обучения.
+            </p>
+
+                <p>Современное дистанционное обучение строится на использовании следующих основных элементов:</p>
+                <ul>
+                    <li>среды передачи информации (почта, телевидение, радио, информационные коммуникационные сети)</li>
+                    <li>методов, зависимых от технической среды обмена информацией</li>
+                </ul>
+
+                <!--<img src="" alt="" align="bottom"/>-->
+
+                <p>В настоящее время перспективным является интерактивное взаимодействие с учащимся посредством информационных коммуникационных сетей, из которых массово выделяется среда интернет-пользователей. В 2003 году инициативная группа ADL начала разработку стандарта дистанционного интерактивного обучения SCORM, который предполагает широкое применение интернет-технологий. Введение стандартов способствует как углублению требований к составу дистанционного обучения, так и требований к программному обеспечению. </p>
+
+                <div style="float: left; width: 215px;">
+                    <p>Использование технологий дистанционного обучения позволяет:</p>
+                    <ul>
+                        <li>снизить затраты на проведение обучения (не требуется затрат на аренду помещений, поездок к месту учебы, как учащихся, так и преподавателей и т. п.);</li>
+                        <li>проводить обучение большого количества человек;</li>
+                        <li>повысить качество обучения за счет применения современных средств, объемных электронных библиотек и т.д.</li>
+                        <li>создать единую образовательную среду (особенно актуально для корпоративного обучения).</li>
+                    </ul>
+                </div>
+                <div class="left_box_girl"/>
+            </div>
+        </div>
+    </div>
+
+    <div id="login_box" class="login_box">
+        <div id="login_box_text" class="login_box_text">
+            <div class="default_font" style="text-align:center;line-height: 1.5em;">
+                <b>Уважаемый пользователь,</b><br/>
+                Вам необходимо авторизоваться в системе.
+                Если вы впервые на этом сайте,
+                пройдитепроцедуру Регистрации.<br/>
+                Регистрация займет всего несколько минут.
+            </div>
+        </div>
+
+        <div id="login_box_form" class="login_box_form">
+            <form method="post" action="j_security_check">
+                <table>
+                    <tr>
+                        <td>
+                            <div style="height: 33px;margin: 7px 5px 0 0;" class="default_font">Логин:</div>
+                        </td>
+                        <td>
+                            <input type="text" name="j_username"
+                                   style="width: 250px;" class="input_field"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="height: 33px;margin: 7px 5px 0 0;" class="default_font">Пароль:</div>
+                        </td>
+
+                        <td>
+                            <input type="password" name="j_password"
+                                   style="width: 250px;" class="input_field default_font"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <input type="submit" class="button default_font" style="font-size:13px;" value="Войти"/>
+                            <input type="button" class="button default_font" style="font-size:13px;"
+                                   value="Регистрация"/>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+
+    <div id="content" class="login_content">
+        <div id="page_content" class="default_font" style="font-size: medium;font-style: italic;">
+            <img src="img/red_arrow.png" alt="" align="left"/>
+
+            <p>”Наука есть достояние общее, а потому справедливость требует не тому отдать наибольшую научную славу, кто первый высказал известную истину, а тому, кто сумел убедить в ней других, показал ее достоверность и сделал ее применимой в науке.”<br/>
+                <b style="margin-left:260px; margin-top: 3px;">Дмитрий Менделеев</b><br/></p>
+
+            <img src="img/red_arrow.png" alt=""
+                 align="left"/>
+
+            <p>”Ничто не кажется мне нелепее смелых споров на ветер о тайнах природы, о сиянии светил, о сокровенных вещах будущего, без того, чтобы хоть раз исследовать то, может ли человеческий дух идти так далеко.”<br/>
+                <b style="margin-left:260px; margin-top: 3px;">Рене Декарт</b><br/></p>
+
+
+            <img src="img/red_arrow.png" alt="" align="left"/>
+
+            <p>”Науки юношей питают,<br/>
+                Отраду старым подают,<br/>
+                В счастливой жизни украшают,<br/>
+                В несчастной случай берегут...”<br/>
+                <b style="margin-left:260px; margin-top: 3px;">Михаил Ломоносов</b><br/></p>
+
+            <img src="img/red_arrow.png" alt=""
+                 align="left"/>
+
+            <p>”Даже в обществе двух человек я непременно найду, чему у них <br/>
+                поучиться. Достоинствам их я постараюсь <br/>подражать, а на их недостатках сам буду учиться.”<br/>
+                <b style="margin-left:260px; margin-top: 3px;">Конфуций</b><br/></p>
+        </div>
+    </div>
+
+    <div id="footer" class="footer">
+        <div id="footer_in" class="default_font">
+            Система спроектирована и выполнена студентами 4-го курса: Жулановой А., Болотиной И., Пекшевой М.<br/>
+            Научный руководитель: Уварова А.
+        </div>
+    </div>
+</h:body>
+</html>
