@@ -1,1 +1,5 @@
-// It's my Task. QQ=)
+<<<<<<< .mine
+// It's my Task.
+
+It's not even started yet.=======
+// It's my Task. QQ=)>>>>>>> .r7
