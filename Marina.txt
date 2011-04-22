@@ -1,3 +1,7 @@
+<<<<<<< .mine
 // It's my Task.
+// It's my Task. QQ=)
 
-It's not even started yet.
+It's not even started yet.=======
+// It's my Task. QQ=)>>>>>>> .r7
+Хорошая погода сегодня :-))

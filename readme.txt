@@ -6,4 +6,6 @@ To build this project for Tomcat 6 run
 
 If you wan to create a binaries for both Tomcat 6 and JBoss 6 run
 
-    mvn clean package -P release   ляляля
+    mvn clean package -P release
+    mvn clean package -P release
+	:-)
