@@ -22,7 +22,7 @@
             <id>java-net</id>
             <name>Java.net Maven Repository</name>
             <url>http://download.java.net/maven/2</url>
-        </repository>
+        </repository> 
         <repository>
             <url>http://download.java.net/maven/2/</url>
             <id>hibernate-persistence</id>
@@ -180,6 +180,11 @@
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
         </dependency>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>6.0</version>
+        </dependency>
 
         <dependency>
             <groupId>net.sf.ehcache</groupId>
@@ -187,13 +192,20 @@
         </dependency>
 
         <!-- Tests -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>5.10</version>
+            <classifier>jdk15</classifier>
+            <scope>test</scope>
+        </dependency>
         
+        <!--Persistence Dependencies-->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>3.4.0.GA</version>
         </dependency>
-        
         <dependency>
             <groupId>javax.annotation</groupId>
             <artifactId>jsr250-api</artifactId>
@@ -205,6 +217,5 @@
             <artifactId>hibernate-validator</artifactId>
             <version>4.0.2.GA</version>
         </dependency>
-       
     </dependencies>
 </project>
