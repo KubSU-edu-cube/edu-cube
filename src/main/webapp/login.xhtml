@@ -1,29 +1,28 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
-        xmlns:m="http://www.w3.org/1998/Math/MathML">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html">
 
 <h:head>
     <title>Система дистанционного обучения EduCube</title>
     <meta http-equiv="content-type" content="text/xhtml; charset=UTF-8"/>
 
-    <link href="css/default.css" rel="stylesheet" type="text/css"/>
+    <link href="#{application.contextPath}/css/default.css" rel="stylesheet" type="text/css"/>
 </h:head>
 
 <h:body>
     <div id="header" class="header">
-        <div id="img_books" class="img_books"/>
+        <a href="#{application.contextPath}/index.jsf" title="В начало" id="img_books" class="img_books"/>
         <div id="text_and_menu" class="text_and_menu">
             <div id="menu" class="menu">
                 <ul class="clear">
-                    <li class="menu_item"><a class="btn_course" href="#"></a></li>
-                    <li class="menu_item"><a class="btn_prepod" href="#"></a></li>
-                    <li class="menu_item"><a class="btn_tests" href="#"></a></li>
-                    <li class="menu_item"><a class="btn_certif" href="#"></a></li>
-                    <li class="menu_item"><a class="btn_about" href="#"></a></li>
+                    <li class="menu_item"><a class="btn_course" href="login.xhtml#"></a></li>
+                    <li class="menu_item"><a class="btn_prepod" href="login.xhtml#"></a></li>
+                    <li class="menu_item"><a class="btn_tests" href="login.xhtml#"></a></li>
+                    <li class="menu_item"><a class="btn_certif" href="login.xhtml#"></a></li>
+                    <li class="menu_item"><a class="btn_about" href="login.xhtml#"></a></li>
                 </ul>
             </div>
+            <div class="header_text"/>
         </div>
     </div>
 
@@ -94,8 +93,7 @@
                         <td></td>
                         <td>
                             <input type="submit" class="button default_font" style="font-size:13px;" value="Войти"/>
-                            <input type="button" class="button default_font" style="font-size:13px;"
-                                   value="Регистрация"/>
+                            <input type="button" class="button default_font" style="font-size:13px;" value="Регистрация"/>
                         </td>
                     </tr>
                 </table>
@@ -105,19 +103,19 @@
 
     <div id="content" class="login_content">
         <div id="page_content" class="default_font" style="font-size: medium;font-style: italic;">
-            <img src="img/red_arrow.png" alt="" align="left"/>
+            <img src="#{application.contextPath}/img/red_arrow.png" alt="" align="left"/>
 
             <p>”Наука есть достояние общее, а потому справедливость требует не тому отдать наибольшую научную славу, кто первый высказал известную истину, а тому, кто сумел убедить в ней других, показал ее достоверность и сделал ее применимой в науке.”<br/>
                 <b style="margin-left:260px; margin-top: 3px;">Дмитрий Менделеев</b><br/></p>
 
-            <img src="img/red_arrow.png" alt=""
+            <img src="#{application.contextPath}/img/red_arrow.png" alt=""
                  align="left"/>
 
             <p>”Ничто не кажется мне нелепее смелых споров на ветер о тайнах природы, о сиянии светил, о сокровенных вещах будущего, без того, чтобы хоть раз исследовать то, может ли человеческий дух идти так далеко.”<br/>
                 <b style="margin-left:260px; margin-top: 3px;">Рене Декарт</b><br/></p>
 
 
-            <img src="img/red_arrow.png" alt="" align="left"/>
+            <img src="#{application.contextPath}/img/red_arrow.png" alt="" align="left"/>
 
             <p>”Науки юношей питают,<br/>
                 Отраду старым подают,<br/>
@@ -125,7 +123,7 @@
                 В несчастной случай берегут...”<br/>
                 <b style="margin-left:260px; margin-top: 3px;">Михаил Ломоносов</b><br/></p>
 
-            <img src="img/red_arrow.png" alt=""
+            <img src="#{application.contextPath}/img/red_arrow.png" alt=""
                  align="left"/>
 
             <p>”Даже в обществе двух человек я непременно найду, чему у них <br/>

@@ -1,18 +1,19 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
     <title>Система дистанционного обучения EduCube</title>
     <meta http-equiv="content-type" content="text/xhtml; charset=UTF-8"/>
 
-    <link href="css/default.css" rel="stylesheet" type="text/css"/>
+    <link href="#{application.contextPath}/css/default.css" rel="stylesheet" type="text/css"/>
 </h:head>
 
 <h:body>
     <div id="header" class="header">
-        <div id="img_books" class="img_books"/>
+        <a href="#{application.contextPath}/index.jsf" title="В начало" id="img_books" class="img_books"/>
         <div id="text_and_menu" class="text_and_menu">
             <div id="menu" class="menu">
                 <ul class="clear">

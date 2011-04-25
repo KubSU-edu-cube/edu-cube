@@ -79,6 +79,10 @@
             <form-error-page>/error.jsf</form-error-page>
         </form-login-config>
     </login-config>
+    <!--<login-config>-->
+        <!--<auth-method>BASIC</auth-method>-->
+        <!--<realm-name>file</realm-name>-->
+    <!--</login-config>-->
 
     <security-role>
         <role-name>Experts</role-name>
