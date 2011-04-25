@@ -19,7 +19,7 @@ import javax.persistence.Table;
  * @author Марина
  */
 @Entity
-@Table(name = "FACT_CLASSIFVALUE", catalog = "", schema = "APP")
+@Table(name = "FACT_CLASSIFVALUE")
 @NamedQueries({
     @NamedQuery(name = "FactClassifvalue.findAll", query = "SELECT f FROM FactClassifvalue f"),
     @NamedQuery(name = "FactClassifvalue.findByFactid", query = "SELECT f FROM FactClassifvalue f WHERE f.factClassifvaluePK.factid = :factid"),

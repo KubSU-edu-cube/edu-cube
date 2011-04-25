@@ -27,7 +27,7 @@ import javax.persistence.Table;
  * @author Марина
  */
 @Entity
-@Table(name = "FACT_COLLECTION", catalog = "", schema = "APP")
+@Table(name = "FACT_COLLECTION")
 @NamedQueries({
     @NamedQuery(name = "FactCollection.findAll", query = "SELECT f FROM FactCollection f"),
     @NamedQuery(name = "FactCollection.findById", query = "SELECT f FROM FactCollection f WHERE f.id = :id"),
@@ -60,6 +60,10 @@ public class FactCollection implements Serializable {
 
     public FactCollection(Integer id) {
         this.id = id;
+    }
+
+    public FactCollection(String newfactcollName) {
+        this.factcollName = newfactcollName;
     }
 
     public Integer getId() {

@@ -24,7 +24,7 @@ import javax.persistence.Table;
  * @author Марина
  */
 @Entity
-@Table(name = "CLASSIFIER", catalog = "", schema = "APP")
+@Table(name = "CLASSIFIER")
 @NamedQueries({
     @NamedQuery(name = "Classifier.findAll", query = "SELECT c FROM Classifier c"),
     @NamedQuery(name = "Classifier.findById", query = "SELECT c FROM Classifier c WHERE c.id = :id"),
@@ -48,8 +48,15 @@ public class Classifier implements Serializable {
     public Classifier() {
     }
 
+
+
     public Classifier(Integer id) {
         this.id = id;
+    }
+
+//    Конструктор для сохранения данных
+    public Classifier(String newClassifName) {
+        this.classifName = newClassifName;
     }
 
     public Integer getId() {

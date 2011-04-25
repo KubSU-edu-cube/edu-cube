@@ -21,7 +21,7 @@ import javax.persistence.Table;
  * @author Марина
  */
 @Entity
-@Table(name = "SYN_ANT", catalog = "", schema = "APP")
+@Table(name = "SYN_ANT")
 @NamedQueries({
     @NamedQuery(name = "SynAnt.findAll", query = "SELECT s FROM SynAnt s"),
     @NamedQuery(name = "SynAnt.findById", query = "SELECT s FROM SynAnt s WHERE s.id = :id"),

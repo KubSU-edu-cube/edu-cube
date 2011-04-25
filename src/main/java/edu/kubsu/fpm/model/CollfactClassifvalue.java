@@ -19,7 +19,7 @@ import javax.persistence.Table;
  * @author Марина
  */
 @Entity
-@Table(name = "COLLFACT_CLASSIFVALUE", catalog = "", schema = "APP")
+@Table(name = "COLLFACT_CLASSIFVALUE")
 @NamedQueries({
     @NamedQuery(name = "CollfactClassifvalue.findAll", query = "SELECT c FROM CollfactClassifvalue c"),
     @NamedQuery(name = "CollfactClassifvalue.findByCollid", query = "SELECT c FROM CollfactClassifvalue c WHERE c.collfactClassifvaluePK.collid = :collid"),

@@ -26,7 +26,7 @@ import javax.persistence.Table;
  * @author Марина
  */
 @Entity
-@Table(name = "CLASSIFIER_VALUE", catalog = "", schema = "APP")
+@Table(name = "CLASSIFIER_VALUE")
 @NamedQueries({
     @NamedQuery(name = "ClassifierValue.findAll", query = "SELECT c FROM ClassifierValue c"),
     @NamedQuery(name = "ClassifierValue.findById", query = "SELECT c FROM ClassifierValue c WHERE c.id = :id"),

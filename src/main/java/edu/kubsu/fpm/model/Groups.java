@@ -26,7 +26,7 @@ import javax.persistence.Table;
  * @author Марина
  */
 @Entity
-@Table(name = "GROUPS", catalog = "", schema = "APP")
+@Table(name = "GROUPS")
 @NamedQueries({
     @NamedQuery(name = "Groups.findAll", query = "SELECT g FROM Groups g"),
     @NamedQuery(name = "Groups.findById", query = "SELECT g FROM Groups g WHERE g.id = :id"),
