@@ -1,7 +1,5 @@
 package edu.kubsu.fpm.servlet;
 
-import edu.kubsu.fpm.LoginBean;
-import edu.kubsu.fpm.ejb.SessionMapBean;
 import edu.kubsu.fpm.ejb.SessionMapRemote;
 
 import javax.ejb.EJB;
