@@ -9,8 +9,19 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import edu.kubsu.fpm.model.*;
-import javax.annotation.ManagedBean;
-import javax.enterprise.context.SessionScoped;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.Resource;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.RollbackException;
+import javax.transaction.SystemException;
+import javax.transaction.UserTransaction;
 
 
 
@@ -26,28 +37,42 @@ public class classifManagedBean implements Serializable {
     private String newfactcollName;
     private List listClassifName = new ArrayList();
     private List listfactcollName = new ArrayList();
-
+    @PersistenceContext(unitName = "educube")
+    private EntityManager em;
+    @Resource
+    private UserTransaction utx;
     public classifManagedBean() {
     }
 
     //    Добавляет новые классификаторы
     public String addClassif(){
-//        Получаем экземпляр класса с заданными значениями
-        Classifier classif = new Classifier(newClassifName);
-        newClassifName = new String();
-//        Теперь listClassifName содержит заданное значение
-        listClassifName.add(classif);
-        return "example";
-    }
+        try {
+            //        Начинаем транзакцию
+            utx.begin();
+            //        Получаем экземпляр класса с заданными значениями
+            Classifier classif = new Classifier(newClassifName);
+            newClassifName = "";
+            //        Записываем значение в базу
 
-    //    Добавляет новые названия коллекций фактов
-    public String addFactcol(){
-//        Получаем экземпляр класса с заданными значениями
-        FactCollection f_coll = new FactCollection(newfactcollName);
-        newfactcollName = new String();
-//        Теперь listfactcollName содержит заданное значение
-        listfactcollName.add(f_coll);
-        return "example";
+            em.persist(classif);
+            //        Заканчиваем транзакцию
+            utx.commit();
+        } catch (RollbackException ex) {
+            Logger.getLogger(classifManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (HeuristicMixedException ex) {
+            Logger.getLogger(classifManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (HeuristicRollbackException ex) {
+            Logger.getLogger(classifManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SecurityException ex) {
+            Logger.getLogger(classifManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalStateException ex) {
+            Logger.getLogger(classifManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotSupportedException ex) {
+            Logger.getLogger(classifManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SystemException ex) {
+            Logger.getLogger(classifManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "work_with_bd";
     }
 
     public List getListClassifName() {
