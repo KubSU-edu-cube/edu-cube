@@ -48,7 +48,7 @@ public class classifManagedBean implements Serializable {
         //        Записываем значение в базу
 
         em.persist(classif);
-        return "work_with_bd";
+        return "index";
     }
 
     public List getListClassifName() {
