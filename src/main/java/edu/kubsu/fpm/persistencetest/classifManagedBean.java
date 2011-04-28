@@ -46,7 +46,6 @@ public class classifManagedBean implements Serializable {
         Classifier classif = new Classifier(newClassifName);
         newClassifName = "";
         //        Записываем значение в базу
-
         em.persist(classif);
         return "index";
     }

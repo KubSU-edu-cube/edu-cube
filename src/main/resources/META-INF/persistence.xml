@@ -3,7 +3,6 @@
   <persistence-unit name="educube" transaction-type="JTA">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <jta-data-source>jdbc/edu</jta-data-source>
-    <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect"/>      
     </properties>
