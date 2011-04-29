@@ -20,7 +20,8 @@ import java.io.PrintWriter;
 
 @WebServlet(name = "TestServlet")
 public class TestServlet extends HttpServlet{
-                                                    // Все-таки это лучше сделать через JSP
+                                                    // Все-таки это лучше сделать через JSF
+                                                    // Правда будет криво
       protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
           response.setContentType("text/html;charset=UTF-8");

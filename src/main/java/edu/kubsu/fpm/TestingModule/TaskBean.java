@@ -17,13 +17,32 @@ import javax.faces.bean.SessionScoped;
 public class TaskBean {
 
     private String testResult = "";
+    private Integer rightAnswer = 0;
+    private Integer countAnswer = 0;
 
     public String getTestResult() {
+        testResult = "Вы ответили на ".concat(this.getRightAnswer().toString()).concat(" из ").concat(this.getCountAnswer().toString());
         return testResult;
     }
 
     public void setTestResult(String testResult) {
         this.testResult = testResult;
+    }
+
+    public Integer getCountAnswer() {
+        return countAnswer;
+    }
+
+    public void setCountAnswer(Integer countAnswer) {
+        this.countAnswer = countAnswer;
+    }
+
+    public Integer getRightAnswer() {
+        return rightAnswer;
+    }
+
+    public void setRightAnswer(Integer rightAnswer) {
+        this.rightAnswer = rightAnswer;
     }
 
     public TaskBean(){
