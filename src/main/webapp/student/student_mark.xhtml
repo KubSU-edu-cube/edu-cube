@@ -6,8 +6,8 @@
 
 
         <ui:define name="page_content">
-
-           <h:commandLink action="stud_test.jsf">Начать тестирование</h:commandLink>
+           <h:outputText value="#{taskBean.testResult}"/>
+           <h:commandLink action="index.jsf">На главную</h:commandLink>
         </ui:define>
 
 </ui:composition>

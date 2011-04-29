@@ -289,18 +289,38 @@
                     <value>
                       <list>
                         <SvnBranchItem>
-                          <option name="creationDateMillis" value="1303937791155" />
-                          <option name="revision" value="30" />
+                          <option name="creationDateMillis" value="1304020168889" />
+                          <option name="revision" value="38" />
+                          <option name="url" value="http://subversion.assembla.com/svn/edu-cube/branches/marinaBranch/META-INF" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1304020168889" />
+                          <option name="revision" value="38" />
                           <option name="url" value="http://subversion.assembla.com/svn/edu-cube/branches/marinaBranch/src" />
                         </SvnBranchItem>
                         <SvnBranchItem>
-                          <option name="creationDateMillis" value="1303925118078" />
-                          <option name="revision" value="28" />
+                          <option name="creationDateMillis" value="1304020168889" />
+                          <option name="revision" value="38" />
+                          <option name="url" value="http://subversion.assembla.com/svn/edu-cube/branches/marinaBranch/educube.ids" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1304020168889" />
+                          <option name="revision" value="38" />
                           <option name="url" value="http://subversion.assembla.com/svn/edu-cube/branches/marinaBranch/educube.iml" />
                         </SvnBranchItem>
                         <SvnBranchItem>
-                          <option name="creationDateMillis" value="1303925118078" />
-                          <option name="revision" value="28" />
+                          <option name="creationDateMillis" value="1304020168889" />
+                          <option name="revision" value="38" />
+                          <option name="url" value="http://subversion.assembla.com/svn/edu-cube/branches/marinaBranch/educube.ipr" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1304020168889" />
+                          <option name="revision" value="38" />
+                          <option name="url" value="http://subversion.assembla.com/svn/edu-cube/branches/marinaBranch/educube.iws" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1304020168889" />
+                          <option name="revision" value="38" />
                           <option name="url" value="http://subversion.assembla.com/svn/edu-cube/branches/marinaBranch/pom.xml" />
                         </SvnBranchItem>
                         <SvnBranchItem>
@@ -760,58 +780,6 @@
         <root url="jar://$MAVEN_REPOSITORY$/xml-apis/xml-apis/1.0.b2/xml-apis-1.0.b2-sources.jar!/" />
       </SOURCES>
     </library>
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ArtifactsStructureConfigurable.UI">
-        <settings>
-          <artifact-editor />
-          <splitter-proportions />
-        </settings>
-      </state>
-      <state key="Copyright.UI">
-        <settings>
-          <splitter-proportions />
-        </settings>
-      </state>
-      <state key="FacetStructureConfigurable.UI">
-        <settings>
-          <splitter-proportions />
-        </settings>
-      </state>
-      <state key="GlobalLibrariesConfigurable.UI">
-        <settings>
-          <splitter-proportions />
-        </settings>
-      </state>
-      <state key="ModuleStructureConfigurable.UI">
-        <settings>
-          <splitter-proportions />
-        </settings>
-      </state>
-      <state key="ProjectJDKs.UI">
-        <settings>
-          <last-edited>1.6</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectLibrariesConfigurable.UI">
-        <settings>
-          <splitter-proportions />
-        </settings>
-      </state>
-      <state key="ScopeChooserConfigurable.UI">
-        <settings>
-          <splitter-proportions />
-        </settings>
-      </state>
-    </states>
   </component>
 </project>
 

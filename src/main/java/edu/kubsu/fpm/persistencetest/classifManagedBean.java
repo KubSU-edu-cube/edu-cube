@@ -7,10 +7,7 @@ package edu.kubsu.fpm.persistencetest;
 
 import edu.kubsu.fpm.model.Classifier;
 
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
-import javax.ejb.TransactionManagement;
-import javax.ejb.TransactionManagementType;
+import javax.ejb.*;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.persistence.EntityManager;
@@ -23,7 +20,7 @@ import java.util.List;
 /**
  * @author Марина
  */
-@ManagedBean
+@ManagedBean(name = "classifManagedBean")
 @SessionScoped
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class classifManagedBean implements Serializable {
