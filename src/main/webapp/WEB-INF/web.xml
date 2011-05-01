@@ -20,10 +20,6 @@
         <servlet-name>ImageServlet</servlet-name>
         <servlet-class>edu.kubsu.fpm.servlet.ImageServlet</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>TestServlet</servlet-name>
-        <servlet-class>edu.kubsu.fpm.TestingModule.TestServlet</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.jsf</url-pattern>
@@ -35,10 +31,6 @@
     <servlet-mapping>
         <servlet-name>ImageServlet</servlet-name>
         <url-pattern>/loadimage</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>TestServlet</servlet-name>
-        <url-pattern>/test/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
