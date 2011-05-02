@@ -15,14 +15,11 @@
   </component>
   <component name="ChangeListManager">
     <list readonly="true" id="e789c243-f53f-41f9-bf1a-06c40e408266" name="Default" comment="" />
-    <list default="true" id="ed763e29-49a6-42bb-9aee-1ba4f4846f84" name="Merge from trunk" comment="Шаблон шаблона модуля тестирования">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/student/student_test.xhtml" />
-      <change type="DELETED" beforePath="G:\Документы\NetBeansProjects\term_paper\educube\src\main\java\edu\kubsu\fpm\TestingModule\TestServlet.java" afterPath="" />
+    <list default="true" id="ed763e29-49a6-42bb-9aee-1ba4f4846f84" name="Merge from trunk" comment="TaskBean - начала работать над генерацией тестов">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/educube.ids" afterPath="$PROJECT_DIR$/educube.ids" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/educube.iml" afterPath="$PROJECT_DIR$/educube.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/educube.iws" afterPath="$PROJECT_DIR$/educube.iws" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/edu/kubsu/fpm/TestingModule/TaskBean.java" afterPath="$PROJECT_DIR$/src/main/java/edu/kubsu/fpm/TestingModule/TaskBean.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/student/stud_home.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/student/stud_home.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/student/student_mark.xhtml" afterPath="$PROJECT_DIR$/src/main/webapp/student/student_mark.xhtml" />
     </list>
     <ignored path="educube.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -82,19 +79,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="TaskBean.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="TaskBean.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/edu/kubsu/fpm/TestingModule/TaskBean.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="39" column="102" selection-start="1493" selection-end="1493" vertical-scroll-proportion="0.0">
+            <state line="88" column="56" selection-start="3971" selection-end="3971" vertical-scroll-proportion="0.47184986">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="student_mark.xhtml" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/student/student_mark.xhtml">
+      <file leaf-file-name="stud_home.xhtml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/student/stud_home.xhtml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="77" selection-start="466" selection-end="466" vertical-scroll-proportion="0.41463414">
+            <state line="9" column="87" selection-start="409" selection-end="409" vertical-scroll-proportion="-5.8846154">
               <folding />
             </state>
           </provider>
@@ -103,7 +100,7 @@
       <file leaf-file-name="student_test.xhtml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/student/student_test.xhtml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="94" selection-start="598" selection-end="598" vertical-scroll-proportion="0.0">
+            <state line="11" column="94" selection-start="598" selection-end="598" vertical-scroll-proportion="-4.3461537">
               <folding />
             </state>
           </provider>
@@ -130,10 +127,11 @@
         <option value="$PROJECT_DIR$/src/main/webapp/student_mark.xhtml" />
         <option value="$PROJECT_DIR$/src/main/java/edu/kubsu/fpm/TestingModule/TestServlet.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
-        <option value="$PROJECT_DIR$/src/main/webapp/student/stud_home.xhtml" />
         <option value="$PROJECT_DIR$/src/main/webapp/student/student_test.xhtml" />
-        <option value="$PROJECT_DIR$/src/main/java/edu/kubsu/fpm/TestingModule/TaskBean.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/student/student_mark.xhtml" />
+        <option value="/FactStore" />
+        <option value="$PROJECT_DIR$/src/main/webapp/student/stud_home.xhtml" />
+        <option value="$PROJECT_DIR$/src/main/java/edu/kubsu/fpm/TestingModule/TaskBean.java" />
       </list>
     </option>
   </component>
@@ -301,6 +299,7 @@
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="DefaultHtmlFileTemplate" value="Xhtml" />
     <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="Database.TableEditor.Splitter" value="0.9" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
@@ -588,28 +587,31 @@
     <frame x="-4" y="-4" width="1374" height="747" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32902735" sideWeight="0.67145133" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2993921" sideWeight="0.6937799" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32854864" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32854864" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="JSF" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32978722" sideWeight="0.6937799" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32854864" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32978722" sideWeight="0.67145133" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32978722" sideWeight="0.67464113" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="EJB" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.67304623" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32695374" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32854864" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.67783093" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32216907" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30622008" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -628,7 +630,7 @@
     <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
     <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Шаблон шаблона модуля тестирования" />
+    <option name="LAST_COMMIT_MESSAGE" value="TaskBean - начала работать над генерацией тестов" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -644,6 +646,7 @@
     <MESSAGE value="Merge all from trunk at 37" />
     <MESSAGE value="Добавила зависимость javax.ejb, но почему-то не помогло" />
     <MESSAGE value="Шаблон шаблона модуля тестирования" />
+    <MESSAGE value="TaskBean - начала работать над генерацией тестов" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -653,26 +656,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/edu/kubsu/fpm/persistencetest/classifManagedBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="25" selection-start="986" selection-end="1007" vertical-scroll-proportion="0.5609137" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/css/default.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/templates/common_template.xhtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="99" selection-start="415" selection-end="507" vertical-scroll-proportion="3.0769231" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/login.xhtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="17" selection-start="299" selection-end="300" vertical-scroll-proportion="0.3090909" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/index.xhtml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0" />
@@ -715,33 +698,102 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="33" column="22" selection-start="1408" selection-end="1408" vertical-scroll-proportion="0.59090906" />
       </provider>
-      <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorProvider">
-        <state />
-      </provider>
       <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleGeneralEditorProvider">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/student/stud_home.xhtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="41" selection-start="363" selection-end="363" vertical-scroll-proportion="0.41576087" />
+      <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorProvider">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/edu/kubsu/fpm/TestingModule/TaskBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="102" selection-start="1493" selection-end="1493" vertical-scroll-proportion="0.0" />
+    <entry file="dbDummy://dbElement:/educube2ed46245/144ce0d1-a324-4b8b-a69e-cdf6c6335400/APP.FACT">
+      <provider selected="true" editor-type-id="com.intellij.persistence.database.editor.DatabaseTableFileEditorProvider">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/student/student_test.xhtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="94" selection-start="598" selection-end="598" vertical-scroll-proportion="0.0">
-          <folding />
+    <entry file="uml://DATABASE/144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.ADITIONAL_QUESTION">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>DATABASE</ID>
+          <OriginalElement>144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.ADITIONAL_QUESTION</OriginalElement>
+          <nodes>
+            <node x="117.25" y="0.0">144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.CLASSIFIER</node>
+            <node x="70.75" y="417.0">144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.ADITIONAL_QUESTION</node>
+            <node x="96.25" y="119.0">144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.CLASSIFIER_VALUE</node>
+            <node x="37.0" y="278.0">144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.GROUPS</node>
+          </nodes>
+          <notes />
+          <edges>
+            <edge source="144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.CLASSIFIER_VALUE" target="144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.CLASSIFIER">
+              <point x="0.0" y="-54.5" />
+              <point x="0.0" y="34.5" />
+            </edge>
+            <edge source="144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.GROUPS" target="144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.CLASSIFIER_VALUE">
+              <point x="0.0" y="-44.5" />
+              <point x="120.0" y="253.0" />
+              <point x="131.5" y="253.0" />
+              <point x="-35.25" y="54.5" />
+            </edge>
+            <edge source="144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.ADITIONAL_QUESTION" target="144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.GROUPS">
+              <point x="-48.0" y="-64.5" />
+              <point x="118.75" y="392.0" />
+              <point x="120.0" y="392.0" />
+              <point x="0.0" y="44.5" />
+            </edge>
+            <edge source="144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.ADITIONAL_QUESTION" target="144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.CLASSIFIER_VALUE">
+              <point x="48.0" y="-64.5" />
+              <point x="214.75" y="392.0" />
+              <point x="213.5" y="392.0" />
+              <point x="213.5" y="253.0" />
+              <point x="202.0" y="253.0" />
+              <point x="35.25" y="54.5" />
+            </edge>
+          </edges>
+          <settings layout="Hierarchic Group" zoom="0.9572438162544169" x="132.0" y="412.0" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Columns</Category>
+            <Category>Key Columns</Category>
+          </Categories>
+          <SCOPE>All</SCOPE>
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/edu/kubsu/fpm/persistencetest/classifManagedBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="42" column="0" selection-start="1147" selection-end="1147" vertical-scroll-proportion="1.1561713" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/student/student_mark.xhtml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="77" selection-start="466" selection-end="466" vertical-scroll-proportion="0.41463414">
+        <state line="12" column="24" selection-start="522" selection-end="522" vertical-scroll-proportion="0.5483871">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/student/student_test.xhtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="94" selection-start="598" selection-end="598" vertical-scroll-proportion="-4.3461537">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/student/stud_home.xhtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="87" selection-start="409" selection-end="409" vertical-scroll-proportion="-5.8846154">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.6.0_20/src.zip!/java/lang/String.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="112" column="41" selection-start="4328" selection-end="4328" vertical-scroll-proportion="-3.3743718">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/edu/kubsu/fpm/TestingModule/TaskBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="88" column="56" selection-start="3971" selection-end="3971" vertical-scroll-proportion="0.47184986">
           <folding />
         </state>
       </provider>
