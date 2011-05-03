@@ -289,34 +289,34 @@
                     <value>
                       <list>
                         <SvnBranchItem>
-                          <option name="creationDateMillis" value="1304020168889" />
-                          <option name="revision" value="38" />
-                          <option name="url" value="http://subversion.assembla.com/svn/edu-cube/branches/marinaBranch/META-INF" />
-                        </SvnBranchItem>
-                        <SvnBranchItem>
-                          <option name="creationDateMillis" value="1304020168889" />
-                          <option name="revision" value="38" />
+                          <option name="creationDateMillis" value="1304364348615" />
+                          <option name="revision" value="43" />
                           <option name="url" value="http://subversion.assembla.com/svn/edu-cube/branches/marinaBranch/src" />
                         </SvnBranchItem>
                         <SvnBranchItem>
-                          <option name="creationDateMillis" value="1304020168889" />
-                          <option name="revision" value="38" />
+                          <option name="creationDateMillis" value="1304364348615" />
+                          <option name="revision" value="43" />
                           <option name="url" value="http://subversion.assembla.com/svn/edu-cube/branches/marinaBranch/educube.ids" />
                         </SvnBranchItem>
                         <SvnBranchItem>
-                          <option name="creationDateMillis" value="1304020168889" />
-                          <option name="revision" value="38" />
+                          <option name="creationDateMillis" value="1304364348615" />
+                          <option name="revision" value="43" />
                           <option name="url" value="http://subversion.assembla.com/svn/edu-cube/branches/marinaBranch/educube.iml" />
                         </SvnBranchItem>
                         <SvnBranchItem>
-                          <option name="creationDateMillis" value="1304020168889" />
-                          <option name="revision" value="38" />
+                          <option name="creationDateMillis" value="1304364348615" />
+                          <option name="revision" value="43" />
+                          <option name="url" value="http://subversion.assembla.com/svn/edu-cube/branches/marinaBranch/educube.iws" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1304087622535" />
+                          <option name="revision" value="39" />
                           <option name="url" value="http://subversion.assembla.com/svn/edu-cube/branches/marinaBranch/educube.ipr" />
                         </SvnBranchItem>
                         <SvnBranchItem>
                           <option name="creationDateMillis" value="1304020168889" />
                           <option name="revision" value="38" />
-                          <option name="url" value="http://subversion.assembla.com/svn/edu-cube/branches/marinaBranch/educube.iws" />
+                          <option name="url" value="http://subversion.assembla.com/svn/edu-cube/branches/marinaBranch/META-INF" />
                         </SvnBranchItem>
                         <SvnBranchItem>
                           <option name="creationDateMillis" value="1304020168889" />
