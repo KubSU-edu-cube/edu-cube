@@ -20,6 +20,7 @@ import java.util.List;
 /**
  * @author Марина
  */
+@Stateless
 @ManagedBean(name = "classifManagedBean")
 @SessionScoped
 @TransactionManagement(TransactionManagementType.CONTAINER)
