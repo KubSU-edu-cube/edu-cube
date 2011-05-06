@@ -16,11 +16,8 @@
   <component name="ChangeListManager">
     <list readonly="true" id="e789c243-f53f-41f9-bf1a-06c40e408266" name="Default" comment="" />
     <list default="true" id="ed763e29-49a6-42bb-9aee-1ba4f4846f84" name="Merge from trunk" comment="Поменяла pom-ник">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/educube.iml" afterPath="$PROJECT_DIR$/educube.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/educube.ipr" afterPath="$PROJECT_DIR$/educube.ipr" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/educube.iws" afterPath="$PROJECT_DIR$/educube.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/edu/kubsu/fpm/persistencetest/classifManagedBean.java" afterPath="$PROJECT_DIR$/src/main/java/edu/kubsu/fpm/persistencetest/classifManagedBean.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/edu/kubsu/fpm/TestingModule/TaskBean.java" afterPath="$PROJECT_DIR$/src/main/java/edu/kubsu/fpm/TestingModule/TaskBean.java" />
     </list>
     <ignored path="educube.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -80,19 +77,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="classifManagedBean.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/edu/kubsu/fpm/persistencetest/classifManagedBean.java">
+      <file leaf-file-name="TaskBean.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/edu/kubsu/fpm/TestingModule/TaskBean.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="48" column="25" selection-start="995" selection-end="1351" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pom.xml" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="199" column="33" selection-start="7598" selection-end="7598" vertical-scroll-proportion="0.71168834">
+            <state line="192" column="61" selection-start="8528" selection-end="8528" vertical-scroll-proportion="0.620603">
               <folding />
             </state>
           </provider>
@@ -120,10 +108,10 @@
         <option value="$PROJECT_DIR$/src/main/webapp/student/student_mark.xhtml" />
         <option value="/FactStore" />
         <option value="$PROJECT_DIR$/src/main/webapp/student/stud_home.xhtml" />
-        <option value="$PROJECT_DIR$/src/main/java/edu/kubsu/fpm/TestingModule/TaskBean.java" />
         <option value="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/edu/kubsu/fpm/persistencetest/classifManagedBean.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/edu/kubsu/fpm/persistencetest/classifManagedBean.java" />
+        <option value="$PROJECT_DIR$/src/main/java/edu/kubsu/fpm/TestingModule/TaskBean.java" />
       </list>
     </option>
   </component>
@@ -198,7 +186,7 @@
     <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
+    <navigator proportions="" version="1" splitterProportion="0.5">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -209,31 +197,7 @@
       <autoscrollFromSource />
       <sortByType />
     </navigator>
-    <panes>
-      <pane id="Scope" />
-      <pane id="Favorites" />
-      <pane id="PackagesPane" />
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="educube" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="educube" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="educube" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="project.structure.last.edited" value="Project" />
@@ -532,9 +496,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-4" y="-4" width="1374" height="747" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2993921" sideWeight="0.6937799" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2986322" sideWeight="0.67783093" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32854864" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -548,11 +512,11 @@
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32674772" sideWeight="0.67783093" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32674772" sideWeight="0.67783093" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="EJB" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.67783093" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.67783093" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32216907" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30622008" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -605,42 +569,22 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$MAVEN_REPOSITORY$/javax/servlet/servlet-api/2.5/servlet-api-2.5-sources.jar!/javax/servlet/http/HttpServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="191" column="19" selection-start="6972" selection-end="6972" vertical-scroll-proportion="1.109137" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/edu/kubsu/fpm/ejb/DBImageLocal.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="17" selection-start="249" selection-end="249" vertical-scroll-proportion="0.4390863" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/edu/kubsu/fpm/servlet/DBImageServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="77" selection-start="1375" selection-end="1375" vertical-scroll-proportion="1.1649746" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/edu/kubsu/fpm/LoginBean.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="2" column="0" selection-start="24" selection-end="99" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="22" selection-start="1408" selection-end="1408" vertical-scroll-proportion="0.59090906" />
-      </provider>
       <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorReferencesProvider">
-        <state />
-      </provider>
-      <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleGeneralEditorProvider">
         <state />
       </provider>
       <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorProvider">
         <state />
       </provider>
-    </entry>
-    <entry file="dbDummy://dbElement:/educube2ed46245/144ce0d1-a324-4b8b-a69e-cdf6c6335400/APP.FACT">
-      <provider selected="true" editor-type-id="com.intellij.persistence.database.editor.DatabaseTableFileEditorProvider">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="22" selection-start="1408" selection-end="1408" vertical-scroll-proportion="0.59090906" />
+      </provider>
+      <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleGeneralEditorProvider">
         <state />
       </provider>
     </entry>
@@ -707,16 +651,6 @@
         <state line="9" column="87" selection-start="409" selection-end="409" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/student/student_test.xhtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="70" selection-start="699" selection-end="699" vertical-scroll-proportion="-8.5" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/edu/kubsu/fpm/TestingModule/TaskBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="111" column="27" selection-start="4710" selection-end="4710" vertical-scroll-proportion="3.5201006" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/work_with_bd.xhtml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="12" column="13" selection-start="514" selection-end="523" vertical-scroll-proportion="0.3554007" />
@@ -727,16 +661,46 @@
         <state line="4" column="49" selection-start="457" selection-end="457" vertical-scroll-proportion="0.11584327" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="199" column="33" selection-start="7598" selection-end="7598" vertical-scroll-proportion="0.71168834" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/edu/kubsu/fpm/persistencetest/classifManagedBean.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="25" selection-start="995" selection-end="1351" vertical-scroll-proportion="0.0">
+        <state line="47" column="18" selection-start="1340" selection-end="1340" vertical-scroll-proportion="0.028333334" />
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbElement:/educube2ed46245/31a13f9f-995a-4e17-b5fd-72839501c273/APP.FACT">
+      <provider selected="true" editor-type-id="com.intellij.persistence.database.editor.DatabaseTableFileEditorProvider">
+        <state />
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbElement:/educube2ed46245/31a13f9f-995a-4e17-b5fd-72839501c273/APP.COLL_DEPEND_FROM">
+      <provider selected="true" editor-type-id="com.intellij.persistence.database.editor.DatabaseTableFileEditorProvider">
+        <state />
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbElement:/educube2ed46245/144ce0d1-a324-4b8b-a69e-cdf6c6335400/APP.COLL_DEPEND_FROM">
+      <provider selected="true" editor-type-id="com.intellij.persistence.database.editor.DatabaseTableFileEditorProvider">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/student/student_test.xhtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="47" selection-start="477" selection-end="477" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
+    <entry file="dbDummy://dbElement:/educube2ed46245/144ce0d1-a324-4b8b-a69e-cdf6c6335400/APP.FACT">
+      <provider selected="true" editor-type-id="com.intellij.persistence.database.editor.DatabaseTableFileEditorProvider">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/edu/kubsu/fpm/TestingModule/TaskBean.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="199" column="33" selection-start="7598" selection-end="7598" vertical-scroll-proportion="0.71168834">
+        <state line="192" column="61" selection-start="8528" selection-end="8528" vertical-scroll-proportion="0.620603">
           <folding />
         </state>
       </provider>

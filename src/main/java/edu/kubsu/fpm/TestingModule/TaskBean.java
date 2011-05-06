@@ -1,15 +1,23 @@
 package edu.kubsu.fpm.TestingModule;
 
 import com.sun.jmx.snmp.tasks.Task;
-
+import java.io.ByteArrayInputStream;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
+import javax.xml.parsers.ParserConfigurationException;
 
 /**
  * Created by IntelliJ IDEA.
@@ -56,7 +64,6 @@ public class TaskBean {
 //        Поскольку персистентность еще не работает, то делаем так
         try{
             Connection connection = getConn();
-            String currentQuestion = "";
             for (Integer id : idFactList){
                 PreparedStatement statement = connection.prepareStatement("SELECT OBLIGATORY FROM APP.FACT WHERE ID = " + id);
                 ResultSet resultSet = statement.executeQuery();
@@ -109,7 +116,7 @@ public class TaskBean {
 //   Генерирует текущий тестовый вопрос
     public String getCurrentQuestion() {
 //        Почему-то не переводится каретка
-        currentQuestion = "";
+        currentQuestion = "abc";
 //        Если задаем обязательный вопрос
         if (isOblig){
 //            Выбираем произвольно id факта, на основе кот. сейчас будем задавать вопрос
@@ -152,8 +159,49 @@ public class TaskBean {
         String quest = "";
         Connection conn = getConn();
             try{
-                PreparedStatement statement = conn.prepareStatement("SELECT CONTENT FROM APP.FACT WHERE ID =" + id);
-//                Получаем факт
+                PreparedStatement statement = conn.prepareStatement("SELECT CONTENT, CONTENT_TYPE FROM APP.FACT WHERE ID =" + id);
+                ResultSet resultSet = statement.executeQuery();
+//                Получаем содержимое факта
+                if (resultSet.next()){
+                    String content = resultSet.getString("CONTENT_TYPE");
+//                    Если это текст
+                    if (content.equals("text")){
+                        Blob text = resultSet.getBlob("CONTENT");
+                        InputStream is = new ByteArrayInputStream(text.getBytes(1, (int)text.length()));
+//                    Получаем структуру DOM факта
+                        DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+                        DocumentBuilder builder = null;
+                        Document fact = null;
+                        try {
+                            builder = builderFactory.newDocumentBuilder();
+                            fact = builder.parse(is);
+                        } catch (ParserConfigurationException e) {
+                            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                        } catch (SAXException e) {
+                            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                        } catch (IOException e) {
+                            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                        }
+                        //                    Получаем корневой элемент
+                        Element root = fact.getDocumentElement();
+    //                    Идем по всем узлам
+                        String a = "";
+                        for (Node child = root.getFirstChild(); child != null; child = root.getNextSibling()){
+                            a += child.getFirstChild().getNodeValue();  //  Получаем листы - текст факта
+
+                        }
+//                        Сгенерировать из полученного текста вопрос и запомнить правильный ответ
+                        quest = a;
+                    }
+//                    Если это изображение
+                    else if (content.equals("image")){
+
+                    }
+//                    Если это формула
+                    else if (content.equals("formula")){
+
+                    }
+                }
             } catch (SQLException ex) {
             Logger.getLogger(TaskBean.class.getName()).log(Level.SEVERE, null, ex);
             }
