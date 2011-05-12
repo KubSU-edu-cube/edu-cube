@@ -293,11 +293,15 @@
       <index name="SQL110501210213340" unique="false" columns="GROUPID" />
     </table>
     <table name="SYN_ANT" schema="APP" catalog="" type="TABLE">
+      <column name="ID" sqlType="INTEGER" length="10" precision="0" nullable="false" jdbcType="4" />
+      <column name="IDDEPEND" sqlType="INTEGER" length="10" precision="0" nullable="false" jdbcType="4" />
+      <column name="RELATION" sqlType="VARCHAR" length="10" precision="0" nullable="false" jdbcType="12" />
+    </table>
+    <table name="WORDS" schema="APP" catalog="" type="TABLE">
       <column name="ID" sqlType="INTEGER" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true" />
-      <column name="TYPE_WORD" sqlType="VARCHAR" length="200" precision="0" nullable="false" jdbcType="12" />
       <column name="WORD" sqlType="VARCHAR" length="200" precision="0" nullable="false" jdbcType="12" />
-      <primary-key name="SYN_ANT_PK" columns="id" />
-      <index name="SQL110501210214060" unique="true" columns="ID" />
+      <primary-key name="SYN_PK" columns="id" />
+      <index name="SQL110512191118730" unique="true" columns="ID" />
     </table>
   </data-source>
 </component>

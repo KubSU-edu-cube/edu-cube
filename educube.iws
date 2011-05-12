@@ -16,6 +16,8 @@
   <component name="ChangeListManager">
     <list readonly="true" id="e789c243-f53f-41f9-bf1a-06c40e408266" name="Default" comment="" />
     <list default="true" id="ed763e29-49a6-42bb-9aee-1ba4f4846f84" name="Merge from trunk" comment="Поменяла pom-ник">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/educube.ids" afterPath="$PROJECT_DIR$/educube.ids" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/educube.ipr" afterPath="$PROJECT_DIR$/educube.ipr" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/educube.iws" afterPath="$PROJECT_DIR$/educube.iws" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/edu/kubsu/fpm/TestingModule/TaskBean.java" afterPath="$PROJECT_DIR$/src/main/java/edu/kubsu/fpm/TestingModule/TaskBean.java" />
     </list>
@@ -80,9 +82,32 @@
       <file leaf-file-name="TaskBean.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/edu/kubsu/fpm/TestingModule/TaskBean.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="192" column="61" selection-start="8528" selection-end="8528" vertical-scroll-proportion="0.620603">
+            <state line="201" column="125" selection-start="8895" selection-end="8959" vertical-scroll-proportion="0.46814406">
               <folding />
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FactStore" pinned="true" current="false" current-in-tab="false">
+        <entry file="mock:///FactStore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="2" column="130" selection-start="163" selection-end="292" vertical-scroll-proportion="-1.36">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="APP.SYN_ANT" pinned="false" current="false" current-in-tab="false">
+        <entry file="dbDummy://dbElement:/educube2ed46245/144ce0d1-a324-4b8b-a69e-cdf6c6335400/APP.SYN_ANT">
+          <provider selected="true" editor-type-id="com.intellij.persistence.database.editor.DatabaseTableFileEditorProvider">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="APP.WORDS" pinned="false" current="false" current-in-tab="false">
+        <entry file="dbDummy://dbElement:/educube2ed46245/144ce0d1-a324-4b8b-a69e-cdf6c6335400/APP.WORDS">
+          <provider selected="true" editor-type-id="com.intellij.persistence.database.editor.DatabaseTableFileEditorProvider">
+            <state />
           </provider>
         </entry>
       </file>
@@ -106,11 +131,11 @@
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
         <option value="$PROJECT_DIR$/src/main/webapp/student/student_test.xhtml" />
         <option value="$PROJECT_DIR$/src/main/webapp/student/student_mark.xhtml" />
-        <option value="/FactStore" />
         <option value="$PROJECT_DIR$/src/main/webapp/student/stud_home.xhtml" />
         <option value="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/edu/kubsu/fpm/persistencetest/classifManagedBean.java" />
+        <option value="/FactStore" />
         <option value="$PROJECT_DIR$/src/main/java/edu/kubsu/fpm/TestingModule/TaskBean.java" />
       </list>
     </option>
@@ -186,7 +211,7 @@
     <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
-    <navigator proportions="" version="1" splitterProportion="0.5">
+    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -197,7 +222,97 @@
       <autoscrollFromSource />
       <sortByType />
     </navigator>
-    <panes />
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="Favorites" />
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="educube" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="educube" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="educube" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="educube" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="educube" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="educube" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="educube" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="student" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="educube" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="educube" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="project.structure.last.edited" value="Project" />
@@ -210,14 +325,14 @@
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="DefaultHtmlFileTemplate" value="Xhtml" />
     <property name="MemberChooser.copyJavadoc" value="false" />
-    <property name="Database.TableEditor.Splitter" value="0.9" />
+    <property name="Database.TableEditor.Splitter" value="0.9451697" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="dynamic.classpath" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RunManager" selected="Glassfish Server.GlassFish">
     <configuration default="false" name="Default" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console" temporary="true">
@@ -263,24 +378,6 @@
         <option name="Maven.BeforeRunTask" enabled="false" />
       </method>
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method>
-        <option name="AntTarget" enabled="false" />
-        <option name="BuildArtifacts" enabled="false" />
-        <option name="Make" enabled="true" />
-        <option name="Maven.BeforeRunTask" enabled="false" />
-      </method>
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <extension name="coverage" enabled="false" merge="false" />
       <module name="" />
@@ -307,6 +404,24 @@
       <envs />
       <properties />
       <listeners />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method>
         <option name="AntTarget" enabled="false" />
         <option name="BuildArtifacts" enabled="false" />
@@ -496,9 +611,10 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-4" y="-4" width="1374" height="747" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2986322" sideWeight="0.67783093" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2998405" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29787233" sideWeight="0.7878788" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32854864" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -511,15 +627,14 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32854864" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.6937799" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32674772" sideWeight="0.67783093" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="EJB" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.67783093" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32216907" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.67942584" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32057416" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30622008" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -569,78 +684,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/edu/kubsu/fpm/LoginBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="0" selection-start="24" selection-end="99" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
-      <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorReferencesProvider">
-        <state />
-      </provider>
-      <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorProvider">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="22" selection-start="1408" selection-end="1408" vertical-scroll-proportion="0.59090906" />
-      </provider>
-      <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleGeneralEditorProvider">
-        <state />
-      </provider>
-    </entry>
-    <entry file="uml://DATABASE/144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.ADITIONAL_QUESTION">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>DATABASE</ID>
-          <OriginalElement>144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.ADITIONAL_QUESTION</OriginalElement>
-          <nodes>
-            <node x="117.25" y="0.0">144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.CLASSIFIER</node>
-            <node x="70.75" y="417.0">144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.ADITIONAL_QUESTION</node>
-            <node x="96.25" y="119.0">144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.CLASSIFIER_VALUE</node>
-            <node x="37.0" y="278.0">144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.GROUPS</node>
-          </nodes>
-          <notes />
-          <edges>
-            <edge source="144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.CLASSIFIER_VALUE" target="144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.CLASSIFIER">
-              <point x="0.0" y="-54.5" />
-              <point x="0.0" y="34.5" />
-            </edge>
-            <edge source="144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.GROUPS" target="144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.CLASSIFIER_VALUE">
-              <point x="0.0" y="-44.5" />
-              <point x="120.0" y="253.0" />
-              <point x="131.5" y="253.0" />
-              <point x="-35.25" y="54.5" />
-            </edge>
-            <edge source="144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.ADITIONAL_QUESTION" target="144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.GROUPS">
-              <point x="-48.0" y="-64.5" />
-              <point x="118.75" y="392.0" />
-              <point x="120.0" y="392.0" />
-              <point x="0.0" y="44.5" />
-            </edge>
-            <edge source="144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.ADITIONAL_QUESTION" target="144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.CLASSIFIER_VALUE">
-              <point x="48.0" y="-64.5" />
-              <point x="214.75" y="392.0" />
-              <point x="213.5" y="392.0" />
-              <point x="213.5" y="253.0" />
-              <point x="202.0" y="253.0" />
-              <point x="35.25" y="54.5" />
-            </edge>
-          </edges>
-          <settings layout="Hierarchic Group" zoom="0.9572438162544169" x="132.0" y="412.0" />
-          <SelectedNodes />
-          <Categories>
-            <Category>Columns</Category>
-            <Category>Key Columns</Category>
-          </Categories>
-          <SCOPE>All</SCOPE>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/student/student_mark.xhtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="24" selection-start="522" selection-end="522" vertical-scroll-proportion="0.5483871" />
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.6.0_20/src.zip!/java/lang/String.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="112" column="41" selection-start="4328" selection-end="4328" vertical-scroll-proportion="-3.3743718" />
@@ -671,11 +714,6 @@
         <state line="47" column="18" selection-start="1340" selection-end="1340" vertical-scroll-proportion="0.028333334" />
       </provider>
     </entry>
-    <entry file="dbDummy://dbElement:/educube2ed46245/31a13f9f-995a-4e17-b5fd-72839501c273/APP.FACT">
-      <provider selected="true" editor-type-id="com.intellij.persistence.database.editor.DatabaseTableFileEditorProvider">
-        <state />
-      </provider>
-    </entry>
     <entry file="dbDummy://dbElement:/educube2ed46245/31a13f9f-995a-4e17-b5fd-72839501c273/APP.COLL_DEPEND_FROM">
       <provider selected="true" editor-type-id="com.intellij.persistence.database.editor.DatabaseTableFileEditorProvider">
         <state />
@@ -686,11 +724,9 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/student/student_test.xhtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="47" selection-start="477" selection-end="477" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+    <entry file="dbDummy://dbElement:/educube2ed46245/31a13f9f-995a-4e17-b5fd-72839501c273/APP.FACT">
+      <provider selected="true" editor-type-id="com.intellij.persistence.database.editor.DatabaseTableFileEditorProvider">
+        <state />
       </provider>
     </entry>
     <entry file="dbDummy://dbElement:/educube2ed46245/144ce0d1-a324-4b8b-a69e-cdf6c6335400/APP.FACT">
@@ -698,9 +734,63 @@
         <state />
       </provider>
     </entry>
+    <entry file="uml://DATABASE/144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.WORDS">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>DATABASE</ID>
+          <OriginalElement>144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.WORDS</OriginalElement>
+          <nodes>
+            <node x="0.0" y="0.0">144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.WORDS</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="46.5" y="34.5" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Key Columns</Category>
+            <Category>Columns</Category>
+          </Categories>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://DATABASE/144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.SYN_ANT">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>DATABASE</ID>
+          <OriginalElement>144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.SYN_ANT</OriginalElement>
+          <nodes>
+            <node x="0.0" y="0.0">144ce0d1-a324-4b8b-a69e-cdf6c6335400.APP.SYN_ANT</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="56.5" y="44.0" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Columns</Category>
+          </Categories>
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbElement:/educube2ed46245/144ce0d1-a324-4b8b-a69e-cdf6c6335400/APP.WORDS">
+      <provider selected="true" editor-type-id="com.intellij.persistence.database.editor.DatabaseTableFileEditorProvider">
+        <state />
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbElement:/educube2ed46245/144ce0d1-a324-4b8b-a69e-cdf6c6335400/APP.SYN_ANT">
+      <provider selected="true" editor-type-id="com.intellij.persistence.database.editor.DatabaseTableFileEditorProvider">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/student/student_test.xhtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="47" selection-start="477" selection-end="477" vertical-scroll-proportion="0.3030303">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/edu/kubsu/fpm/TestingModule/TaskBean.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="192" column="61" selection-start="8528" selection-end="8528" vertical-scroll-proportion="0.620603">
+        <state line="201" column="125" selection-start="8895" selection-end="8959" vertical-scroll-proportion="0.46814406">
           <folding />
         </state>
       </provider>

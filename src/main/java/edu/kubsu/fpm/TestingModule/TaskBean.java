@@ -28,7 +28,10 @@ import javax.xml.parsers.ParserConfigurationException;
  */
 
 // TO DO:
-//        1.    Проверить, что собственно записано в факт в БД: структура DOM или просто текст -> вспомнить инструменты для работы с потоками и DOM-документами
+//        1.    Учесть, что в тексте факта слова могут начинаться как с маленьких, так и с больших букв.
+//        3.    Дописать алгоритм генерации тестов
+//        3.5.  Предусмотреть, чтобы тестовые задания не повторялись.
+//        4.    Отладить все, что уже сделала.           - хорошо звучит ;-))
 //
 
 
@@ -37,7 +40,7 @@ import javax.xml.parsers.ParserConfigurationException;
 public class TaskBean {
 
     private String testResult = "";     //  Возвращает строчку с результатом тестирования
-    private Integer countRightAnswer = 0;    //  Содержит колличество парвильных ответов студента
+    private Double countRightAnswer = 0.0;    //  Содержит колличество парвильных ответов студента
     private Integer countAnswer = 0;    //  Содержит колличество заданных вопросов
     private String studentAnswer = "";  //  Содержит текущий ответ студента
     private String rightAnswer;         //  Содержит текущий правильный ответ на заданный вопрос
@@ -48,6 +51,7 @@ public class TaskBean {
     private Connection conn;            //  Устанавливает соединение с базой
     private int countQuestion;      //  Колличество вопросов, кот. еще нужно задать
     private boolean isOblig = true;   //  Сейчас будут задаваться обязательные вопросы или нет
+    private int typeQuestion = 0;       //  Тип генерируемого вопроса
 
 //    Конструктор класса
     public TaskBean(){
@@ -85,14 +89,34 @@ public class TaskBean {
             wasAsked.add(false);
     }
 
+
 //    Проверяет текущий ответ студента
     public String checkAnswer(){
         String url = "student_test";
-//        if (rightAnswer.equals(studentAnswer)){
-//            countRightAnswer++;
-//        }
+        if (rightAnswer.equals(studentAnswer)){
+            countRightAnswer++;
+        }
+        else if(typeQuestion == 2){
+            try {
+//                Получаем список синонимов
+                PreparedStatement ps = conn.prepareStatement("select s.IDDEPEND from app.WORDS w right outer join app.syn_ant s on w.id = s.id where w.WORD = '"+ rightAnswer +"' and s.RELATION='SYN'");
+                ResultSet rs = ps.executeQuery();
+                List<String> synonym = new ArrayList<String>();
+                while (rs.next()){
+                        ps = conn.prepareStatement("SELECT WORD FROM APP.WORDS WHERE ID =" + rs.getInt(1));
+                        ResultSet resSet = ps.executeQuery();
+                        if (resSet.next())
+                            synonym.add(resSet.getString("WORD"));
+                 }
+                for (int i=0; i<synonym.size(); i++)
+                    if (synonym.get(i).equals(studentAnswer))
+                        countRightAnswer += 0.5;
+            } catch (SQLException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+        }
 //        Если заданы все вопросы
-//        if ((countQuestion == 1)&&(isOblig == false))
+        if ((countQuestion == 1)&&(isOblig == false))
             url = "student_mark";
 //         Если у нас закончились обязательные вопросы
         if ((countQuestion == 0)&&(isOblig == false)){
@@ -100,7 +124,7 @@ public class TaskBean {
     //        Когда закончились обязательные вопросы, должен достать из базы чисо доп. вопросов k
 //            Получаем число доп. вопросов
             countQuestion = (idFactList.size() - idObligitaryFactList.size())*k /100;
-            if (countQuestion == 0)
+            if ((countQuestion == 0)&&(idFactList.size() > 1))
                 countQuestion = 1;
             countAnswer += countQuestion;
         }
@@ -109,7 +133,7 @@ public class TaskBean {
 
 //    Формирует вывод результатов тестирования
     public String getTestResult() {
-        testResult = "Вы ответили на ".concat(this.getCountRightAnswer().toString()).concat(" вопросов из ").concat(this.getCountAnswer().toString());
+        testResult = "Вы получили ".concat(this.getCountRightAnswer().toString()).concat(" балов из ").concat(this.getCountAnswer().toString());
         return testResult;
     }
 
@@ -166,32 +190,71 @@ public class TaskBean {
                     String content = resultSet.getString("CONTENT_TYPE");
 //                    Если это текст
                     if (content.equals("text")){
-                        Blob text = resultSet.getBlob("CONTENT");
-                        InputStream is = new ByteArrayInputStream(text.getBytes(1, (int)text.length()));
-//                    Получаем структуру DOM факта
-                        DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
-                        DocumentBuilder builder = null;
-                        Document fact = null;
-                        try {
-                            builder = builderFactory.newDocumentBuilder();
-                            fact = builder.parse(is);
-                        } catch (ParserConfigurationException e) {
-                            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                        } catch (SAXException e) {
-                            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                        } catch (IOException e) {
-                            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                        }
-                        //                    Получаем корневой элемент
-                        Element root = fact.getDocumentElement();
-    //                    Идем по всем узлам
-                        String a = "";
-                        for (Node child = root.getFirstChild(); child != null; child = root.getNextSibling()){
-                            a += child.getFirstChild().getNodeValue();  //  Получаем листы - текст факта
-
-                        }
+                        String factText = getContentFact(resultSet);
 //                        Сгенерировать из полученного текста вопрос и запомнить правильный ответ
-                        quest = a;
+//                        В произвольном порядке выбираем тип вопроса
+                        Random r = new Random();
+                        typeQuestion = r.nextInt(3) + 1;
+                        switch (typeQuestion){
+                            case 1: {    //  Генерируем вопрос с вариантом выбора
+                                String [] words = factText.split(" ");  //  Получаем массив слов, состовляющих текст факта, чтобы выбрать одно из них случайно
+                                ResultSet rs = null;
+                                PreparedStatement ps = null;
+                                int countAnt = 0;       //  Число антонимов
+                                boolean f = true;
+                                int i = 0;      //  Номер выбранного слова
+                                do{
+                                    i = r.nextInt(words.length);
+    //                                Получаем все антонимы от выбранного слова
+                                    ps = conn.prepareStatement("select s.IDDEPEND from app.WORDS w right outer join app.syn_ant s on w.id = s.id where w.WORD = '"+ words[i] +"' and s.RELATION='ANT'");
+                                    rs = ps.executeQuery();        //      Получили id-шники антонимов данного слова
+                                    if (rs.next()){
+                                        f = false;      //  Значит мы все нашли: слово и его антонимы
+                                    }
+                                } while (f);
+//                                Получаем список антонимов
+                                List<String> antonym = new ArrayList<String>();
+                                 do{
+                                        ps = conn.prepareStatement("SELECT WORD FROM APP.WORDS WHERE ID =" + rs.getInt(1));
+                                        ResultSet resSet = ps.executeQuery();
+                                        if (resSet.next())
+                                            antonym.add(resSet.getString("WORD"));
+                                        countAnt++;
+                                 } while (rs.next());
+                                Integer numberRightAnswer = 0;      //  Номер по порядку, кот. будет выводится правильный ответ
+                                if (countAnt > 4)
+                                    countAnt = 4;   //  По-хорошему их надо выбирать рэндомом, чтобы генерировать вопросы на основе различных антонимов
+                                numberRightAnswer  = r.nextInt(countAnt) + 1;
+                                rightAnswer = numberRightAnswer.toString();
+                                quest = "Выберете правильный вариант из предложенных. В качестве ответа введите номер этого варианта \n";
+                                String[] wrongFact;
+                                for (Integer j = 1; j < numberRightAnswer; j++) {
+                                        wrongFact = words;
+                                        wrongFact[i] = antonym.get(j - 1);
+                                        quest += j.toString() + ". " + getStringFromArray(wrongFact) + "; \n";
+                                }
+                                quest += numberRightAnswer.toString() + ". " + getStringFromArray(words) + "; \n";
+                                for (Integer j = numberRightAnswer + 1; j <= countAnt + 1; j++) {
+                                        wrongFact = words;
+                                        wrongFact[i] = antonym.get(j - 2);
+                                        quest += j.toString() + ". " + getStringFromArray(wrongFact) + "; \n";
+                                }
+                                break;
+                            }
+                            case 2:{     //  Генерируем вопрос с пропущенным словом
+                                String [] words = factText.split(" ");  //  Получаем массив слов, состовляющих текст факта, чтобы выбрать одно из них случайно
+                                int i = 0;      //  Номер выбранного слова
+                                i = r.nextInt(words.length);
+                                rightAnswer = words[i];
+                                words[i] = " ... ";
+                                quest = getStringFromArray(words);
+                                break;
+                            }
+                            case 3:{     //  Генерируем вопрос с развернутым ответом
+                                quest = "Вопрос с развернутым ответом";
+                                break;
+                            }
+                        }
                     }
 //                    Если это изображение
                     else if (content.equals("image")){
@@ -205,8 +268,49 @@ public class TaskBean {
             } catch (SQLException ex) {
             Logger.getLogger(TaskBean.class.getName()).log(Level.SEVERE, null, ex);
             }
-//        Дописать алгоритм
         return quest;
+    }
+
+    //     Преобразует массив строк в одну строку
+    private String getStringFromArray(String [] sArray){
+        String s = "";
+        for(int i = 0; i< sArray.length; i++)
+            s += sArray[i] + " ";
+        return s;
+    }
+
+//    Получаем содержимое факта, если оно - текст
+    private String getContentFact(ResultSet resultSet){
+        Blob text = null;
+        InputStream is = null;
+        try {
+            text = resultSet.getBlob("CONTENT");
+            is = new ByteArrayInputStream(text.getBytes(1, (int)text.length()));
+        } catch (SQLException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+//                    Получаем структуру DOM факта
+        DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = null;
+        Document fact = null;
+        try {
+                            builder = builderFactory.newDocumentBuilder();
+                            fact = builder.parse(is);
+                        } catch (ParserConfigurationException e) {
+                            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                        } catch (SAXException e) {
+                            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                        } catch (IOException e) {
+                            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                        }
+                        //                    Получаем корневой элемент
+                        Element root = fact.getDocumentElement();
+    //                    Идем по всем узлам
+        String txt = "";
+                        for (Node child = root.getFirstChild(); child != null; child = root.getNextSibling()){
+                            txt += child.getFirstChild().getNodeValue();  //  Получаем листы - текст факта
+                        }
+        return txt;
     }
 
     public Connection getConn() {
@@ -247,11 +351,11 @@ public class TaskBean {
         this.rightAnswer = rightAnswer;
     }
 
-    public Integer getCountRightAnswer() {
+    public Double getCountRightAnswer() {
         return countRightAnswer;
     }
 
-    public void setCountRightAnswer(Integer countRightAnswer) {
+    public void setCountRightAnswer(Double countRightAnswer) {
         this.countRightAnswer = countRightAnswer;
     }
 
