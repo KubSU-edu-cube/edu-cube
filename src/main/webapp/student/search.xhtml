@@ -1,0 +1,19 @@
+<ui:composition template="templates/stud_template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="page_content">
+        <h:inputText value="#{searchBean.queryText}"/>
+        <h:commandButton value="поиск" action="#{searchBean.searchButtonClick}"/>
+        <a4j:repeat value="#{searchBean.queryResultList}" var="qRes" rows="20"
+                    id="repeat">
+            <br/>
+            <h:commandLink value="#{qRes.lection}" action="#{lectionBean.buildLection}">
+                <a4j:param value="#{qRes.lectionId}" assignTo="#{lectionBean.lectionId}"/>
+            </h:commandLink>
+            #{qRes.collection}
+        </a4j:repeat>
+        <h:commandButton value="test" action="#{factTestBean.testImgServlet}"/>
+    </ui:define>
+</ui:composition>

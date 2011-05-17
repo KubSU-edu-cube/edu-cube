@@ -1,0 +1,11 @@
+<ui:composition template="templates/stud_template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="page_content">
+        <!--<h1>Жирный пингвин!</h1>-->
+        <h:outputText escape="false" value="#{lectionBean.content}"></h:outputText>
+        <!--<h:outputText escape="false" value="#{test_class.content}"></h:outputText>-->
+    </ui:define>
+</ui:composition>
