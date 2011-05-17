@@ -14,7 +14,7 @@
 
     <repositories>
         <repository>
-            <id>jboss-public-repository-group</id>
+            <id>jboss-public-repository-groupList</id>
             <name>Jboss Repository for Maven</name>
             <url>https://repository.jboss.org/nexus/content/groups/public/</url>
         </repository>

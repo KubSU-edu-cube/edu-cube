@@ -1,0 +1,20 @@
+<ui:composition template="templates/stud_template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+
+        <ui:define name="page_content">
+            <ul>
+                <li> <h:commandLink action="setCourse.jsf">Назначить группе курс для изучения
+                    </h:commandLink>
+                </li>
+                <li>
+                <h:commandLink action="setAditionalQuestion.jsf">Назначить группе число дополнительных вопросов
+                    </h:commandLink>
+                </li>
+            </ul>
+        </ui:define>
+
+</ui:composition>

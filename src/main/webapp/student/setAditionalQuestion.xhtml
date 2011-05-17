@@ -1,0 +1,28 @@
+<ui:composition template="templates/stud_template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+        <ui:define name="page_content">
+            <h:form>
+                Выберите интересующую вас группу:
+                <h:selectOneListbox id="groupName" value="#{teacherBean.selectedGroup}" size="3">
+                    <f:selectItems value="#{teacherBean.groupListItem}" />
+                    <f:validateLongRange minimum="1" />
+                </h:selectOneListbox><br />
+                Выберете для нее курс для изучения:
+                <h:selectOneListbox id="groupCourse" value="#{teacherBean.selectedCourse}" size="3">
+                    <f:selectItems value="#{teacherBean.courseListItem}" />
+                    <f:validateLongRange minimum="1" />
+                </h:selectOneListbox><br />
+                Процент праильных ответов на обязательные вопросы:
+                <h:inputText id="groupPersMin" size="1" value="#{teacherBean.percent}" />
+                Соответствующее ему число дополнительных воросов:
+                <h:inputText id="groupAmount" size="1" value="#{teacherBean.amountAditionalQuestion}"/>     <br />
+                <h:commandButton id="OK" value="OK" action="#{teacherBean.saveAmountAditionalQuestion}"/>
+            </h:form>
+        </ui:define>
+
+</ui:composition>
