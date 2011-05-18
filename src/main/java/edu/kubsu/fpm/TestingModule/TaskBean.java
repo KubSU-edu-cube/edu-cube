@@ -53,6 +53,8 @@ public class TaskBean {
     private int countQuestion;      //  Колличество вопросов, кот. еще нужно задать
     private boolean isOblig = true;   //  Сейчас будут задаваться обязательные вопросы или нет
     private int typeQuestion = 0;       //  Тип генерируемого вопроса
+    private int idGroup;                //  id текущей группы
+    private int idCourse;               //  id текущего курса
 
 //    Конструктор класса
     public TaskBean(){
@@ -65,6 +67,8 @@ public class TaskBean {
         idFactList.add(6);
         idFactList.add(3);
         idFactList.add(4);
+        idCourse = 1;
+        idGroup = 1;
 //        Теперь вообще хотелось бы знать число обязательных фактов в лекции
 //        Поскольку персистентность еще не работает, то делаем так
         try{
@@ -121,15 +125,49 @@ public class TaskBean {
             url = "student_mark";
 //         Если у нас закончились обязательные вопросы
         if ((countQuestion == 0)&&(isOblig == false)){
-            int k = 0;      //  Процент доп. вопросов
-    //        Когда закончились обязательные вопросы, должен достать из базы чисо доп. вопросов k
+          double percent = countRightAnswer*100/countAnswer;      //  Процент доп. вопросов
+    //        Когда закончились обязательные вопросы, достаем из базы чисо доп. вопросов
 //            Получаем число доп. вопросов
-            countQuestion = (idFactList.size() - idObligitaryFactList.size())*k /100;
-            if ((countQuestion == 0)&&(idFactList.size() > 1))
-                countQuestion = 1;
+            countQuestion = getAmountAddQuest(percent);
             countAnswer += countQuestion;
         }
         return url;
+    }
+
+    //      Возвращает число доплнительных вопросов из базы
+    private int getAmountAddQuest(double percent) {
+        int k = 0;
+        Connection connection = getConn();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("select percent_rightansers from app.aditional_question where classif_valuesid = " + idCourse);
+            ResultSet resultSet = preparedStatement.executeQuery();
+//              Находим самое ближайшее к текущему значение процентов в базе
+            double min = percent;
+            double p = percent;
+            while (resultSet.next()){
+                if (abs(resultSet.getDouble("percent_rightansers") - percent) < min){
+                    min = abs(resultSet.getDouble("percent_rightansers") - percent);
+                    p = resultSet.getDouble("percent_rightansers");
+                }
+            }
+            preparedStatement = connection.prepareStatement("select quest_amount from app.aditional_question where classif_valuesid = " + idCourse +
+                    " and percent_rightansers = " + p);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next())
+                k = resultSet.getInt("quest_amount");
+        } catch (SQLException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        int amountRemainQuestion = idFactList.size() - countAnswer;
+        if (k > amountRemainQuestion)
+            k = amountRemainQuestion;
+        return k;
+    }
+
+      private double abs(double z){
+        if (z < 0.0)
+            z = - z;
+        return z;
     }
 
 //    Формирует вывод результатов тестирования
@@ -195,7 +233,7 @@ public class TaskBean {
 //                        Сгенерировать из полученного текста вопрос и запомнить правильный ответ
 //                        В произвольном порядке выбираем тип вопроса
                         Random r = new Random();
-                        typeQuestion = r.nextInt(3) + 1;
+                        typeQuestion = r.nextInt(2) + 1;
                         switch (typeQuestion){
                             case 1: {    //  Генерируем вопрос с вариантом выбора
                                 String [] words = factText.split(" ");  //  Получаем массив слов, состовляющих текст факта, чтобы выбрать одно из них случайно
