@@ -6,7 +6,7 @@
     <ui:define name="page_content">
         Здесь редактируется личная информация учителя
         <h:form id="form">
-        <p:panel header="Основное" toggleable="false" id="panel">
+        <p:panel header="Основное" toggleable="false" id="personalInfPanel">
             <h:panelGrid columns="2" cellpadding="5">
                 <h:outputLabel value="Фамилия" for="surname" />
                 <p:inputText id="surname" value="#{personalInfBean.surname}"/>
@@ -17,66 +17,79 @@
                 <h:outputLabel value="Отчество" for="patronymic" />
                 <p:inputText id="patronymic" value="#{personalInfBean.patronymic}"/>
 
+                <h:outputLabel value="Пол" for="sex" />
+                <p:inputText id="sex" value="#{personalInfBean.sex}"/>
+
                 <h:outputLabel value="Дата рождения" for="date_of_birth" />
                 <p:calendar value="#{personalInfBean.dateOfBirth}" id="date_of_birth" />
 
                 <h:outputLabel value="Родной город" for="city_of_birth" />
                 <p:inputText id="city_of_birth" value="#{personalInfBean.cityOfBirth}"/>
+
+                <h:outputLabel value="О себе" for="additional_information" />
+                <p:inputText id="additional_information" value="#{personalInfBean.additionalInformation}"/>
             </h:panelGrid>
         </p:panel>
-            <p:panel header="Контакты" toggleable="true" id="panel">
+            <p:panel header="Контакты" toggleable="true" id="contactsPanel">
                 <h:panelGrid columns="2" cellpadding="5">
-                    <h:outputLabel value="Фамилия" for="surname" />
-                    <p:inputText id="surname" value="#{personalInfBean.surname}"/>
+                    <h:outputLabel value="Страна" for="currentCountry" />
+                    <p:inputText id="currentCountry" value="#{personalInfBean.currentCountry}"/>
 
-                    <h:outputLabel value="Имя" for="name" />
-                    <p:inputText id="name" value="#{personalInfBean.name}"/>
+                    <h:outputLabel value="Город" for="currentCity" />
+                    <p:inputText id="currentCity" value="#{personalInfBean.currentCity}"/>
 
-                    <h:outputLabel value="Отчество" for="patronymic" />
-                    <p:inputText id="patronymic" value="#{personalInfBean.patronymic}"/>
+                    <h:outputLabel value="Адрес" for="adress" />
+                    <p:inputText id="adress" value="#{personalInfBean.adress}"/>
 
-                    <h:outputLabel value="Дата рождения" for="date_of_birth" />
-                    <p:calendar value="#{personalInfBean.dateOfBirth}" id="date_of_birth" />
+                    <h:outputLabel value="Моб. телефон" for="mobTel" />
+                    <p:inputText id="mobTel" value="#{personalInfBean.mobTel}"/>
 
-                    <h:outputLabel value="Родной город" for="city_of_birth" />
-                    <p:inputText id="city_of_birth" value="#{personalInfBean.cityOfBirth}"/>
+                    <h:outputLabel value="Дом. телефон" for="homeTel" />
+                    <p:inputText id="homeTel" value="#{personalInfBean.homeTel}"/>
+
+                    <h:outputLabel value="Skype" for="skype" />
+                    <p:inputText id="skype" value="#{personalInfBean.skype}"/>
+
+                    <h:outputLabel value="ICQ" for="icq" />
+                    <p:inputText id="icq" value="#{personalInfBean.icq}"/>
+
+                    <h:outputLabel value="Web сайт" for="webSite" />
+                    <p:inputText id="webSite" value="#{personalInfBean.webSite}"/>
                 </h:panelGrid>
             </p:panel>
-            <p:panel header="Образование" toggleable="true" id="panel">
-                <h:panelGrid columns="2" cellpadding="5">
-                    <h:outputLabel value="Фамилия" for="surname" />
-                    <p:inputText id="surname" value="#{personalInfBean.surname}"/>
+            <p:panel header="Образование" toggleable="true" id="educationPanel">
+                <p:dataList value="#{personalInfBean.educations}" var="education" id="educationList">
+                    <h:panelGrid columns="2" cellpadding="5">
 
-                    <h:outputLabel value="Имя" for="name" />
-                    <p:inputText id="name" value="#{personalInfBean.name}"/>
+                        <h:outputLabel value="Страна" for="eCountry" />
+                        <p:inputText id="eCountry" value="#{education.country}"/>
 
-                    <h:outputLabel value="Отчество" for="patronymic" />
-                    <p:inputText id="patronymic" value="#{personalInfBean.patronymic}"/>
+                        <h:outputLabel value="Город" for="eCity" />
+                        <p:inputText id="eCity" value="#{education.city}"/>
 
-                    <h:outputLabel value="Дата рождения" for="date_of_birth" />
-                    <p:calendar value="#{personalInfBean.dateOfBirth}" id="date_of_birth" />
+                        <h:outputLabel value="ВУЗ" for="eUniversity" />
+                        <p:inputText id="eUniversity" value="#{education.university}"/>
 
-                    <h:outputLabel value="Родной город" for="city_of_birth" />
-                    <p:inputText id="city_of_birth" value="#{personalInfBean.cityOfBirth}"/>
-                </h:panelGrid>
+                        <h:outputLabel value="Факультет" for="eFaculty" />
+                        <p:inputText id="eFaculty" value="#{education.faculty}"/>
+
+                        <h:outputLabel value="Кафедра" for="eDepartment" />
+                        <p:inputText id="eDepartment" value="#{education.department}"/>
+
+                        <h:outputLabel value="Статус" for="eStatus" />
+                        <p:inputText id="eStatus" value="#{education.status}"/>
+
+                        <h:outputLabel value="Дата поступления" for="eEnterDate" />
+                        <p:calendar value="#{education.enterDate}" id="eEnterDate" />
+
+                        <h:outputLabel value="Дата окончания" for="graduateDate" />
+                        <p:calendar value="#{education.graduateDate}" id="graduateDate" />
+
+                    </h:panelGrid>
+                </p:dataList>
             </p:panel>
-            <p:panel header="Работа" toggleable="true" id="panel">
-                <h:panelGrid columns="2" cellpadding="5">
-                    <h:outputLabel value="Фамилия" for="surname" />
-                    <p:inputText id="surname" value="#{personalInfBean.surname}"/>
+            <p:panel header="Работа" toggleable="true" id="jobPanel">
 
-                    <h:outputLabel value="Имя" for="name" />
-                    <p:inputText id="name" value="#{personalInfBean.name}"/>
-
-                    <h:outputLabel value="Отчество" for="patronymic" />
-                    <p:inputText id="patronymic" value="#{personalInfBean.patronymic}"/>
-
-                    <h:outputLabel value="Дата рождения" for="date_of_birth" />
-                    <p:calendar value="#{personalInfBean.dateOfBirth}" id="date_of_birth" />
-
-                    <h:outputLabel value="Родной город" for="city_of_birth" />
-                    <p:inputText id="city_of_birth" value="#{personalInfBean.cityOfBirth}"/>
-                </h:panelGrid>
             </p:panel>
        </h:form>
     </ui:define>

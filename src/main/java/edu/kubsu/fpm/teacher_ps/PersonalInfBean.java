@@ -1,8 +1,13 @@
 package edu.kubsu.fpm.teacher_ps;
 
+import edu.kubsu.fpm.teacher_ps.classes.Education;
+import edu.kubsu.fpm.teacher_ps.classes.Job;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -18,14 +23,36 @@ public class PersonalInfBean {
     private String surname;
     private String patronymic;
     private String dateOfBirth;
+    private String sex;
     private String cityOfBirth;
+    private String currentCountry;
     private String currentCity;
+    private String Adress;
     private String mobTel;
     private String homeTel;
     private String skype;
     private String icq;
     private String webSite;
-    private String Adress;
+    private String additionalInformation;
+    private List<Education> educations;
+    private List<Job> jobs;
+
+    public PersonalInfBean() {
+        educations = new ArrayList<Education>();
+        Education e = new Education();
+        Date sDate = new Date();
+        Date eDate = new Date();
+        e.setCity("Краснодар");
+        e.setCountry("Россия");
+        e.setDepartment("Информационных Технологий");
+        e.setEnterDate(sDate);
+        e.setFaculty("ФКТиПМ");
+        e.setGraduateDate(eDate);
+        e.setStatus("Студентка");
+        e.setUniversity("КубГУ");
+        educations.add(e);
+        
+    }
 
     public String getName() {
         return name;
@@ -118,6 +145,46 @@ public class PersonalInfBean {
 
     public String getDateOfBirth() {
         return dateOfBirth;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getCurrentCountry() {
+        return currentCountry;
+    }
+
+    public void setCurrentCountry(String currentCountry) {
+        this.currentCountry = currentCountry;
+    }
+
+    public String getAdditionalInformation() {
+        return additionalInformation;
+    }
+
+    public void setAdditionalInformation(String additionalInformation) {
+        this.additionalInformation = additionalInformation;
+    }
+
+    public List<Education> getEducations() {
+        return educations;
+    }
+
+    public void setEducations(List<Education> educations) {
+        this.educations = educations;
+    }
+
+    public List<Job> getJobs() {
+        return jobs;
+    }
+
+    public void setJobs(List<Job> jobs) {
+        this.jobs = jobs;
     }
 
     public void setDateOfBirth(String dateOfBirth) {
