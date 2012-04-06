@@ -1,0 +1,83 @@
+<ui:composition template="/templates/teacher_ps_template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="page_content">
+        Здесь редактируется личная информация учителя
+        <h:form id="form">
+        <p:panel header="Основное" toggleable="false" id="panel">
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:outputLabel value="Фамилия" for="surname" />
+                <p:inputText id="surname" value="#{personalInfBean.surname}"/>
+
+                <h:outputLabel value="Имя" for="name" />
+                <p:inputText id="name" value="#{personalInfBean.name}"/>
+
+                <h:outputLabel value="Отчество" for="patronymic" />
+                <p:inputText id="patronymic" value="#{personalInfBean.patronymic}"/>
+
+                <h:outputLabel value="Дата рождения" for="date_of_birth" />
+                <p:calendar value="#{personalInfBean.dateOfBirth}" id="date_of_birth" />
+
+                <h:outputLabel value="Родной город" for="city_of_birth" />
+                <p:inputText id="city_of_birth" value="#{personalInfBean.cityOfBirth}"/>
+            </h:panelGrid>
+        </p:panel>
+            <p:panel header="Контакты" toggleable="true" id="panel">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel value="Фамилия" for="surname" />
+                    <p:inputText id="surname" value="#{personalInfBean.surname}"/>
+
+                    <h:outputLabel value="Имя" for="name" />
+                    <p:inputText id="name" value="#{personalInfBean.name}"/>
+
+                    <h:outputLabel value="Отчество" for="patronymic" />
+                    <p:inputText id="patronymic" value="#{personalInfBean.patronymic}"/>
+
+                    <h:outputLabel value="Дата рождения" for="date_of_birth" />
+                    <p:calendar value="#{personalInfBean.dateOfBirth}" id="date_of_birth" />
+
+                    <h:outputLabel value="Родной город" for="city_of_birth" />
+                    <p:inputText id="city_of_birth" value="#{personalInfBean.cityOfBirth}"/>
+                </h:panelGrid>
+            </p:panel>
+            <p:panel header="Образование" toggleable="true" id="panel">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel value="Фамилия" for="surname" />
+                    <p:inputText id="surname" value="#{personalInfBean.surname}"/>
+
+                    <h:outputLabel value="Имя" for="name" />
+                    <p:inputText id="name" value="#{personalInfBean.name}"/>
+
+                    <h:outputLabel value="Отчество" for="patronymic" />
+                    <p:inputText id="patronymic" value="#{personalInfBean.patronymic}"/>
+
+                    <h:outputLabel value="Дата рождения" for="date_of_birth" />
+                    <p:calendar value="#{personalInfBean.dateOfBirth}" id="date_of_birth" />
+
+                    <h:outputLabel value="Родной город" for="city_of_birth" />
+                    <p:inputText id="city_of_birth" value="#{personalInfBean.cityOfBirth}"/>
+                </h:panelGrid>
+            </p:panel>
+            <p:panel header="Работа" toggleable="true" id="panel">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel value="Фамилия" for="surname" />
+                    <p:inputText id="surname" value="#{personalInfBean.surname}"/>
+
+                    <h:outputLabel value="Имя" for="name" />
+                    <p:inputText id="name" value="#{personalInfBean.name}"/>
+
+                    <h:outputLabel value="Отчество" for="patronymic" />
+                    <p:inputText id="patronymic" value="#{personalInfBean.patronymic}"/>
+
+                    <h:outputLabel value="Дата рождения" for="date_of_birth" />
+                    <p:calendar value="#{personalInfBean.dateOfBirth}" id="date_of_birth" />
+
+                    <h:outputLabel value="Родной город" for="city_of_birth" />
+                    <p:inputText id="city_of_birth" value="#{personalInfBean.cityOfBirth}"/>
+                </h:panelGrid>
+            </p:panel>
+       </h:form>
+    </ui:define>
+</ui:composition>

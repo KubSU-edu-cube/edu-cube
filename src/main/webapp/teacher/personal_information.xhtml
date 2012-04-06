@@ -1,10 +1,13 @@
 <ui:composition template="/templates/teacher_ps_template.xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:p="http://primefaces.org/ui"
                 xmlns="http://www.w3.org/1999/xhtml">
     <ui:define name="page_content">
         Здесь личная информация учителя
-
+        <h:form>
+            <p:commandLink value="Редактировать основную информацию" actionListener="edit_personal_information"/>
+            <h:commandLink value="Ред" action="edit_personal_information"/>
+        </h:form>
     </ui:define>
 </ui:composition>
