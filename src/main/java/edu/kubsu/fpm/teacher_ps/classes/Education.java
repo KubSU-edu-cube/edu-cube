@@ -10,6 +10,7 @@ import java.util.Date;
  * To change this template use File | Settings | File Templates.
  */
 public class Education {
+    private int id;
     private String country;
     private String city;
     private String university;
@@ -81,5 +82,13 @@ public class Education {
 
     public void setGraduateDate(Date graduateDate) {
         this.graduateDate = graduateDate;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

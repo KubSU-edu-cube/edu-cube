@@ -5,6 +5,7 @@ import edu.kubsu.fpm.teacher_ps.classes.Job;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -50,8 +51,34 @@ public class PersonalInfBean {
         e.setGraduateDate(eDate);
         e.setStatus("Студентка");
         e.setUniversity("КубГУ");
+        e.setId(educations.size());
         educations.add(e);
         
+    }
+
+    public void removeEducation() {
+        String educationId = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("educationToRemove");
+        educations.remove(Integer.parseInt(educationId) - 1);
+    }
+    public void addEducation(){
+        addNewEducationToLst();
+    }
+
+    private void addNewEducationToLst() {
+        Education e = new Education();
+        Date sDate = new Date();
+        Date eDate = new Date();
+        e.setCity("");
+        e.setCountry("");
+        e.setDepartment("");
+        e.setEnterDate(sDate);
+        e.setFaculty("");
+        e.setGraduateDate(eDate);
+        e.setStatus("");
+        e.setUniversity("");
+        e.setId(educations.size());
+        educations.add(e);
+
     }
 
     public String getName() {

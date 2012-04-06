@@ -2,6 +2,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
                 xmlns="http://www.w3.org/1999/xhtml">
     <ui:define name="page_content">
         Здесь редактируется личная информация учителя
@@ -61,32 +62,39 @@
                 <p:dataList value="#{personalInfBean.educations}" var="education" id="educationList">
                     <h:panelGrid columns="2" cellpadding="5">
 
-                        <h:outputLabel value="Страна" for="eCountry" />
-                        <p:inputText id="eCountry" value="#{education.country}"/>
+                        <h:outputLabel value="Страна"  />
+                        <p:inputText  value="#{education.country}"/>
 
-                        <h:outputLabel value="Город" for="eCity" />
-                        <p:inputText id="eCity" value="#{education.city}"/>
+                        <h:outputLabel value="Город"/>
+                        <p:inputText value="#{education.city}"/>
 
-                        <h:outputLabel value="ВУЗ" for="eUniversity" />
-                        <p:inputText id="eUniversity" value="#{education.university}"/>
+                        <h:outputLabel value="ВУЗ"  />
+                        <p:inputText  value="#{education.university}"/>
 
-                        <h:outputLabel value="Факультет" for="eFaculty" />
-                        <p:inputText id="eFaculty" value="#{education.faculty}"/>
+                        <h:outputLabel value="Факультет"  />
+                        <p:inputText  value="#{education.faculty}"/>
 
-                        <h:outputLabel value="Кафедра" for="eDepartment" />
-                        <p:inputText id="eDepartment" value="#{education.department}"/>
+                        <h:outputLabel value="Кафедра"  />
+                        <p:inputText  value="#{education.department}"/>
 
-                        <h:outputLabel value="Статус" for="eStatus" />
-                        <p:inputText id="eStatus" value="#{education.status}"/>
+                        <h:outputLabel value="Статус"  />
+                        <p:inputText  value="#{education.status}"/>
 
-                        <h:outputLabel value="Дата поступления" for="eEnterDate" />
-                        <p:calendar value="#{education.enterDate}" id="eEnterDate" />
+                        <h:outputLabel value="Дата поступления"  />
+                        <p:calendar value="#{education.enterDate}" />
 
-                        <h:outputLabel value="Дата окончания" for="graduateDate" />
-                        <p:calendar value="#{education.graduateDate}" id="graduateDate" />
+                        <h:outputLabel value="Дата окончания" />
+                        <p:calendar value="#{education.graduateDate}"  />
+
+                        <p:commandLink actionListener="#{personalInfBean.removeEducation}">
+                            <f:param name="educationToRemove" value="#{education.id}"/>
+                            <h:outputText value="Удалить информацию" />
+                        </p:commandLink>
 
                     </h:panelGrid>
                 </p:dataList>
+                <p:commandButton value="Добавить учебное заведение" icon="ui-icon-plus" actionListener="#{personalInfBean.addEducation}" update="educationList"/>
+
             </p:panel>
             <p:panel header="Работа" toggleable="true" id="jobPanel">
 
