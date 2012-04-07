@@ -1,0 +1,14 @@
+.seperator_col_caption{
+    width: 90px;
+}
+.seperator_col_line{
+    width: 300px;
+}
+.seperator_col_link{
+    width: 90px;
+}
+.ui-widget-content{
+    border: none !important;
+    background: none !important;
+    color: #000000;
+}

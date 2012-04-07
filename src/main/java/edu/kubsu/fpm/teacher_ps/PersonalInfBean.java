@@ -38,6 +38,8 @@ public class PersonalInfBean {
     private List<Education> educations;
     private List<Job> jobs;
 
+
+
     public PersonalInfBean() {
         educations = new ArrayList<Education>();
         Education e = new Education();
@@ -58,7 +60,7 @@ public class PersonalInfBean {
 
     public void removeEducation() {
         String educationId = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("educationToRemove");
-        educations.remove(Integer.parseInt(educationId) - 1);
+        educations.remove(Integer.parseInt(educationId));
     }
     public void addEducation(){
         addNewEducationToLst();

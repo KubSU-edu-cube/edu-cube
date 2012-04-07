@@ -5,8 +5,8 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns="http://www.w3.org/1999/xhtml">
     <ui:define name="page_content">
-        Здесь редактируется личная информация учителя
-        <h:form id="form">
+        <h:form>
+
         <p:panel header="Основное" toggleable="false" id="personalInfPanel">
             <h:panelGrid columns="2" cellpadding="5">
                 <h:outputLabel value="Фамилия" for="surname" />
@@ -60,6 +60,8 @@
             </p:panel>
             <p:panel header="Образование" toggleable="true" id="educationPanel">
                 <p:dataList value="#{personalInfBean.educations}" var="education" id="educationList">
+                    <p:column>
+
                     <h:panelGrid columns="2" cellpadding="5">
 
                         <h:outputLabel value="Страна"  />
@@ -86,12 +88,14 @@
                         <h:outputLabel value="Дата окончания" />
                         <p:calendar value="#{education.graduateDate}"  />
 
-                        <p:commandLink actionListener="#{personalInfBean.removeEducation}">
+                        <p:commandLink actionListener="#{personalInfBean.removeEducation}" update="form_id">
                             <f:param name="educationToRemove" value="#{education.id}"/>
                             <h:outputText value="Удалить информацию" />
                         </p:commandLink>
 
                     </h:panelGrid>
+                    </p:column>
+
                 </p:dataList>
                 <p:commandButton value="Добавить учебное заведение" icon="ui-icon-plus" actionListener="#{personalInfBean.addEducation}" update="educationList"/>
 
@@ -99,6 +103,7 @@
             <p:panel header="Работа" toggleable="true" id="jobPanel">
 
             </p:panel>
+            <p:commandButton value="Сохранить изменения" type="submit" action="personal_information"/>
        </h:form>
     </ui:define>
 </ui:composition>
