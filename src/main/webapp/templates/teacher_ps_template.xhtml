@@ -33,19 +33,14 @@
     <div id="left_box" class="left_box">
         <div id="left_box_text" class="left_box_text">
             <h:form>
-                <h:commandButton value="Личная информация" action="personal_information"/>
-
+                <h:panelGrid columns="1" style="margin-top: 4px">
+                    <p:commandButton value="Личная информация" action="personal_information" ajax="false" style="margin-top: 3px;"/>
+                    <p:commandButton value="Сообщения" action="messages" ajax="false" style="margin-top: 3px; "/>
+                    <p:commandButton value="Курсы" action="courses" ajax="false" style="margin-top: 3px;"/>
+                </h:panelGrid>
             </h:form>
-            <h:form>
-                <h:commandButton value="Сообщеdfния" action="messages"/>
-            </h:form>
-            <h:form>
-                <h:commandButton value="Курсы" action="courses"/>
-            </h:form>
-
         </div>
     </div>
-
 
     <div id="content" class="login_content">
         <ui:insert name="page_content">Page Content</ui:insert>

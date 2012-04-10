@@ -4,87 +4,9 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns="http://www.w3.org/1999/xhtml">
     <ui:define name="page_content">
-
+        Здесь личная информация учителя
         <h:form>
-            <h:outputLabel value="#{personalInfBean.surname} #{personalInfBean.name} #{personalInfBean.patronymic}"/>
-            <h:outputText value="#{personalInfBean.additionalInformation}"/>
-            <p:separator/>
-            <h:panelGrid columns="2" >
-                <h:outputLabel value="Дата рождения" for="date_of_birth" />
-                <h:outputLabel value="#{personalInfBean.dateOfBirth}" id="date_of_birth" />
-
-                <h:outputLabel value="Пол" for="sex" />
-                <h:outputLabel id="sex" value="#{personalInfBean.sex}"/>
-
-                <h:outputLabel value="Родной город" for="city_of_birth" />
-                <h:outputLabel id="city_of_birth" value="#{personalInfBean.cityOfBirth}"/>
-
-            </h:panelGrid>
-            <h:panelGrid columns="3" cellpadding="5" columnClasses="seperator_col_caption, seperator_col_line, seperator_col_link">
-                <h:outputLabel value="Контактная информация"/>
-                <p:separator style="width:500px"/>
-                <h:commandLink value="Редактировать" action="edit_personal_information"/>
-            </h:panelGrid>
-            <h:panelGrid columns="2" cellpadding="5" cellspacing="5">
-                <h:outputLabel value="Страна" for="currentCountry" />
-                <h:outputLabel id="currentCountry" value="#{personalInfBean.currentCountry}"/>
-
-                <h:outputLabel value="Город" for="currentCity" />
-                <h:outputLabel id="currentCity" value="#{personalInfBean.currentCity}"/>
-
-                <h:outputLabel value="Адрес" for="adress" />
-                <h:outputLabel id="adress" value="#{personalInfBean.adress}"/>
-
-                <h:outputLabel value="Моб. телефон" for="mobTel" />
-                <h:outputLabel id="mobTel" value="#{personalInfBean.mobTel}"/>
-
-                <h:outputLabel value="Дом. телефон" for="homeTel" />
-                <h:outputLabel id="homeTel" value="#{personalInfBean.homeTel}"/>
-
-                <h:outputLabel value="Skype" for="skype" />
-                <h:outputLabel id="skype" value="#{personalInfBean.skype}"/>
-
-                <h:outputLabel value="ICQ" for="icq" />
-                <h:outputLabel id="icq" value="#{personalInfBean.icq}"/>
-
-                <h:outputLabel value="Web сайт" for="webSite" />
-                <h:outputLabel id="webSite" value="#{personalInfBean.webSite}"/>
-            </h:panelGrid>
-            <h:panelGrid columns="3" cellpadding="5" columnClasses="seperator_col_caption, seperator_col_line, seperator_col_link">
-                <h:outputLabel value="Образование"/>
-                <p:separator style="width:500px"/>
-                <h:commandLink value="Редактировать" action="edit_personal_information"/>
-            </h:panelGrid>
-
-            <p:dataGrid var="education" value="#{personalInfBean.educations}" columns="1">
-                <p:column>
-                    <h:panelGrid columns="2" cellpadding="20" cellspacing="5" >
-                        <h:outputLabel value="Учебное заведение"/>
-                        <h:outputLabel value="#{education.university} (#{education.country} - #{education.city})"/>
-
-                        <h:outputLabel value="Факультет"/>
-                        <h:outputLabel value="#{education.faculty}"/>
-
-                        <h:outputLabel value="Кафедра"/>
-                        <h:outputLabel value="#{education.department}"/>
-
-                        <h:outputLabel value="Статус"/>
-                        <h:outputLabel value="#{education.status}"/>
-
-                        <h:outputLabel value="Поступление"/>
-                        <h:outputLabel value="#{education.enterDate}"/>
-
-                        <h:outputLabel value="Окончание"/>
-                        <h:outputLabel value="#{education.graduateDate}"/>
-                    </h:panelGrid>
-                    <h:outputLabel/>
-                </p:column>
-            </p:dataGrid>
-            <h:panelGrid columns="3" cellpadding="5" columnClasses="seperator_col_caption, seperator_col_line, seperator_col_link">
-                <h:outputLabel value="Работа"/>
-                <p:separator style="width:500px"/>
-                <h:commandLink value="Редактировать" action="edit_personal_information"/>
-            </h:panelGrid>
+            <p:commandLink value="Редактировать основную информацию" action="edit_personal_information" ajax="false"/>
         </h:form>
     </ui:define>
 </ui:composition>
