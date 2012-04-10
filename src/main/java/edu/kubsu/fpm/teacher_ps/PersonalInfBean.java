@@ -9,7 +9,7 @@ import edu.kubsu.fpm.teacher_ps.classes.Job;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,7 +23,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class PersonalInfBean {
     private String name;
     private String surname;
@@ -50,7 +50,7 @@ public class PersonalInfBean {
 
     public PersonalInfBean() {
         
-        tempBaseInit();
+
         
         educations = new ArrayList<Education>();
         Education e = new Education();
@@ -69,7 +69,7 @@ public class PersonalInfBean {
         
     }
 
-    private void tempBaseInit() {
+    public void tempBaseInit() {
         University university = new University();
         university.setCountry("Россия");
         university.setCity("Краснодар");

@@ -16,6 +16,7 @@ import java.util.List;
  * Time: 15:02
  * To change this template use File | Settings | File Templates.
  */
+
 @Stateless
 @TransactionManagement(value = TransactionManagementType.CONTAINER)
 public class    DAODepartment {
