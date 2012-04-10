@@ -4,7 +4,7 @@ import edu.kubsu.fpm.teacher_ps.classes.Education;
 import edu.kubsu.fpm.teacher_ps.classes.Job;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,7 +18,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class PersonalInfBean {
     private String name;
     private String surname;
@@ -58,7 +58,7 @@ public class PersonalInfBean {
 
     public void removeEducation() {
         String educationId = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("educationToRemove");
-        educations.remove(Integer.parseInt(educationId) - 1);
+        educations.remove(Integer.parseInt(educationId));
     }
     public void addEducation(){
         addNewEducationToLst();
