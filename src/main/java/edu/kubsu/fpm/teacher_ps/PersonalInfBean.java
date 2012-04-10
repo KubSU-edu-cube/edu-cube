@@ -1,8 +1,13 @@
 package edu.kubsu.fpm.teacher_ps;
 
+import edu.kubsu.fpm.DAO.DAODepartment;
+import edu.kubsu.fpm.entity.Department;
+import edu.kubsu.fpm.entity.Faculty;
+import edu.kubsu.fpm.entity.University;
 import edu.kubsu.fpm.teacher_ps.classes.Education;
 import edu.kubsu.fpm.teacher_ps.classes.Job;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -38,9 +43,15 @@ public class PersonalInfBean {
     private List<Education> educations;
     private List<Job> jobs;
 
+    @EJB
+    private DAODepartment daoDepartment;
+
 
 
     public PersonalInfBean() {
+        
+        tempBaseInit();
+        
         educations = new ArrayList<Education>();
         Education e = new Education();
         Date sDate = new Date();
@@ -56,6 +67,28 @@ public class PersonalInfBean {
         e.setId(educations.size());
         educations.add(e);
         
+    }
+
+    private void tempBaseInit() {
+        University university = new University();
+        university.setCountry("Россия");
+        university.setCity("Краснодар");
+        university.setName("КубГУ");
+
+        Faculty faculty = new Faculty();
+        faculty.setName("ФКТиПМ");
+        faculty.setUniversity(university);
+        
+        List<Faculty> faculties = new ArrayList<Faculty>();
+        faculties.add(faculty);
+
+        university.setFaculties(faculties);
+
+        Department department = new Department();
+        department.setFaculty(faculty);
+        department.setName("Информационных Технологий");
+
+        daoDepartment.persist(department);
     }
 
     public void removeEducation() {
