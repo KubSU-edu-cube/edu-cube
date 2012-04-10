@@ -21,7 +21,7 @@ public class Faculty implements Serializable {
     private String name;
 
 
-    @OneToMany(mappedBy = "faculty")
+    @OneToMany(cascade=ALL, mappedBy="faculty")
     private List<Department> departments;
 
     @ManyToOne
@@ -43,6 +43,7 @@ public class Faculty implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
 
     public List<Department> getDepartments() {
         return departments;
