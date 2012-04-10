@@ -24,7 +24,7 @@ public class Organization implements Serializable {
     private String adress;
 
     @OneToMany(mappedBy = "organization")
-    List<Organization> organizations;
+    List<Post> posts;
 
     public int getId() {
         return id;
@@ -66,11 +66,11 @@ public class Organization implements Serializable {
         this.adress = adress;
     }
 
-    public List<Organization> getOrganizations() {
-        return organizations;
+    public List<Post> getPosts() {
+        return posts;
     }
 
-    public void setOrganizations(List<Organization> organizations) {
-        this.organizations = organizations;
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 }
