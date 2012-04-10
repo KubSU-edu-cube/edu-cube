@@ -22,7 +22,7 @@ public class University implements Serializable {
     private String city;
     private String name;
 
-    @OneToMany(mappedBy = "university")
+    @OneToMany(mappedBy = "university", cascade = CascadeType.ALL)
     private List<Faculty> faculties;
 
     public int getId() {

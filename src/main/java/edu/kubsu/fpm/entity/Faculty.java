@@ -21,10 +21,10 @@ public class Faculty implements Serializable {
     private String name;
 
 
-    @OneToMany(cascade=ALL, mappedBy="faculty")
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="faculty")
     private List<Department> departments;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="university_id", referencedColumnName = "id")
     private University university;
 
