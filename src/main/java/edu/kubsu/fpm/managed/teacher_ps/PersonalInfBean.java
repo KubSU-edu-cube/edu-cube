@@ -1,11 +1,11 @@
-package edu.kubsu.fpm.teacher_ps;
+package edu.kubsu.fpm.managed.teacher_ps;
 
-import edu.kubsu.fpm.DAO.DAODepartment;
+import edu.kubsu.fpm.DAO.DepartmentDAO;
 import edu.kubsu.fpm.entity.Department;
 import edu.kubsu.fpm.entity.Faculty;
 import edu.kubsu.fpm.entity.University;
-import edu.kubsu.fpm.teacher_ps.classes.Education;
-import edu.kubsu.fpm.teacher_ps.classes.Job;
+import edu.kubsu.fpm.managed.teacher_ps.classes.Education;
+import edu.kubsu.fpm.managed.teacher_ps.classes.Job;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -44,7 +44,7 @@ public class PersonalInfBean {
     private List<Job> jobs;
 
     @EJB
-    private DAODepartment daoDepartment;
+    private DepartmentDAO departmentDAO;
 
 
 
@@ -88,7 +88,7 @@ public class PersonalInfBean {
         department.setFaculty(faculty);
         department.setName("Информационных Технологий");
 
-        daoDepartment.persist(department);
+        departmentDAO.persist(department);
     }
 
     public void removeEducation() {

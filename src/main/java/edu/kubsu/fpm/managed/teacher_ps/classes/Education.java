@@ -1,4 +1,4 @@
-package edu.kubsu.fpm.teacher_ps.classes;
+package edu.kubsu.fpm.managed.teacher_ps.classes;
 
 import java.util.Date;
 
