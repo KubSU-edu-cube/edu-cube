@@ -12,3 +12,15 @@
     background: none !important;
     color: #000000;
 }
+
+.ui-tabs {
+    background: transparent !important;
+}
+
+.ui-tabs-nav {
+    background: transparent !important;
+}
+
+.ui-tabs-panels {
+    background-color: #f5f5f5 !important;
+}
