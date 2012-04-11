@@ -30,26 +30,18 @@
         </div>
     </div>
 
-    <div id="left_box" class="left_box">
-        <div id="left_box_text" class="left_box_text">
-            <h:form>
-                <h:panelGrid columns="1" style="margin-top: 4px">
-                    <p:commandButton value="Личная информация" action="personal_information" ajax="false" style="margin-top: 3px;"/>
-                    <p:commandButton value="Сообщения" action="messages" ajax="false" style="margin-top: 3px; "/>
-                    <p:commandButton value="Курсы" action="courses" ajax="false" style="margin-top: 3px;"/>
-                </h:panelGrid>
-            </h:form>
-        </div>
+    <div id="left_box" style="margin-left: 10px">
+        <h:form>
+            <h:panelGrid columns="1" style="margin-top: 4px">
+                <p:commandButton value="Личная информация" action="personal_information" ajax="false" style="margin-top: 3px; width: 100%"/>
+                <p:commandButton value="Сообщения" action="messages" ajax="false" style="margin-top: 3px; width: 100%"/>
+                <p:commandButton value="Курсы" action="courses" ajax="false" style="margin-top: 3px; width: 100%"/>
+            </h:panelGrid>
+        </h:form>
     </div>
 
-    <div id="content" class="login_content">
+    <div id="content" class="ps_content">
         <ui:insert name="page_content">Page Content</ui:insert>
     </div>
-
-    <div id="footer" class="footer">
-        <ui:insert name="footer">Footer Content</ui:insert>
-    </div>
-
-
 </h:body>
 </html>
