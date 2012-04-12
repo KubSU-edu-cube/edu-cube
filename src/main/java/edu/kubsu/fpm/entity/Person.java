@@ -13,31 +13,186 @@ import java.util.List;
  */
 
 @Entity
-public class Person implements Serializable{
-    
+public class Person implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-        private int id;
-        private String name;
-        private String surname;
-        private String patronymic;
-        private String dateOfBirth;
-        private String sex;
-        private String cityOfBirth;
-        private String currentCountry;
-        private String currentCity;
-        private String Adress;
-        private String mobTel;
-        private String homeTel;
-        private String skype;
-        private String icq;
-        private String webSite;
-        private String additionalInformation;
+    private int id;
+    private String name;
+    private String surname;
+    private String patronymic;
+    private String dateOfBirth;
+    private String sex;
+    private String cityOfBirth;
+    private String currentCountry;
+    private String currentCity;
+    private String Adress;
+    private String mobTel;
+    private String homeTel;
+    private String skype;
+    private String icq;
+    private String webSite;
+    private String additionalInformation;
 
-        @OneToMany(mappedBy = "person")
-        private List<Education> educations;
+    @OneToMany(mappedBy = "person")
+    private List<Education> educations;
 
-        @OneToMany(mappedBy = "person")
-        private List<Job> jobs;
+    @OneToMany(mappedBy = "person")
+    private List<Job> jobs;
 
+    @ManyToMany(mappedBy = "recipients")
+    private List<Message> messages;
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getPatronymic() {
+        return patronymic;
+    }
+
+    public void setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
+    }
+
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getCityOfBirth() {
+        return cityOfBirth;
+    }
+
+    public void setCityOfBirth(String cityOfBirth) {
+        this.cityOfBirth = cityOfBirth;
+    }
+
+    public String getCurrentCountry() {
+        return currentCountry;
+    }
+
+    public void setCurrentCountry(String currentCountry) {
+        this.currentCountry = currentCountry;
+    }
+
+    public String getCurrentCity() {
+        return currentCity;
+    }
+
+    public void setCurrentCity(String currentCity) {
+        this.currentCity = currentCity;
+    }
+
+    public String getAdress() {
+        return Adress;
+    }
+
+    public void setAdress(String adress) {
+        Adress = adress;
+    }
+
+    public String getMobTel() {
+        return mobTel;
+    }
+
+    public void setMobTel(String mobTel) {
+        this.mobTel = mobTel;
+    }
+
+    public String getHomeTel() {
+        return homeTel;
+    }
+
+    public void setHomeTel(String homeTel) {
+        this.homeTel = homeTel;
+    }
+
+    public String getSkype() {
+        return skype;
+    }
+
+    public void setSkype(String skype) {
+        this.skype = skype;
+    }
+
+    public String getIcq() {
+        return icq;
+    }
+
+    public void setIcq(String icq) {
+        this.icq = icq;
+    }
+
+    public String getWebSite() {
+        return webSite;
+    }
+
+    public void setWebSite(String webSite) {
+        this.webSite = webSite;
+    }
+
+    public String getAdditionalInformation() {
+        return additionalInformation;
+    }
+
+    public void setAdditionalInformation(String additionalInformation) {
+        this.additionalInformation = additionalInformation;
+    }
+
+    public List<Education> getEducations() {
+        return educations;
+    }
+
+    public void setEducations(List<Education> educations) {
+        this.educations = educations;
+    }
+
+    public List<Job> getJobs() {
+        return jobs;
+    }
+
+    public void setJobs(List<Job> jobs) {
+        this.jobs = jobs;
+    }
+
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
+    }
 }
