@@ -13,6 +13,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -25,21 +26,22 @@ import java.util.List;
 @ManagedBean
 @SessionScoped
 public class PersonalInfBean {
-    private String name;
-    private String surname;
-    private String patronymic;
-    private String dateOfBirth;
-    private String sex;
-    private String cityOfBirth;
-    private String currentCountry;
-    private String currentCity;
-    private String Adress;
-    private String mobTel;
-    private String homeTel;
-    private String skype;
-    private String icq;
-    private String webSite;
-    private String additionalInformation;
+    private String name = "Анна";
+    private String surname = "Жуланова";
+    private String patronymic = "Павловна";
+    private Date dateOfBirth;
+    private String sex = "женский";
+    private String cityOfBirth = "Краснодар";
+    private String currentCountry = "Россия";
+    private String currentCity = "Краснодар";
+    private String Adress = "ул. Айвазовского 102 А, 29";
+    private String mobTel = "+79528616200";
+    private String homeTel = "235-32-18";
+    private String skype = "julanova-anna";
+    private String icq = "78234091";
+    private String webSite = "vk.com";
+    private String email = "julanovaanna@rambler.ru";
+    private String additionalInformation = "дурочка с переулочка";
     private List<Education> educations;
     private List<Job> jobs;
 
@@ -49,7 +51,11 @@ public class PersonalInfBean {
 
 
     public PersonalInfBean() {
-        
+
+        dateOfBirth = null;
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.set(2012, 9, 1);
+        dateOfBirth = calendar.getTime();
 
         
         educations = new ArrayList<Education>();
@@ -205,9 +211,7 @@ public class PersonalInfBean {
         Adress = adress;
     }
 
-    public String getDateOfBirth() {
-        return dateOfBirth;
-    }
+
 
     public String getSex() {
         return sex;
@@ -249,7 +253,20 @@ public class PersonalInfBean {
         this.jobs = jobs;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 }
