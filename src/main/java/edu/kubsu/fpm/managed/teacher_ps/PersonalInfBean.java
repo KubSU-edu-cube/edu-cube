@@ -9,7 +9,7 @@ import edu.kubsu.fpm.managed.teacher_ps.classes.Job;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,7 +24,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class PersonalInfBean {
     private String name = "Анна";
     private String surname = "Жуланова";

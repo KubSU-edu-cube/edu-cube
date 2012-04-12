@@ -7,8 +7,12 @@
         <h:form id="message_form">
             <p:tabView effect="fade" effectDuration="normal">
                 <p:tab title="Личные">
+                    <p:dataList value="#{messageBean.messages}" var="message">
+                        <h:outputFormat rendered="#{messageBean.messages.size}">У вас нет сообщений</h:outputFormat>
+                        <p:column rendered=""></p:column>
+                    </p:dataList>
                 </p:tab>
-                <p:tab title="От студентов" disabled="true"/>
+                <p:tab title="От студентов" />
             </p:tabView>
         </h:form>
     </ui:define>
