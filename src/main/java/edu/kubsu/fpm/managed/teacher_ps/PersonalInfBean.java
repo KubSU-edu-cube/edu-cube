@@ -1,9 +1,8 @@
 package edu.kubsu.fpm.managed.teacher_ps;
 
+import edu.kubsu.fpm.DAO.CountryDAO;
 import edu.kubsu.fpm.DAO.DepartmentDAO;
-import edu.kubsu.fpm.entity.Department;
-import edu.kubsu.fpm.entity.Faculty;
-import edu.kubsu.fpm.entity.University;
+import edu.kubsu.fpm.entity.*;
 import edu.kubsu.fpm.managed.teacher_ps.classes.Education;
 import edu.kubsu.fpm.managed.teacher_ps.classes.Job;
 
@@ -26,6 +25,8 @@ import java.util.List;
 @ManagedBean
 @SessionScoped
 public class PersonalInfBean {
+    private int beanUniqueId = 0;
+    
     private String name = "Анна";
     private String surname = "Жуланова";
     private String patronymic = "Павловна";
@@ -44,13 +45,28 @@ public class PersonalInfBean {
     private String additionalInformation = "дурочка с переулочка";
     private List<Education> educations;
     private List<Job> jobs;
+    
+    private List<City> cities;
+    private City selectedCity;
+    private List<Country> countries;
+    private Country selectedCountry;
 
     @EJB
     private DepartmentDAO departmentDAO;
+    @EJB
+    private CountryDAO countryDAO;
 
 
-
+//    **************************************************************************************************************
+//    ***************************************************************************************************************
     public PersonalInfBean() {
+
+
+
+
+
+
+
 
         dateOfBirth = null;
         GregorianCalendar calendar = new GregorianCalendar();
@@ -70,8 +86,15 @@ public class PersonalInfBean {
         e.setGraduateDate(eDate);
         e.setStatus("Студентка");
         e.setUniversity("КубГУ");
-        e.setId(educations.size());
+        e.setId(beanUniqueId++);
         educations.add(e);
+        
+        jobs = new ArrayList<Job>();
+        Job job = new Job();
+        job.setJobId(beanUniqueId++);
+        job.setPost("Грузчик");
+
+        jobs.add(job);
         
     }
 
@@ -99,7 +122,29 @@ public class PersonalInfBean {
 
     public void removeEducation() {
         String educationId = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("educationToRemove");
-        educations.remove(Integer.parseInt(educationId));
+        for(Education education:educations){
+            if(education.getId()==Integer.parseInt(educationId)){
+                educations.remove(education);
+            }
+        }
+    }
+    public void removeJob(){
+        String jobId = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("jobToRemove");
+        for (Job j:jobs){
+            if (j.getJobId()==Integer.parseInt(jobId)){
+                jobs.remove(j);
+            }
+        }
+    }
+    public void changeCityList(){
+        String jobId = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("selectedCountry");
+        for (Job j:jobs){
+            if (j.getJobId()==Integer.parseInt(jobId)){
+                String s = j.getCountry().getName();
+                setCities(j.getCountry().getCities());
+            }
+        }
+    
     }
     public void addEducation(){
         addNewEducationToLst();
@@ -117,9 +162,71 @@ public class PersonalInfBean {
         e.setGraduateDate(eDate);
         e.setStatus("");
         e.setUniversity("");
-        e.setId(educations.size());
+        e.setId(beanUniqueId++);
         educations.add(e);
 
+    }
+
+    public List<City> getCities() {
+        if(cities==null){
+            cities = new ArrayList<City>();
+        }
+        if(selectedCountry!=null){
+            cities = selectedCountry.getCities();
+        }
+
+        return cities;
+    }
+
+    public void setCities(List<City> cities) {
+        this.cities = cities;
+    }
+
+    public List<Country> getCountries() {
+        if (countries == null){
+            countries = new ArrayList<Country>();
+//*********************************************************************************************
+            Country countryR = new Country();
+            countryR.setName("Россия");
+            Country countryU = new Country();
+            countryU.setName("Украина");
+            
+            City cityK = new City();
+            cityK.setName("Краснодар");
+            cityK.setCountry(countryR);
+
+            City cityM = new City();
+            cityM.setName("Москва");
+            cityM.setCountry(countryR);
+
+            City cityKi = new City();
+            cityKi.setName("Киев");
+            cityKi.setCountry(countryU);
+
+            List<City> citiesR = new ArrayList<>();
+            citiesR.add(cityK);
+            citiesR.add(cityM);
+
+            countryR.setCities(citiesR);
+
+            List<City> citiesU= new ArrayList<>();
+            citiesU.add(cityKi);
+
+            countryU.setCities(citiesU);
+
+            countryDAO.persist(countryR);
+            countryDAO.persist(countryU);
+            
+//*********************************************************************************************
+
+            countries = countryDAO.getAllCountries();
+        }
+
+        return countries;
+    }
+
+    public void setCountries(List<Country> countries) {
+        this.countries = countries;
     }
 
     public String getName() {
@@ -268,5 +375,21 @@ public class PersonalInfBean {
 
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public City getSelectedCity() {
+        return selectedCity;
+    }
+
+    public void setSelectedCity(City selectedCity) {
+        this.selectedCity = selectedCity;
+    }
+
+    public Country getSelectedCountry() {
+        return selectedCountry;
+    }
+
+    public void setSelectedCountry(Country selectedCountry) {
+        this.selectedCountry = selectedCountry;
     }
 }
