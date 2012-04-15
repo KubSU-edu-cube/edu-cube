@@ -88,14 +88,21 @@
                             <h:outputLabel value="Дата окончания"/>
                             <p:calendar value="#{education.graduateDate}"/>
 
-                            <p:commandLink actionListener="#{personalInfBean.removeEducation}" update="@form">
+                            <p:commandLink actionListener="#{personalInfBean.removeEducation}"
+                                           process="@parent"
+                                           update="@form">
                                 <f:param name="educationToRemove" value="#{education.id}"/>
                                 <h:outputText value="Удалить информацию"/>
                             </p:commandLink>
                         </h:panelGrid>
                     </p:column>
                 </p:dataList>
-                <p:commandButton value="Добавить учебное заведение" icon="ui-icon-plus" actionListener="#{personalInfBean.addEducation}" update="educationList"/>
+                <p:commandButton
+                        value="Добавить учебное заведение"
+                        icon="ui-icon-plus"
+                        actionListener="#{personalInfBean.addEducation}"
+                        process="@parent"
+                        update="educationList"/>
 
             </p:panel>
             <p:panel header="Работа" toggleable="true" id="jobPanel">
@@ -122,15 +129,13 @@
                                 <f:selectItem itemLabel="Не выбрано" itemValue="---"/>
                                 <f:selectItems value="#{personalInfBean.cities}" itemLabel="#{city.name}"
                                                var="city" itemValue="#{city}"/>
-
                             </p:selectOneMenu>
-
                         </h:panelGrid>
                     </p:column>
                 </p:dataGrid>
 
             </p:panel>
-            <p:commandButton value="Сохранить изменения" ajax="false" action="personal_information"/>
+            <p:commandButton value="Сохранить изменения" process="@this" actionListener="#{personalInfBean.goToPersonalInfo}"/>
         </h:form>
     </ui:define>
 </ui:composition>

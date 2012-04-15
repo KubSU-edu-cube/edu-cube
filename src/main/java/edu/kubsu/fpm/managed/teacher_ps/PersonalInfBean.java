@@ -8,8 +8,9 @@ import edu.kubsu.fpm.managed.teacher_ps.classes.Job;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -23,7 +24,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class PersonalInfBean {
     private int beanUniqueId = 0;
     
@@ -118,6 +119,10 @@ public class PersonalInfBean {
         department.setName("Информационных Технологий");
 
         departmentDAO.persist(department);
+    }
+
+    public void goToPersonalInfo() throws IOException {
+        FacesContext.getCurrentInstance().getExternalContext().redirect("personal_information.jsf");
     }
 
     public void removeEducation() {
