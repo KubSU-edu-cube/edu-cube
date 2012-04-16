@@ -46,6 +46,8 @@ public class PersonalInfBean {
     private String additionalInformation = "дурочка с переулочка";
     private List<Education> educations;
     private List<Job> jobs;
+
+    private Job tmpJob;
     
     private List<City> cities;
     private City selectedCity;
@@ -61,7 +63,9 @@ public class PersonalInfBean {
 //    **************************************************************************************************************
 //    ***************************************************************************************************************
     public PersonalInfBean() {
-
+       this.tmpJob = new Job();
+        tmpJob.setCountry(null);
+        tmpJob.setCity(null);
 
 
 
@@ -396,5 +400,13 @@ public class PersonalInfBean {
 
     public void setSelectedCountry(Country selectedCountry) {
         this.selectedCountry = selectedCountry;
+    }
+
+    public Job getTmpJob() {
+        return tmpJob;
+    }
+
+    public void setTmpJob(Job tmpJob) {
+        this.tmpJob = tmpJob;
     }
 }
