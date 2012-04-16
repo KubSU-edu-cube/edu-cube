@@ -110,11 +110,14 @@
                     <p:column>
                         <h:panelGrid columns="3">
                             <h:outputLabel value="Страна" styleClass="labels"/>
-                            <p:selectOneMenu value="#{job.country}" valueChangeListener="#{personalInfBean.changeCityList}">
+                            <p:selectOneMenu value="#{job.country}">
+
+
                                 <f:selectItem itemLabel="Не выбрано" itemValue="---"/>
                                 <f:selectItems value="#{personalInfBean.countries}" itemLabel="#{country.name}"
                                                var="country" itemValue="#{country}"/>
                                 <f:param name="selectedCountry" value="#{job.jobId}"/>
+                                <p:ajax event="change" update="@form" listener="#{personalInfBean.changeCityList}" process="@parent"/>
                             </p:selectOneMenu>
                             <p:commandLink actionListener="#{personalInfBean.removeJob}" update="@form">
                                 <f:param name="jobToRemove" value="#{job.jobId}"/>
