@@ -7,7 +7,7 @@
         Здесь личная информация учителя
         <h:form>
             <p:commandLink value="Редактировать основную информацию" action="edit_personal_information" ajax="false"/>
-            <p:commandButton value="Инициализация БД" actionListener="#{personalInfBean.tempBaseInit}"/>
+            <p:commandButton value="Инициализация БД" actionListener="#{personalInfBean.tempBaseInit}" process="@this"/>
 
             <h:panelGrid columns="1">
             <h:outputLabel value="#{personalInfBean.surname} #{personalInfBean.name} #{personalInfBean.patronymic}" styleClass="user_name"/>

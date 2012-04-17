@@ -17,4 +17,6 @@ public interface DBImageLocal {
      */
     public List<byte[]> getImgList();
     public  void setImgList(List<byte[]> list);
+    public List<byte[]> getSmallImgs();
+    public  void setSmallImgs(List<byte[]> list);
 }
