@@ -31,8 +31,8 @@ public class PersonDAO {
         return (List<Person>)em.createQuery
                 ("from Person p where (p.name = :firstName and p.surname = :secondName) or" +
                                         " (p.name = :secondName and p.surname = :firstName ) ").
-                setParameter(secondName,secondName).
-                setParameter(firstName,firstName).
+                setParameter("secondName",secondName).
+                setParameter("firstName",firstName).
                 getResultList();
     }
 

@@ -7,7 +7,56 @@
     <ui:define name="page_content">
         Здесь редактируется личная информация учителя
         <h:form id="form">
-            <p:commandButton value="тест поиск людей" actionListener="#{searchBean.testShowPerson}" process="@this"/>
+            <div>
+                <h:panelGrid columns="2">
+                    <p:inputText value="#{searchBean.simpleQuery}"/>
+                    <p:commandButton value="Поикс" actionListener="#{searchBean.testShowPerson}" process="@this"/>
+                </h:panelGrid>
+            </div>
+            <div>
+                <div>
+                    <p:dataGrid var="shortInfo" value="#{searchBean.shortPersonInfos}">
+                        <p:column>
+                            <h:panelGrid columns="2">
+                                <p:graphicImage value="#{shortInfo.src}"/>
+                                <h:panelGrid columns="1">
+                                    <h:outputLabel value="#{shortInfo.surmane} #{shortInfo.name}"/>
+                                    <h:outputLabel value="#{shortInfo.age}"/>
+                                    <h:outputLabel value="#{shortInfo.city}"/>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                        </p:column>
+                    </p:dataGrid>
+
+                </div>
+                <div>
+                    <h:panelGrid columns="1">
+                        <h:outputLabel value="Страна"/>
+                        <p:selectOneMenu>
+
+                        </p:selectOneMenu>
+                        <h:outputLabel value="Город"/>
+                        <p:selectOneMenu>
+
+                        </p:selectOneMenu>
+                        <h:outputLabel value="Возраст"/>
+                        <h:panelGrid columns="2">
+                            <p:selectOneMenu>
+
+                            </p:selectOneMenu>
+                            <p:selectOneMenu>
+
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+                        <h:outputLabel value="Пол"/>
+                        <p:selectOneRadio id="customRadio" value="#{searchBean.sex}" layout="custom">
+                            <f:selectItem itemLabel="Женский" itemValue="Женский" />
+                            <f:selectItem itemLabel="Мужской" itemValue="Мужской" />
+                            <f:selectItem itemLabel="Любой" itemValue="Любой" />
+                        </p:selectOneRadio>
+                    </h:panelGrid>
+                </div>
+            </div>
 
         </h:form>
     </ui:define>

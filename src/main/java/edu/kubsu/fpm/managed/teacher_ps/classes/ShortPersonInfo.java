@@ -43,7 +43,7 @@ public class ShortPersonInfo {
     }
 
     public void setSrc(String src) {
-        this.src = src;
+        this.src = "http://localhost:8080/educube-1.0/DBImageServlet?personId="+src;
     }
 
     public String getCity() {
