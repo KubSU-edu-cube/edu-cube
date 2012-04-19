@@ -30,7 +30,7 @@ public class MessagingBean {
      * Передача в метод идентификатора пользователя исключается, чтобы не позволить пользователям читать чужие сообщения
      * @return список сообщений пользователя
      */
-    public List<Message> getUserMessages() {
+    public List<Message> getOutcomingMessages() {
         if (person == null) {
             person = personDAO.getPersonById(userId);
         } else {
