@@ -194,5 +194,8 @@ public class SearchBean {
     public void setCountries(List<Country> countries) {
         this.countries = countries;
     }
+    public void testListner(){
+        String s = selectedCountry.getName();
+    }
 }
 

@@ -33,14 +33,18 @@
                     <h:panelGrid columns="1">
                         <h:outputLabel value="Страна"/>
                         <p:selectOneMenu value="#{searchBean.selectedCountry}"
-                                         var="countries"
+                                         var="c"
                                          converter="edu.kubsu.fpm.converter.SelectOneConverter">
                             <f:selectItem itemLabel="Выбор страны" itemValue="" />
                             <f:selectItems value="#{searchBean.countries}"
                                            var="country"
                                            itemLabel="#{country.name}"
                                            itemValue="#{country}"/>
-                            <p:ajax event="change" update="selectCity" process="@parent"/>
+                            <p:column>
+                                #{c.name}
+                            </p:column>
+
+                            <p:ajax event="change" listener="#{searchBean.testListner}" update="selectCity" process="@parent"/>
                         </p:selectOneMenu>
                         <h:outputLabel value="Город"/>
                         <p:selectOneMenu id="selectCity">
