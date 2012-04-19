@@ -6,6 +6,7 @@ import edu.kubsu.fpm.entity.Country;
 import javax.ejb.*;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -25,4 +26,10 @@ public class CityDAO {
         em.persist(city);
     }
 
+    public List<City> getCitiesByCountry(Country selectedCountry) {
+        return (List<City>)em.createQuery
+                ("from City c where c.country = :sCountry").
+                setParameter("sCountry",selectedCountry).
+                getResultList();
+    }
 }
