@@ -122,8 +122,7 @@ public class InitFactBean {
 
     private void persistValueClassifierValue(Integer classifid, Integer parentId, String value) {
         ClassifierValue classifierValue = new ClassifierValue();
-        ClassifierDAO classifierDAO1 = new ClassifierDAO();
-        classifierValue.setClassifier(classifierDAO1.getClassifierById(classifid));
+        classifierValue.setClassifier(classifierDAO.getClassifierById(classifid));
         classifierValue.setParentid(parentId);
         classifierValue.setValue(value);
         classifierValueDAO.persist(classifierValue);
