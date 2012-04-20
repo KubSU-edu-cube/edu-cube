@@ -18,20 +18,16 @@ import edu.kubsu.fpm.model.Classifier;
 @Stateless
 @TransactionManagement(value = TransactionManagementType.CONTAINER)
 public class ClassifierDAO {
-    @PersistenceUnit
-    private EntityManagerFactory entityManagerFactory;
-
     @PersistenceContext(unitName = "sample")
     private EntityManager em;
 
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
-    public void persist(Classifier classifier){
+    public void persist(Classifier classifier) {
         em.persist(classifier);
     }
 
-    public Classifier getClassifierById(Integer classifId){
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        return (Classifier)entityManager.createQuery("FROM Classifier c WHERE c.id = :id")
+    public Classifier getClassifierById(Integer classifId) {
+        return (Classifier) em.createQuery("FROM Classifier c WHERE c.id = :id")
                 .setParameter("id", classifId)
                 .getSingleResult();
     }
