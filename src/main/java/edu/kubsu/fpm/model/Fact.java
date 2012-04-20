@@ -35,7 +35,6 @@ public class Fact implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "ID", nullable = false)
     private Integer id;
     @Basic(optional = false)
@@ -52,7 +51,7 @@ public class Fact implements Serializable {
     private int obligatory;
     @JoinColumn(name = "COLLID", referencedColumnName = "ID", nullable = false)
     @ManyToOne(optional = false)
-    private FactCollection collid;
+    private FactCollection collection;
 
     public Fact() {
     }
@@ -108,12 +107,12 @@ public class Fact implements Serializable {
         this.obligatory = obligatory;
     }
 
-    public FactCollection getCollid() {
-        return collid;
+    public FactCollection getCollection() {
+        return collection;
     }
 
-    public void setCollid(FactCollection collid) {
-        this.collid = collid;
+    public void setCollection(FactCollection collection) {
+        this.collection = collection;
     }
 
     @Override

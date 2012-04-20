@@ -36,7 +36,6 @@ public class ClassifierValue implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "ID", nullable = false)
     private Integer id;
     @Column(name = "VALUE_", length = 1000)
@@ -49,7 +48,7 @@ public class ClassifierValue implements Serializable {
     private Collection<Mark> markCollection;
     @JoinColumn(name = "CLASSIFID", referencedColumnName = "ID", nullable = false)
     @ManyToOne(optional = false)
-    private Classifier classifid;
+    private Classifier classifier;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "classifValuesid")
     private Collection<Groups> groupsCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "classifValuesid")
@@ -106,12 +105,12 @@ public class ClassifierValue implements Serializable {
         this.markCollection = markCollection;
     }
 
-    public Classifier getClassifid() {
-        return classifid;
+    public Classifier getClassifier() {
+        return classifier;
     }
 
-    public void setClassifid(Classifier classifid) {
-        this.classifid = classifid;
+    public void setClassifier(Classifier classifier) {
+        this.classifier = classifier;
     }
 
     public Collection<Groups> getGroupsCollection() {

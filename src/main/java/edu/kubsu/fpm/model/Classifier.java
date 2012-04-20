@@ -33,14 +33,13 @@ public class Classifier implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "ID", nullable = false)
     private Integer id;
     @Column(name = "CLASSIF_NAME", length = 300)
     private String classifName;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "classifier")
     private Collection<FactClassifvalue> factClassifvalueCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "classifid")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "classifier")
     private Collection<ClassifierValue> classifierValueCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "classifier")
     private Collection<CollfactClassifvalue> collfactClassifvalueCollection;
@@ -123,5 +122,6 @@ public class Classifier implements Serializable {
     public String toString() {
         return "edu.kubsu.fpm.model.Classifier[id=" + id + "]";
     }
+
 
 }

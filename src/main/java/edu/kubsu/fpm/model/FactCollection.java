@@ -36,7 +36,6 @@ public class FactCollection implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "ID", nullable = false)
     private Integer id;
     @Column(name = "FACTCOLL_NAME", length = 300)
@@ -52,7 +51,7 @@ public class FactCollection implements Serializable {
     private Collection<FactClassifvalue> factClassifvalueCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "factCollection")
     private Collection<CollfactClassifvalue> collfactClassifvalueCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "collid")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "collection")
     private Collection<Fact> factCollection;
 
     public FactCollection() {
