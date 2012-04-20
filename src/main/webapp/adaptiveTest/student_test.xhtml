@@ -1,0 +1,16 @@
+<ui:composition template="/templates/teacher_ps_template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+
+        <ui:define name="page_content">
+           <h:form>
+               <!-- TODO Не факт, что отобразятся картинки. Нужно придумать что-то другое -->
+               <p:commandButton value="Инициализация БД" actionListener="#{initFactBean.tmpFactsInit}" process="@this"/>
+
+           </h:form>
+        </ui:define>
+
+</ui:composition>
