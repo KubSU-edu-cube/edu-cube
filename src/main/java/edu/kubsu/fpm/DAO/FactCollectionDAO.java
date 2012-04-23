@@ -23,4 +23,10 @@ public class FactCollectionDAO {
     public void persist(FactCollection factCollection){
         em.persist(factCollection);
     }
+
+    public FactCollection getCollectionById(Integer collId) {
+        return (FactCollection) em.createNamedQuery("FactCollection.findById")
+                .setParameter("id", collId)
+                .getSingleResult();
+    }
 }

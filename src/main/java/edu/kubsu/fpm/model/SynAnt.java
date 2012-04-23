@@ -2,86 +2,88 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package edu.kubsu.fpm.model;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Марина
+ * @author Marina
  */
 @Entity
 @Table(name = "SYN_ANT")
 @NamedQueries({
     @NamedQuery(name = "SynAnt.findAll", query = "SELECT s FROM SynAnt s"),
-    @NamedQuery(name = "SynAnt.findById", query = "SELECT s FROM SynAnt s WHERE s.id = :id"),
-    @NamedQuery(name = "SynAnt.findByTypeWord", query = "SELECT s FROM SynAnt s WHERE s.typeWord = :typeWord"),
-    @NamedQuery(name = "SynAnt.findByWord", query = "SELECT s FROM SynAnt s WHERE s.word = :word")})
+    @NamedQuery(name = "SynAnt.findById", query = "SELECT s FROM SynAnt s WHERE s.synAntPK.id = :id"),
+    @NamedQuery(name = "SynAnt.findByIddepend", query = "SELECT s FROM SynAnt s WHERE s.synAntPK.iddepend = :iddepend"),
+    @NamedQuery(name = "SynAnt.findByRelation", query = "SELECT s FROM SynAnt s WHERE s.relation = :relation")})
 public class SynAnt implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "ID", nullable = false)
-    private Integer id;
-    @Basic(optional = false)
-    @Column(name = "TYPE_WORD", nullable = false, length = 200)
-    private String typeWord;
-    @Basic(optional = false)
-    @Column(name = "WORD", nullable = false, length = 200)
-    private String word;
+    @EmbeddedId
+    protected SynAntPK synAntPK;
+    @Column(name = "RELATION")
+    private String relation;
+    @JoinColumn(name = "ID", referencedColumnName = "ID", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Words words;
+    @JoinColumn(name = "IDDEPEND", referencedColumnName = "ID", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Words words1;
 
     public SynAnt() {
     }
 
-    public SynAnt(Integer id) {
-        this.id = id;
+    public SynAnt(SynAntPK synAntPK) {
+        this.synAntPK = synAntPK;
     }
 
-    public SynAnt(Integer id, String typeWord, String word) {
-        this.id = id;
-        this.typeWord = typeWord;
-        this.word = word;
+    public SynAnt(SynAntPK synAntPK, String relation) {
+        this.synAntPK = synAntPK;
+        this.relation = relation;
     }
 
-    public Integer getId() {
-        return id;
+    public SynAnt(int id, int iddepend) {
+        this.synAntPK = new SynAntPK(id, iddepend);
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public SynAntPK getSynAntPK() {
+        return synAntPK;
     }
 
-    public String getTypeWord() {
-        return typeWord;
+    public void setSynAntPK(SynAntPK synAntPK) {
+        this.synAntPK = synAntPK;
     }
 
-    public void setTypeWord(String typeWord) {
-        this.typeWord = typeWord;
+    public String getRelation() {
+        return relation;
     }
 
-    public String getWord() {
-        return word;
+    public void setRelation(String relation) {
+        this.relation = relation;
     }
 
-    public void setWord(String word) {
-        this.word = word;
+    public Words getWords() {
+        return words;
+    }
+
+    public void setWords(Words words) {
+        this.words = words;
+    }
+
+    public Words getWords1() {
+        return words1;
+    }
+
+    public void setWords1(Words words1) {
+        this.words1 = words1;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (synAntPK != null ? synAntPK.hashCode() : 0);
         return hash;
     }
 
@@ -92,7 +94,7 @@ public class SynAnt implements Serializable {
             return false;
         }
         SynAnt other = (SynAnt) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.synAntPK == null && other.synAntPK != null) || (this.synAntPK != null && !this.synAntPK.equals(other.synAntPK))) {
             return false;
         }
         return true;
@@ -100,7 +102,7 @@ public class SynAnt implements Serializable {
 
     @Override
     public String toString() {
-        return "edu.kubsu.fpm.model.SynAnt[id=" + id + "]";
+        return "edu.student.richfaces.SynAnt[ synAntPK=" + synAntPK + " ]";
     }
-
+    
 }

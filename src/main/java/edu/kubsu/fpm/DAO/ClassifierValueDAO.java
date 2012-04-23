@@ -29,4 +29,10 @@ public class ClassifierValueDAO {
     public void persist(ClassifierValue classifierValue){
         em.persist(classifierValue);
     }
+
+    public ClassifierValue getClassifierValueById(Integer classifValueId) {
+        return (ClassifierValue) em.createNamedQuery("ClassifierValue.findById")
+                .setParameter("id", classifValueId)
+                .getSingleResult();
+    }
 }

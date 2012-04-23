@@ -1,12 +1,10 @@
 package edu.kubsu.fpm.DAO;
 
+import edu.kubsu.fpm.model.Classifier;
+
 import javax.ejb.*;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceUnit;
-
-import edu.kubsu.fpm.model.Classifier;
 
 /**
  * Created by IntelliJ IDEA.
@@ -27,7 +25,7 @@ public class ClassifierDAO {
     }
 
     public Classifier getClassifierById(Integer classifId) {
-        return (Classifier) em.createQuery("FROM Classifier c WHERE c.id = :id")
+        return (Classifier) em.createNamedQuery("Classifier.findById")
                 .setParameter("id", classifId)
                 .getSingleResult();
     }
