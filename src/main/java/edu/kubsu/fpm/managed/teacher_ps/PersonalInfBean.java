@@ -86,7 +86,18 @@ public class PersonalInfBean {
         dateOfBirth = null;
         GregorianCalendar calendar = new GregorianCalendar();
         calendar.set(2012, 9, 1);
+
         dateOfBirth = calendar.getTime();
+
+        GregorianCalendar curDate = new GregorianCalendar();
+        calendar.setTime(new Date());
+
+        GregorianCalendar age = new GregorianCalendar();
+        calendar.set(18,0,0);
+
+
+
+
 
         
         educations = new ArrayList<Education>();

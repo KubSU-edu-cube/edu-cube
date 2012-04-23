@@ -43,6 +43,8 @@ public class SearchBean {
     private List<City> cities;
     private List<Country> countries;
 
+    private List<Person> foundPersons;
+
     @EJB
     private PersonDAO personDAO;
     @EJB
@@ -55,7 +57,7 @@ public class SearchBean {
     public SearchBean() {
         ageList = new ArrayList<String>();
         initAgeList(0,90);
-
+        shortPersonInfos = new ArrayList<ShortPersonInfo>();
     }
 
     private void initAgeList(int from, int to) {
@@ -66,12 +68,22 @@ public class SearchBean {
     }
 
     public void testShowPerson(){
+        // очищаем список короткой информации о найденных людях
+        clearShortPersonInfosLst();
+        // находим всех людей, соответствующих запросу, заполняем список короткой информации
+        this.shortPersonInfos = findPersons(this.simpleQuery,
+                this.selectedCountry,
+                this.selectedCity,
+                this.selectedFromAge,
+                this.selectedToAge,
+                this.sex);
+
        List<Person> personList = personDAO.findBy2Names("Ирина","Семенова");
        List<PersonalPhoto> smalImgs = new ArrayList<PersonalPhoto>();
 
        Person person = personList.get(0);
 
-       shortPersonInfos = new ArrayList<ShortPersonInfo>();
+
        ShortPersonInfo personInfo = new ShortPersonInfo();
        personInfo.setName(person.getName());
        personInfo.setSurmane(person.getSurname());
@@ -86,6 +98,14 @@ public class SearchBean {
 
 
 
+    }
+
+    private List<ShortPersonInfo> findPersons(String simpleQuery, Country selectedCountry, City selectedCity, String selectedFromAge, String selectedToAge, String sex) {
+        return null;  //To change body of created methods use File | Settings | File Templates.
+    }
+
+    private void clearShortPersonInfosLst() {
+        this.shortPersonInfos.clear();
     }
 
     private int getPersonAge(Date dateOfBirth) {
@@ -196,6 +216,14 @@ public class SearchBean {
     }
     public void testListner(){
         String s = selectedCountry.getName();
+    }
+
+    public List<Person> getFoundPersons() {
+        return foundPersons;
+    }
+
+    public void setFoundPersons(List<Person> foundPersons) {
+        this.foundPersons = foundPersons;
     }
 }
 
