@@ -2,6 +2,7 @@ package edu.kubsu.fpm.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ public class Person implements Serializable {
     private String name;
     private String surname;
     private String patronymic;
-    private String dateOfBirth;
+    private Date dateOfBirth;
     private String sex;
     private String cityOfBirth;
     private String currentCountry;
@@ -33,6 +34,11 @@ public class Person implements Serializable {
     private String icq;
     private String webSite;
     private String additionalInformation;
+
+    @Lob
+    private byte[] photo;
+
+
 
     @OneToMany(mappedBy = "person")
     private List<Education> educations;
@@ -76,11 +82,11 @@ public class Person implements Serializable {
         this.patronymic = patronymic;
     }
 
-    public String getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -195,4 +201,13 @@ public class Person implements Serializable {
     public void setMessages(List<Message> messages) {
         this.messages = messages;
     }
+
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
+    }
 }
+

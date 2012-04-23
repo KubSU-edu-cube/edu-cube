@@ -7,6 +7,7 @@
     <ui:define name="page_content">
         Здесь редактируется личная информация учителя
         <h:form id="form">
+
             <p:panel header="Основное" toggleable="false" id="personalInfPanel">
                 <h:panelGrid columns="2" cellpadding="5">
                     <h:outputLabel value="Фамилия" for="surname"/>
@@ -87,19 +88,57 @@
                             <h:outputLabel value="Дата окончания"/>
                             <p:calendar value="#{education.graduateDate}"/>
 
-                            <p:commandLink actionListener="#{personalInfBean.removeEducation}" update="@form">
+                            <p:commandLink actionListener="#{personalInfBean.removeEducation}"
+                                           process="@parent"
+                                           update="@form">
                                 <f:param name="educationToRemove" value="#{education.id}"/>
                                 <h:outputText value="Удалить информацию"/>
                             </p:commandLink>
                         </h:panelGrid>
                     </p:column>
                 </p:dataList>
-                <p:commandButton value="Добавить учебное заведение" icon="ui-icon-plus" actionListener="#{personalInfBean.addEducation}" update="educationList"/>
+                <p:commandButton
+                        value="Добавить учебное заведение"
+                        icon="ui-icon-plus"
+                        actionListener="#{personalInfBean.addEducation}"
+                        process="@parent"
+                        update="educationList"/>
 
             </p:panel>
             <p:panel header="Работа" toggleable="true" id="jobPanel">
+                <p:dataGrid var="job" value="#{personalInfBean.jobs}" columns="1">
+                    <p:column>
+                        <h:panelGrid columns="3">
+                            <h:outputLabel value="Страна" styleClass="labels"/>
+                            <p:selectOneMenu value="#{job.country}">
+
+
+                                <f:selectItem itemLabel="Не выбрано" itemValue="---"/>
+                                <f:selectItems value="#{personalInfBean.countries}" itemLabel="#{country.name}"
+                                               var="country" itemValue="#{country}"/>
+                                <f:param name="selectedCountry" value="#{job.jobId}"/>
+                                <p:ajax event="change" update="@form" listener="#{personalInfBean.changeCityList}" process="@parent"/>
+                            </p:selectOneMenu>
+                            <p:commandLink actionListener="#{personalInfBean.removeJob}" update="@form">
+                                <f:param name="jobToRemove" value="#{job.jobId}"/>
+                                <h:outputText value="Удалить"/>
+                            </p:commandLink>
+                            <p:commandLink actionListener="#{personalInfBean.removeEducation}" update="@form">
+                                <f:param name="educationToRemove" value="#{job.jobId}"/>
+                                <h:outputText value="Удалить информацию"/>
+                            </p:commandLink>
+                            <h:outputLabel value="Город" styleClass="labels"/>
+                            <p:selectOneMenu value="#{job.city}">
+                                <f:selectItem itemLabel="Не выбрано" itemValue="---"/>
+                                <f:selectItems value="#{personalInfBean.cities}" itemLabel="#{city.name}"
+                                               var="city" itemValue="#{city}"/>
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+                    </p:column>
+                </p:dataGrid>
 
             </p:panel>
+            <p:commandButton value="Сохранить изменения" process="@this" actionListener="#{personalInfBean.goToPersonalInfo}"/>
         </h:form>
     </ui:define>
 </ui:composition>

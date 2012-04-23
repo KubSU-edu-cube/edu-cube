@@ -19,7 +19,7 @@ import java.util.List;
 
 @Stateless
 @TransactionManagement(value = TransactionManagementType.CONTAINER)
-public class    DAODepartment {
+public class DepartmentDAO {
     @PersistenceContext(unitName = "sample")
     EntityManager em;
 

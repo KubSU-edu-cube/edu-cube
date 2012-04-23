@@ -1,5 +1,7 @@
 package edu.kubsu.fpm.ejb;
 
+import edu.kubsu.fpm.managed.teacher_ps.classes.PersonalPhoto;
+
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ import java.util.List;
 @Local(DBImageLocal.class)
 public class DBImageBean implements DBImageLocal {
     private List<byte[]> imgList = new ArrayList<byte[]>();
+    private List<PersonalPhoto> smallImgs = new ArrayList<PersonalPhoto>();
 
 
     public List<byte[]> getImgList() {
@@ -26,5 +29,11 @@ public class DBImageBean implements DBImageLocal {
         this.imgList = imgList;
     }
 
+    public List<PersonalPhoto> getSmallImgs() {
+        return smallImgs;
+    }
 
+    public void setSmallImgs(List<PersonalPhoto> smallImgs) {
+        this.smallImgs = smallImgs;
+    }
 }

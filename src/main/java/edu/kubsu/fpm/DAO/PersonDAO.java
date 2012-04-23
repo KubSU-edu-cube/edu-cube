@@ -5,6 +5,7 @@ import edu.kubsu.fpm.entity.Person;
 import javax.ejb.*;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -25,6 +26,14 @@ public class PersonDAO {
 
     public void refresh(Person person){
         em.refresh(person);
+    }
+    public List<Person> findBy2Names(String firstName, String secondName){
+        return (List<Person>)em.createQuery
+                ("from Person p where (p.name = :firstName and p.surname = :secondName) or" +
+                                        " (p.name = :secondName and p.surname = :firstName ) ").
+                setParameter("secondName",secondName).
+                setParameter("firstName",firstName).
+                getResultList();
     }
 
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)

@@ -1,5 +1,7 @@
 package edu.kubsu.fpm.ejb;
 
+import edu.kubsu.fpm.managed.teacher_ps.classes.PersonalPhoto;
+
 import javax.ejb.Local;
 import java.util.List;
 
@@ -17,4 +19,6 @@ public interface DBImageLocal {
      */
     public List<byte[]> getImgList();
     public  void setImgList(List<byte[]> list);
+    public List<PersonalPhoto> getSmallImgs();
+    public  void setSmallImgs(List<PersonalPhoto> list);
 }
