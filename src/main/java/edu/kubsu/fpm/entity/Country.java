@@ -19,7 +19,7 @@ public class Country implements Serializable {
     
     private String name;
 
-    @OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "country", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
      private List<City> cities;
 
     public int getId() {

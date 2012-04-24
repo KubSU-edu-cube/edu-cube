@@ -156,8 +156,8 @@ public class PersonalInfBean {
         Person person1 = new Person();
         person1.setAdditionalInformation("Доктор наук");
         person1.setAdress("ул. Рашпилевская 50, кв. 14");
-        person1.setCityOfBirth("Ижевск");
-        person1.setCurrentCity("Краснодар");
+        person1.setCityOfBirth("Москва");
+        person1.setCurrentCity("Москва");
         person1.setCurrentCountry("Россия");
         person1.setDateOfBirth(InsertDate(21, 05, 1951));
         person1.setHomeTel("254-93-77");
@@ -169,7 +169,7 @@ public class PersonalInfBean {
         person1.setSkype("orf_541");
         person1.setSurname("Семенова");
         person1.setWebSite("");
-        person1.setPhoto(getBytesFromFile("temp_img/gy.png"));
+        person1.setPhoto(getBytesFromFile("temp_img/gy.jpeg"));
 
 
 

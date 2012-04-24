@@ -6,7 +6,7 @@
          version="3.0">
     <context-param>
         <param-name>javax.faces.CONFIG_FILES</param-name>
-        <param-value>faces-config.xml</param-value>
+        <param-value>/faces-config.xml</param-value>
     </context-param>
     <servlet>
         <servlet-name>faces</servlet-name>

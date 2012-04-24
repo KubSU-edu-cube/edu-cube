@@ -1,5 +1,6 @@
 package edu.kubsu.fpm.managed.classes;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -12,11 +13,12 @@ import java.util.GregorianCalendar;
  */
 public class DateConverter {
     public static Date getDate(Date curDate, int age){
-        GregorianCalendar calendar = new GregorianCalendar();
-        calendar.set(age,0,0);
-        Date date = new Date();
-        date.setTime(calendar.getTime().getTime()-curDate.getTime());
-        return date;
+        GregorianCalendar myCalendar = new GregorianCalendar();
+        myCalendar.setTime(curDate);
+        GregorianCalendar myFromDate = new GregorianCalendar();
+        myFromDate.set(myCalendar.get(Calendar.YEAR)-age,myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH));
+        return myFromDate.getTime();
     }
     public static boolean isBetweenAges(Date dOfBirth, int ageFrom, int ageTo){
         return dOfBirth.after(DateConverter.getDate(new Date(),ageTo))&&
@@ -33,5 +35,22 @@ public class DateConverter {
 
     public static Date getMaxDate() {
         return new Date();
+    }
+
+    public static int getAgeByDofBirth(Date dateOfBirth) {
+        GregorianCalendar calendarDoB = new GregorianCalendar();
+        calendarDoB.setTime(dateOfBirth);
+        GregorianCalendar calendarToday = new GregorianCalendar();
+        calendarToday.setTime(new Date());
+
+        int age = calendarToday.get(Calendar.YEAR)-calendarDoB.get(Calendar.YEAR);
+        if (calendarToday.get(Calendar.MONTH)<calendarDoB.get(Calendar.MONTH)){
+            age = age-1;
+        }
+        if (calendarToday.get(Calendar.MONTH) == calendarDoB.get(Calendar.MONTH)&&
+            calendarToday.get(Calendar.DAY_OF_MONTH) < calendarDoB.get(Calendar.DAY_OF_MONTH)){
+            age = age-1;
+        }
+        return age;
     }
 }

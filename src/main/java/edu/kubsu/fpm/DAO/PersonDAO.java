@@ -47,7 +47,7 @@ public class PersonDAO {
 
         String cityParam = (city == null ? "%":city);
         String countryParam = (country == null ? "%" :country);
-        String sexParam = (sex.toUpperCase() == "любой".toUpperCase() || sex==null ? "%":sex);
+        String sexParam = (sex.toUpperCase().equals("любой".toUpperCase())? "%":sex);
         Date dateFromParam = (fromAge == 0 ? DateConverter.getMinDate():DateConverter.getDate(DateConverter.getCurDate(),fromAge));
         Date dateToParam = (toAge == 0 ? DateConverter.getMaxDate():DateConverter.getDate(DateConverter.getCurDate(),toAge));
 
@@ -62,7 +62,7 @@ public class PersonDAO {
                 "and " +
                 "upper(p.sex) like upper(:sexParam) " +
                 "and " +
-                " p.dateOfBirth between :dateFromParam and :dateToParam").
+                " p.dateOfBirth between :dateToParam and :dateFromParam").
                 setParameter("firstName",firstName).
                 setParameter("secondName", secondName).
                 setParameter("cityParam", cityParam).

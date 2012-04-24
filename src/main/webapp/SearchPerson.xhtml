@@ -10,7 +10,7 @@
             <div>
                 <h:panelGrid columns="2">
                     <p:inputText value="#{searchBean.simpleQuery}"/>
-                    <p:commandButton value="Поикс" actionListener="#{searchBean.testShowPerson}" process="@this"/>
+                    <p:commandButton value="Поикс" actionListener="#{searchBean.search}" process="@this" update="@form"/>
                 </h:panelGrid>
             </div>
             <div>
@@ -52,11 +52,19 @@
                         </p:selectOneMenu>
                         <h:outputLabel value="Возраст"/>
                         <h:panelGrid columns="2">
-                            <p:selectOneMenu>
-
+                            <p:selectOneMenu value="#{searchBean.selectedFromAge}">
+                                <f:selectItem itemValue="от" itemLabel="от"/>
+                                <f:selectItems value="#{searchBean.ageList}"
+                                               itemLabel="#{age}"
+                                               var="age"
+                                               itemValue="#{age}"/>
                             </p:selectOneMenu>
-                            <p:selectOneMenu>
-
+                            <p:selectOneMenu value="#{searchBean.selectedToAge}">
+                                <f:selectItem itemValue="до" itemLabel="до"/>
+                                <f:selectItems value="#{searchBean.ageList}"
+                                               itemLabel="#{age}"
+                                               var="age"
+                                               itemValue="#{age}"/>
                             </p:selectOneMenu>
                         </h:panelGrid>
                         <h:outputLabel value="Пол"/>
