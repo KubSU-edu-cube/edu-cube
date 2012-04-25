@@ -31,7 +31,7 @@ public class CourseCreation {
     @EJB
     private PersonDAO personDAO;
 
-    public String createCourse(){
+    public void createCourse(){
         Course course = new Course();
         course.setName(this.courseName);
 
@@ -49,7 +49,6 @@ public class CourseCreation {
 
         course_variationDAO.persist(course_variation);
 
-        return "personal_information";
     }
 
     public String getCourseName() {

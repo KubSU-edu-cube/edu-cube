@@ -10,7 +10,7 @@
             <p:inputTextarea value="#{courseCreation.courseDescription}" label="Описание курса"/>
             <p:inputText value="#{courseCreation.hoursCount}" label="Количество часов"/>
             <p:inputText value="#{courseCreation.level}" label="Уровень"/>
-            <p:commandButton ajax="false" action="#{courseCreation.createCourse}" value="Готово"/>
+            <p:commandButton actionListener="#{courseCreation.createCourse}" value="Готово"/>
         </h:form>
     </ui:define>
 </ui:composition>
