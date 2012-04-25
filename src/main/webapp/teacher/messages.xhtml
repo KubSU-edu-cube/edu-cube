@@ -5,6 +5,7 @@
                 xmlns="http://www.w3.org/1999/xhtml">
     <ui:define name="page_content">
         <h:form id="message_form">
+            <h:outputLabel value="Это страница учителя с идентификатором #{teacherPS.teacherId}"/>
             <p:tabView effect="fade" effectDuration="normal">
                 <p:tab title="Личные">
                     <p:dataList value="#{messageBean.messages}" var="message">

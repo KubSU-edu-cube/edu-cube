@@ -1,10 +1,12 @@
 <ui:composition template="/templates/teacher_ps_template.xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:p="http://primefaces.org/ui"
                 xmlns="http://www.w3.org/1999/xhtml">
     <ui:define name="page_content">
-        Здесь курсы, которые ведет учитель
-
+        <h:form id="message_form">
+            <h:outputLabel value="Курсы Это страница учителя с идентификатором #{teacherPS.teacherId}"/>
+            <p:commandLink value="Создать новый курс" ajax="false" action="course_creation"/>
+        </h:form>
     </ui:define>
 </ui:composition>

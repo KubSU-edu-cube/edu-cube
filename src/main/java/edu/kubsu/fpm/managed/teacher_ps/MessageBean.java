@@ -4,6 +4,7 @@ import edu.kubsu.fpm.entity.Message;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,22 @@ import java.util.List;
 @ManagedBean
 @ViewScoped
 public class MessageBean {
+
+    private String teacherId;
+
+    public MessageBean() {
+        this.setTeacherId((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("teacherId"));
+
+    }
+
+    public String getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(String teacherId) {
+        this.teacherId = teacherId;
+    }
+
     private List<Message> messages = new ArrayList<Message>();
 
 

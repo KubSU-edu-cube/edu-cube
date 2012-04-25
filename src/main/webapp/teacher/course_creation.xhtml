@@ -1,0 +1,16 @@
+<ui:composition template="/templates/teacher_ps_template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="page_content">
+        <h:form>
+            <h:outputLabel value="Создание нового курса Это страница учителя с идентификатором #{teacherPS.teacherId}"/>
+            <p:inputText value="#{courseCreation.courseName}" label="Название курса"/>
+            <p:inputTextarea value="#{courseCreation.courseDescription}" label="Описание курса"/>
+            <p:inputText value="#{courseCreation.hoursCount}" label="Количество часов"/>
+            <p:inputText value="#{courseCreation.level}" label="Уровень"/>
+            <p:commandButton ajax="false" action="#{courseCreation.createCourse}" value="Готово"/>
+        </h:form>
+    </ui:define>
+</ui:composition>

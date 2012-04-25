@@ -49,6 +49,8 @@ public class Person implements Serializable {
     @ManyToMany(mappedBy = "recipients")
     private List<Message> messages;
 
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private List<Course_variation> variationList;
 
     public int getId() {
         return id;
@@ -208,6 +210,14 @@ public class Person implements Serializable {
 
     public void setPhoto(byte[] photo) {
         this.photo = photo;
+    }
+
+    public List<Course_variation> getVariationList() {
+        return variationList;
+    }
+
+    public void setVariationList(List<Course_variation> variationList) {
+        this.variationList = variationList;
     }
 }
 

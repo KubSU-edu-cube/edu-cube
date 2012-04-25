@@ -32,7 +32,8 @@ import java.util.List;
 @RequestScoped
 public class PersonalInfBean {
     private int beanUniqueId = 0;
-    
+
+    private String teacherId;   // кому принадлежит страница
     private String name = "Анна";
     private String surname = "Жуланова";
     private String patronymic = "Павловна";
@@ -71,9 +72,10 @@ public class PersonalInfBean {
 //    ***************************************************************************************************************
     public PersonalInfBean() {
 
+       ///////// чей вообще кабинет?? //////////////////////
+        this.setTeacherId((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("teacherId"));
 
-
-       this.tmpJob = new Job();
+        this.tmpJob = new Job();
         tmpJob.setCountry(null);
         tmpJob.setCity(null);
 
@@ -533,5 +535,15 @@ public class PersonalInfBean {
 
     public void setTmpJob(Job tmpJob) {
         this.tmpJob = tmpJob;
+    }
+
+    public String getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(String teacherId) {
+        this.teacherId = teacherId;
+
+
     }
 }

@@ -44,7 +44,7 @@
                                 #{c.name}
                             </p:column>
 
-                            <p:ajax event="change" listener="#{searchBean.testListner}" update="selectCity" process="@parent"/>
+                            <p:ajax event="change" listener="#{searchBean.testListner}" update="selectCity" process="@form"/>
                         </p:selectOneMenu>
                         <h:outputLabel value="Город"/>
                         <p:selectOneMenu id="selectCity">
