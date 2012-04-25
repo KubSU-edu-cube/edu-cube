@@ -42,6 +42,12 @@ public class InitFactBean {
     @EJB
     private WordsDAO wordsDAO;
 
+    @EJB
+    private AdditionalQuestionDAO additionalQuestionDAO;
+
+    @EJB
+    private GroupsDAO groupsDAO;
+
     public InitFactBean(){
 
     }
@@ -57,6 +63,24 @@ public class InitFactBean {
             e.printStackTrace();
         }
         persistSynAnt();
+        persistAditionalQuestion();
+    }                                                     
+
+    private void persistAditionalQuestion() {     // TODO Проверить!
+        persistAditionalQuestionValue(0, 22, 50, 100, 0);
+        persistAditionalQuestionValue(0, 22, 50, 80, 10);
+        persistAditionalQuestionValue(0, 22, 50, 60, 20);
+        persistAditionalQuestionValue(0, 22, 50, 40, 30);
+        persistAditionalQuestionValue(0, 22, 50, 20, 40);
+    }
+
+    private void persistAditionalQuestionValue(int groupId, int classifValuesId, int percentObligQuest, int percentRightAnsw, int percentAddQuest){
+        AditionalQuestion aditionalQuestion = new AditionalQuestion();
+        aditionalQuestion.setGroupid(groupsDAO.getGroupsById(groupId));
+        aditionalQuestion.setClassifValuesid(classifierValueDAO.getClassifierValueById(classifValuesId));
+        aditionalQuestion.setPercentObligatoryQuestion(percentObligQuest);
+        aditionalQuestion.setPercentAdditionalQuestion(percentAddQuest);
+        aditionalQuestion.setPercentRigthAnswers(percentRightAnsw);
     }
 
     private void persistSynAnt() {
@@ -221,11 +245,11 @@ public class InitFactBean {
         persistValueCollfactClassifvalue(2,2,26);
         persistValueCollfactClassifvalue(3,1,22);
         persistValueCollfactClassifvalue(3,2,26);
-        persistValueCollfactClassifvalue(4,1,19);
+        persistValueCollfactClassifvalue(4,1,22);   // Пока что 22 вместо 19
         persistValueCollfactClassifvalue(4,2,28);
-        persistValueCollfactClassifvalue(5,1,19);
+        persistValueCollfactClassifvalue(5,1,22);   // Пока что 22 вместо 19
         persistValueCollfactClassifvalue(5,2,29);
-        persistValueCollfactClassifvalue(6,1,19);
+        persistValueCollfactClassifvalue(6,1,22);   // Пока что 22 вместо 19
         persistValueCollfactClassifvalue(6,2,32);
     }
 

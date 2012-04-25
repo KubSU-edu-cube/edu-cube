@@ -1,24 +1,30 @@
 package edu.kubsu.fpm.managed.adaptiveTesting;
 
+import edu.kubsu.fpm.DAO.FactDAO;
+import edu.kubsu.fpm.DAO.SynAntDAO;
+import edu.kubsu.fpm.DAO.WordsDAO;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.persistence.EntityManager;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.*;
+import java.sql.Blob;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Created by IntelliJ IDEA.
@@ -29,6 +35,7 @@ import java.util.logging.Logger;
  */
 
 // TODO:
+//    1!. Преобразовать все запросы к Persistence модели.
 //        1.    Учесть, что в тексте факта слова могут начинаться как с маленьких, так и с больших букв.
 //        3.    Дописать алгоритм генерации тестов
 //        3.5.  Предусмотреть, чтобы тестовые задания не повторялись.
@@ -56,12 +63,22 @@ public class TaskBean {
     private int typeQuestion = 0;       //  Тип генерируемого вопроса
     private int idGroup;                //  id текущей группы
     private int idCourse;               //  id текущего курса
+    private EntityManager entityManager;
+
+    @EJB
+    private FactDAO factDAO;
+
+    @EJB
+    private WordsDAO wordsDAO;
+    
+    @EJB
+    private SynAntDAO synAntDAO;
 
 //    Конструктор класса
     public TaskBean(){
-        idFactList = new ArrayList<Integer>();  //  По-идее их нужно получать из класса генерции лекции
-        idObligitaryFactList = new ArrayList<Integer>();
-        wasAsked = new ArrayList<Boolean>();
+        idFactList = new ArrayList<>();  //  По-идее их нужно получать из класса генерции лекции
+        idObligitaryFactList = new ArrayList<>();
+        wasAsked = new ArrayList<>();
         idFactList.add(2);  //  Но мы пока что будем извращаться
         idFactList.add(5);
         idFactList.add(1);
@@ -70,22 +87,18 @@ public class TaskBean {
         idFactList.add(4);
         idCourse = 1;
         idGroup = 1;
+        List<Integer> obligitaryFactList;
 //        Теперь вообще хотелось бы знать число обязательных фактов в лекции
-//        Поскольку персистентность еще не работает, то делаем так
-        try{
-            Connection connection = getConn();
-            for (Integer id : idFactList){
-                PreparedStatement statement = connection.prepareStatement("SELECT OBLIGATORY FROM APP.FACT WHERE ID = " + id);
-                ResultSet resultSet = statement.executeQuery();
-                if ((resultSet.next())&&(resultSet.getInt("OBLIGATORY") == 1))
+        for (Integer id : idFactList){
+            obligitaryFactList = factDAO.getObligitaryFactById(id);
+            for(Integer obligatory: obligitaryFactList){
+                if (obligatory == 1)
                     idObligitaryFactList.add(id);   //  Добавляем id обязательного факта
             }
-            connection.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(TaskBean.class.getName()).log(Level.SEVERE, null, ex);
         }
+
 //        Число обязательных фактов, на основе которых будут заданы вопросы
-        countAnswer = idObligitaryFactList.size()/5;
+        countAnswer = idObligitaryFactList.size()/5; // TODO учесть, что процент обязат. вопросов настравиается.
         if (countAnswer == 0)
             countAnswer = 1;
         countQuestion = countAnswer;
@@ -99,71 +112,70 @@ public class TaskBean {
 //    Проверяет текущий ответ студента
     public String checkAnswer(){
         String url = "student_test";
-        if (rightAnswer.equals(studentAnswer)){
-            countRightAnswer++;
-        }
-        else if(typeQuestion == 2){
-            try {
-//                Получаем список синонимов
-                PreparedStatement ps = conn.prepareStatement("select s.IDDEPEND from app.WORDS w right outer join app.syn_ant s on w.id = s.id where w.WORD = '"+ rightAnswer +"' and s.RELATION='SYN'");
-                ResultSet rs = ps.executeQuery();
-                List<String> synonym = new ArrayList<>();
-                while (rs.next()){
-                        ps = conn.prepareStatement("SELECT WORD FROM APP.WORDS WHERE ID =" + rs.getInt(1));
-                        ResultSet resSet = ps.executeQuery();
-                        if (resSet.next())
-                            synonym.add(resSet.getString("WORD"));
-                 }
-                for (String aSynonym : synonym)
-                    if (aSynonym.equals(studentAnswer))
-                        countRightAnswer += 0.5;
-            } catch (SQLException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            }
-        }
-//        Если заданы все вопросы
-        if ((countQuestion == 1)&&(!isOblig))
-            url = "student_mark";
-//         Если у нас закончились обязательные вопросы
-        if ((countQuestion == 0)&&(!isOblig)){
-          double percent = countRightAnswer*100/countAnswer;      //  Процент доп. вопросов
-    //        Когда закончились обязательные вопросы, достаем из базы чисо доп. вопросов
-//            Получаем число доп. вопросов
-            countQuestion = getAmountAddQuest(percent);
-            countAnswer += countQuestion;
-        }
+//        if (rightAnswer.equals(studentAnswer)){
+//            countRightAnswer++;
+//        }
+//        else if(typeQuestion == 2){
+////                Получаем список синонимов
+//            int synAntId = synAntDAO.getSynAntById();
+//            Words words = new Words();
+//            List<SynAnt> synAntList = words.getSynAntList();
+//            for (SynAnt synAnt: synAntList){
+//
+//            }
+//            // select s.relation from Words w, SynAnt s Where w.id = s.id and w.word = :word and s.relation = :relation
+//            List<Integer> idDependList = wordsDAO.getIdDependByWordAndRelation(rightAnswer, "SYN");
+//            List<String> synonym = new ArrayList<>();
+//            for (Integer idDepend: idDependList){
+//                    Words words = wordsDAO.getWordsById(idDepend);
+//                    synonym.add(words.getWord());
+//            }
+//            for (String aSynonym : synonym)
+//                if (aSynonym.equals(studentAnswer))
+//                    countRightAnswer += 0.5;
+//        }
+////        Если заданы все вопросы
+//        if ((countQuestion == 1)&&(!isOblig))
+//            url = "student_mark";
+////         Если у нас закончились обязательные вопросы
+//        if ((countQuestion == 0)&&(!isOblig)){
+//          double percent = countRightAnswer*100/countAnswer;      // TODO Учесть, что процент доп. вопросов настраивается.
+//    //        Когда закончились обязательные вопросы, достаем из базы чисо доп. вопросов
+////            Получаем число доп. вопросов
+////            countQuestion = getAmountAddQuest(percent);
+//            countAnswer += countQuestion;
+//        }
         return url;
     }
 
     //      Возвращает число доплнительных вопросов из базы
-    private int getAmountAddQuest(double percent) {
-        int k = 0;
-        Connection connection = getConn();
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement("select percent_rightansers from app.aditional_question where classif_valuesid = " + idCourse);
-            ResultSet resultSet = preparedStatement.executeQuery();
-//              Находим самое ближайшее к текущему значение процентов в базе
-            double min = percent;
-            double p = percent;
-            while (resultSet.next()){
-                if (abs(resultSet.getDouble("percent_rightansers") - percent) < min){
-                    min = abs(resultSet.getDouble("percent_rightansers") - percent);
-                    p = resultSet.getDouble("percent_rightansers");
-                }
-            }
-            preparedStatement = connection.prepareStatement("select quest_amount from app.aditional_question where classif_valuesid = " + idCourse +
-                    " and percent_rightansers = " + p);
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next())
-                k = resultSet.getInt("quest_amount");
-        } catch (SQLException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        int amountRemainQuestion = idFactList.size() - countAnswer;
-        if (k > amountRemainQuestion)
-            k = amountRemainQuestion;
-        return k;
-    }
+//    private int getAmountAddQuest(double percent) {   // TODO Должно быть такое понятие, как значение процентов по-умолчанию.
+//        int k = 0;
+//        try {
+//            PreparedStatement preparedStatement = connection.prepareStatement("select percent_rightansers from app.aditional_question where classif_valuesid = " + idCourse);
+//            ResultSet resultSet = preparedStatement.executeQuery();
+////              Находим самое ближайшее к текущему значение процентов в базе
+//            double min = percent;
+//            double p = percent;
+//            while (resultSet.next()){
+//                if (abs(resultSet.getDouble("percent_rightansers") - percent) < min){
+//                    min = abs(resultSet.getDouble("percent_rightansers") - percent);
+//                    p = resultSet.getDouble("percent_rightansers");
+//                }
+//            }
+//            preparedStatement = connection.prepareStatement("select quest_amount from app.aditional_question where classif_valuesid = " + idCourse +
+//                    " and percent_rightansers = " + p);
+//            resultSet = preparedStatement.executeQuery();
+//            if (resultSet.next())
+//                k = resultSet.getInt("quest_amount");
+//        } catch (SQLException e) {
+//            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+//        }
+//        int amountRemainQuestion = idFactList.size() - countAnswer;
+//        if (k > amountRemainQuestion)
+//            k = amountRemainQuestion;
+//        return k;
+//    }
 
       private double abs(double z){
         if (z < 0.0)
@@ -221,98 +233,98 @@ public class TaskBean {
 //    Должен сохранять правильный ответ на сгенерированный вопрос
     private String generateQuestion(int id){
         String quest = "";
-        Connection conn = getConn();
-            try{
-                PreparedStatement statement = conn.prepareStatement("SELECT CONTENT, CONTENT_TYPE FROM APP.FACT WHERE ID =" + id);
-                ResultSet resultSet = statement.executeQuery();
-//                Получаем содержимое факта
-                if (resultSet.next()){
-                    String content = resultSet.getString("CONTENT_TYPE");
-//                    Если это текст
-                    switch (content) {
-                        case "text":
-                            String factText = getContentFact(resultSet);
-//                        Сгенерировать из полученного текста вопрос и запомнить правильный ответ
-//                        В произвольном порядке выбираем тип вопроса
-                            Random r = new Random();
-                            typeQuestion = r.nextInt(2) + 1;
-                            switch (typeQuestion) {
-                                case 1: {    //  Генерируем вопрос с вариантом выбора
-                                    String[] words = factText.split(" ");  //  Получаем массив слов, состовляющих текст факта, чтобы выбрать одно из них случайно
-                                    ResultSet rs;
-                                    PreparedStatement ps;
-                                    int countAnt = 0;       //  Число антонимов
-                                    boolean f = true;
-                                    int i = 0;      //  Номер выбранного слова
-                                    do {
-                                        i = r.nextInt(words.length);
-                                        //                                Получаем все антонимы от выбранного слова
-                                        ps = conn.prepareStatement("select s.IDDEPEND from app.WORDS w right outer join app.syn_ant s on w.id = s.id where w.WORD = '" + words[i] + "' and s.RELATION='ANT'");
-                                        rs = ps.executeQuery();        //      Получили id-шники антонимов данного слова
-                                        if (rs.next()) {
-                                            f = false;      //  Значит мы все нашли: слово и его антонимы
-                                        }
-                                    } while (f);
-//                                Получаем список антонимов
-                                    List<String> antonym = new ArrayList<>();
-                                    do {
-                                        ps = conn.prepareStatement("SELECT WORD FROM APP.WORDS WHERE ID =" + rs.getInt(1));
-                                        ResultSet resSet = ps.executeQuery();
-                                        if (resSet.next())
-                                            antonym.add(resSet.getString("WORD"));
-                                        countAnt++;
-                                    } while (rs.next());
-                                    Integer numberRightAnswer;      //  Номер по порядку, кот. будет выводится правильный ответ
-                                    if (countAnt > 4)
-                                        countAnt = 4;   //  По-хорошему их надо выбирать рэндомом, чтобы генерировать вопросы на основе различных антонимов
-                                    numberRightAnswer = r.nextInt(countAnt) + 1;
-                                    rightAnswer = numberRightAnswer.toString();
-                                    quest = "Выберете правильный вариант из предложенных. В качестве ответа введите номер этого варианта \n";
-                                    String[] wrongFact;
-                                    for (Integer j = 1; j < numberRightAnswer; j++) {
-                                        wrongFact = words;
-                                        wrongFact[i] = antonym.get(j - 1);
-                                        quest += j.toString() + ". " + getStringFromArray(wrongFact) + "; \n";
-                                    }
-                                    quest += numberRightAnswer.toString() + ". " + getStringFromArray(words) + "; \n";
-                                    for (Integer j = numberRightAnswer + 1; j <= countAnt + 1; j++) {
-                                        wrongFact = words;
-                                        wrongFact[i] = antonym.get(j - 2);
-                                        quest += j.toString() + ". " + getStringFromArray(wrongFact) + "; \n";
-                                    }
-                                    break;
-                                }
-                                case 2: {     //  Генерируем вопрос с пропущенным словом
-                                    String[] words = factText.split(" ");  //  Получаем массив слов, состовляющих текст факта, чтобы выбрать одно из них случайно
-                                    int i;      //  Номер выбранного слова
-                                    i = r.nextInt(words.length);
-                                    rightAnswer = words[i];
-                                    words[i] = " ... ";
-                                    quest = getStringFromArray(words);
-                                    break;
-                                }
-                                case 3: {     //  Генерируем вопрос с развернутым ответом
-                                    quest = "Вопрос с развернутым ответом";
-                                    rightAnswer = "";
-                                    break;
-                                }
-                            }
-                            break;
-//                    Если это изображение
-                        case "image":
-                            quest = "Это вопрос на основе изображения";
-                            rightAnswer = "";
-                            break;
-//                    Если это формула
-                        case "formula":
-                            quest = "Это вопрос на основе формулы";
-                            rightAnswer = "";
-                            break;
-                    }
-                }
-            } catch (SQLException ex) {
-            Logger.getLogger(TaskBean.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//        Connection conn = getConn();
+//            try{
+//                PreparedStatement statement = conn.prepareStatement("SELECT CONTENT, CONTENT_TYPE FROM APP.FACT WHERE ID =" + id);
+//                ResultSet resultSet = statement.executeQuery();
+////                Получаем содержимое факта
+//                if (resultSet.next()){
+//                    String content = resultSet.getString("CONTENT_TYPE");
+////                    Если это текст
+//                    switch (content) {
+//                        case "text":
+//                            String factText = getContentFact(resultSet);
+////                        Сгенерировать из полученного текста вопрос и запомнить правильный ответ
+////                        В произвольном порядке выбираем тип вопроса
+//                            Random r = new Random();
+//                            typeQuestion = r.nextInt(2) + 1;
+//                            switch (typeQuestion) {
+//                                case 1: {    //  Генерируем вопрос с вариантом выбора
+//                                    String[] words = factText.split(" ");  //  Получаем массив слов, состовляющих текст факта, чтобы выбрать одно из них случайно
+//                                    ResultSet rs;
+//                                    PreparedStatement ps;
+//                                    int countAnt = 0;       //  Число антонимов
+//                                    boolean f = true;
+//                                    int i = 0;      //  Номер выбранного слова
+//                                    do {
+//                                        i = r.nextInt(words.length);
+//                                        //                                Получаем все антонимы от выбранного слова
+//                                        ps = conn.prepareStatement("select s.IDDEPEND from app.WORDS w right outer join app.syn_ant s on w.id = s.id where w.WORD = '" + words[i] + "' and s.RELATION='ANT'");
+//                                        rs = ps.executeQuery();        //      Получили id-шники антонимов данного слова
+//                                        if (rs.next()) {
+//                                            f = false;      //  Значит мы все нашли: слово и его антонимы
+//                                        }
+//                                    } while (f);
+////                                Получаем список антонимов
+//                                    List<String> antonym = new ArrayList<>();
+//                                    do {
+//                                        ps = conn.prepareStatement("SELECT WORD FROM APP.WORDS WHERE ID =" + rs.getInt(1));
+//                                        ResultSet resSet = ps.executeQuery();
+//                                        if (resSet.next())
+//                                            antonym.add(resSet.getString("WORD"));
+//                                        countAnt++;
+//                                    } while (rs.next());
+//                                    Integer numberRightAnswer;      //  Номер по порядку, кот. будет выводится правильный ответ
+//                                    if (countAnt > 4)
+//                                        countAnt = 4;   //  По-хорошему их надо выбирать рэндомом, чтобы генерировать вопросы на основе различных антонимов
+//                                    numberRightAnswer = r.nextInt(countAnt) + 1;
+//                                    rightAnswer = numberRightAnswer.toString();
+//                                    quest = "Выберете правильный вариант из предложенных. В качестве ответа введите номер этого варианта \n";
+//                                    String[] wrongFact;
+//                                    for (Integer j = 1; j < numberRightAnswer; j++) {
+//                                        wrongFact = words;
+//                                        wrongFact[i] = antonym.get(j - 1);
+//                                        quest += j.toString() + ". " + getStringFromArray(wrongFact) + "; \n";
+//                                    }
+//                                    quest += numberRightAnswer.toString() + ". " + getStringFromArray(words) + "; \n";
+//                                    for (Integer j = numberRightAnswer + 1; j <= countAnt + 1; j++) {
+//                                        wrongFact = words;
+//                                        wrongFact[i] = antonym.get(j - 2);
+//                                        quest += j.toString() + ". " + getStringFromArray(wrongFact) + "; \n";
+//                                    }
+//                                    break;
+//                                }
+//                                case 2: {     //  Генерируем вопрос с пропущенным словом
+//                                    String[] words = factText.split(" ");  //  Получаем массив слов, состовляющих текст факта, чтобы выбрать одно из них случайно
+//                                    int i;      //  Номер выбранного слова
+//                                    i = r.nextInt(words.length);
+//                                    rightAnswer = words[i];
+//                                    words[i] = " ... ";
+//                                    quest = getStringFromArray(words);
+//                                    break;
+//                                }
+//                                case 3: {     //  Генерируем вопрос с развернутым ответом
+//                                    quest = "Вопрос с развернутым ответом";
+//                                    rightAnswer = "";
+//                                    break;
+//                                }
+//                            }
+//                            break;
+////                    Если это изображение
+//                        case "image":
+//                            quest = "Это вопрос на основе изображения";
+//                            rightAnswer = "";
+//                            break;
+////                    Если это формула
+//                        case "formula":
+//                            quest = "Это вопрос на основе формулы";
+//                            rightAnswer = "";
+//                            break;
+//                    }
+//                }
+//            } catch (SQLException ex) {
+//            Logger.getLogger(TaskBean.class.getName()).log(Level.SEVERE, null, ex);
+//            }
         return quest;
     }
 
@@ -352,17 +364,6 @@ public class TaskBean {
                             txt += child.getFirstChild().getNodeValue();  //  Получаем листы - текст факта
                         }
         return txt;
-    }
-
-    public Connection getConn() {
-
-        try{
-             Class.forName("org.apache.derby.jdbc.ClientDriver");
-             conn = DriverManager.getConnection("jdbc:derby://localhost:1527/FactsStore", "admin", "admin");
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(TaskBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return conn;
     }
 
     public void setCurrentQuestion(String currentQuestion) {

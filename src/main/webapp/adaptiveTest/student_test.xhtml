@@ -8,7 +8,14 @@
         <ui:define name="page_content">
            <h:form>
                <!-- TODO Не факт, что отобразятся картинки. Нужно придумать что-то другое -->
-
+               <h:outputText value="#{taskBean.currentQuestion}"/> <br />
+               <h:inputTextarea cols="100" rows="7" value="#{taskBean.studentAnswer}"/> <br />
+               <h:panelGroup>
+                   <h:commandButton value="Дальше" action="#{taskBean.checkAnswer}" />
+                   <h:commandButton value="Выйти" action="stud_home.jsf"/>
+                   <!-- По-хорошему нужно запоминать результат даже при выходе и предлагать студенту в следующий раз продолжить тест-->
+                   <!-- Или предлагать запомнить/не запомнить, и в соответствии от этого потом плясать-->
+               </h:panelGroup>
            </h:form>
         </ui:define>
 

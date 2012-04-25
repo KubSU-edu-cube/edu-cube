@@ -1,6 +1,6 @@
 package edu.kubsu.fpm.DAO;
 
-import edu.kubsu.fpm.model.SynAnt;
+import edu.kubsu.fpm.model.Groups;
 
 import javax.ejb.*;
 import javax.persistence.EntityManager;
@@ -8,23 +8,23 @@ import javax.persistence.PersistenceContext;
 
 /**
  * User: Marina
- * Date: 19.04.12
- * Time: 21:26
+ * Date: 24.04.12
+ * Time: 13:30
  */
 @Stateless
 @TransactionManagement(value = TransactionManagementType.CONTAINER)
-public class SynAntDAO {
+public class GroupsDAO {
     @PersistenceContext(unitName = "sample")
     EntityManager em;
 
-    public SynAnt getSynAntById(Integer id) {
-        return (SynAnt) em.createNamedQuery("SynAnt.findById")
+    public Groups getGroupsById(Integer id){
+        return (Groups) em.createNamedQuery("Groups.findById")
                 .setParameter("id", id)
                 .getSingleResult();
     }
 
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
-    public void persist(SynAnt synAnt){
-        em.persist(synAnt);
+    public void persist(Groups groups){
+        em.persist(groups);
     }
 }

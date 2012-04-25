@@ -1,6 +1,6 @@
 package edu.kubsu.fpm.DAO;
 
-import edu.kubsu.fpm.model.SynAnt;
+import edu.kubsu.fpm.model.AditionalQuestion;
 
 import javax.ejb.*;
 import javax.persistence.EntityManager;
@@ -8,23 +8,19 @@ import javax.persistence.PersistenceContext;
 
 /**
  * User: Marina
- * Date: 19.04.12
- * Time: 21:26
+ * Date: 24.04.12
+ * Time: 12:29
  */
 @Stateless
 @TransactionManagement(value = TransactionManagementType.CONTAINER)
-public class SynAntDAO {
+public class AdditionalQuestionDAO {
     @PersistenceContext(unitName = "sample")
     EntityManager em;
 
-    public SynAnt getSynAntById(Integer id) {
-        return (SynAnt) em.createNamedQuery("SynAnt.findById")
-                .setParameter("id", id)
-                .getSingleResult();
-    }
+//    public  getAditionalQuestion
 
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
-    public void persist(SynAnt synAnt){
-        em.persist(synAnt);
+    public void persist(AditionalQuestion aditionalQuestion){
+        em.persist(aditionalQuestion);
     }
 }

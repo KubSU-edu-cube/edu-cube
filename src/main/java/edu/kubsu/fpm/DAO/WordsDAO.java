@@ -16,6 +16,12 @@ import javax.persistence.PersistenceContext;
 public class WordsDAO {
     @PersistenceContext(unitName = "sample")
     EntityManager em;
+    
+    public Words getWordsById(Integer id){
+        return (Words) em.createNamedQuery("Words.findById")
+                .setParameter("id", id)
+                .getSingleResult();
+    }
 
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
     public void persist(Words words){

@@ -7,6 +7,7 @@ package edu.kubsu.fpm.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 /**
  *
@@ -27,9 +28,9 @@ public class Words implements Serializable {
     @Column(name = "WORD")
     private String word;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "words")
-    private Collection<SynAnt> synAntCollection;
+    private List<SynAnt> synAntList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "words1")
-    private Collection<SynAnt> synAntCollection1;
+    private List<SynAnt> synAntCollection1;
 
     public Words() {
     }
@@ -59,19 +60,19 @@ public class Words implements Serializable {
         this.word = word;
     }
 
-    public Collection<SynAnt> getSynAntCollection() {
-        return synAntCollection;
+    public List<SynAnt> getSynAntList() {
+        return synAntList;
     }
 
-    public void setSynAntCollection(Collection<SynAnt> synAntCollection) {
-        this.synAntCollection = synAntCollection;
+    public void setSynAntList(List<SynAnt> synAntCollection) {
+        this.synAntList = synAntCollection;
     }
 
     public Collection<SynAnt> getSynAntCollection1() {
         return synAntCollection1;
     }
 
-    public void setSynAntCollection1(Collection<SynAnt> synAntCollection1) {
+    public void setSynAntCollection1(List<SynAnt> synAntCollection1) {
         this.synAntCollection1 = synAntCollection1;
     }
 

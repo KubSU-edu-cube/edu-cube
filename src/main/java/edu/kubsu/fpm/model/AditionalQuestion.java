@@ -5,18 +5,8 @@
 
 package edu.kubsu.fpm.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
 
 /**
  *
@@ -26,18 +16,19 @@ import javax.persistence.Table;
 @Table(name = "ADITIONAL_QUESTION")
 @NamedQueries({
     @NamedQuery(name = "AditionalQuestion.findAll", query = "SELECT a FROM AditionalQuestion a"),
-    @NamedQuery(name = "AditionalQuestion.findById", query = "SELECT a FROM AditionalQuestion a WHERE a.id = :id"),
-    @NamedQuery(name = "AditionalQuestion.findByQuestAmount", query = "SELECT a FROM AditionalQuestion a WHERE a.questAmount = :questAmount")})
+    @NamedQuery(name = "AditionalQuestion.findById", query = "SELECT a FROM AditionalQuestion a WHERE a.id = :id")})
 public class AditionalQuestion implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "ID", nullable = false)
     private Integer id;
-    @Basic(optional = false)
-    @Column(name = "QUEST_AMOUNT", nullable = false)
-    private int questAmount;
+    @Column(name = "PERCENT_OBLIGATORY_QUESTION", nullable = false)
+    private Integer percentObligatoryQuestion;
+    @Column(name = "PERCENT_ADDITIONAL_QUESTION", nullable = false)
+    private Integer percentAdditionalQuestion;
+    @Column(name = "PERCENT_RIGHT_ANSWERS", nullable = false)
+    private int percentRigthAnswers;
     @JoinColumn(name = "GROUPID", referencedColumnName = "ID", nullable = false)
     @ManyToOne(optional = false)
     private Groups groupid;
@@ -52,9 +43,11 @@ public class AditionalQuestion implements Serializable {
         this.id = id;
     }
 
-    public AditionalQuestion(Integer id, int questAmount) {
+    public AditionalQuestion(Integer id, int percentObligatoryQuestion, int percentAdditionalQuestion, int percentRigthAnswers) {
         this.id = id;
-        this.questAmount = questAmount;
+        this.percentObligatoryQuestion = percentObligatoryQuestion;
+        this.percentAdditionalQuestion = percentAdditionalQuestion;
+        this.percentRigthAnswers = percentRigthAnswers;
     }
 
     public Integer getId() {
@@ -65,12 +58,28 @@ public class AditionalQuestion implements Serializable {
         this.id = id;
     }
 
-    public int getQuestAmount() {
-        return questAmount;
+    public Integer getPercentObligatoryQuestion() {
+        return percentObligatoryQuestion;
     }
 
-    public void setQuestAmount(int questAmount) {
-        this.questAmount = questAmount;
+    public void setPercentObligatoryQuestion(Integer percentObligatoryQuestion) {
+        this.percentObligatoryQuestion = percentObligatoryQuestion;
+    }
+
+    public Integer getPercentAdditionalQuestion() {
+        return percentAdditionalQuestion;
+    }
+
+    public void setPercentAdditionalQuestion(Integer percentAdditionalQuestion) {
+        this.percentAdditionalQuestion = percentAdditionalQuestion;
+    }
+
+    public int getPercentRigthAnswers() {
+        return percentRigthAnswers;
+    }
+
+    public void setPercentRigthAnswers(int percentRigthAnswers) {
+        this.percentRigthAnswers = percentRigthAnswers;
     }
 
     public Groups getGroupid() {

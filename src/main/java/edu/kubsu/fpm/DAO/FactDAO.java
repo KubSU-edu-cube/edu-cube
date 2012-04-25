@@ -19,8 +19,14 @@ public class FactDAO {
     @PersistenceContext(unitName = "sample")
     EntityManager em;
     
-    private List<Fact> getFactByCollection(FactCollection collection){
+    public List<Fact> getFactByCollection(FactCollection collection){
         return (List<Fact>)em.createQuery("from Fact f where f.collection = collection").getResultList();
+    }
+    
+    public List<Integer> getObligitaryFactById(Integer idFact){
+        return (List<Integer>) em.createQuery("SELECT obligatory FROM Fact WHERE id = :id")
+                .setParameter("id", idFact)
+                .getResultList();
     }
 
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
