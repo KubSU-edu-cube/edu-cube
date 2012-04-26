@@ -23,6 +23,12 @@ public class GroupsDAO {
                 .getSingleResult();
     }
 
+    public Integer getClassiferValuesById(int idGroup){
+        return (Integer) em.createQuery("select classifValuesid from Groups where id = :id")
+                .setParameter("id", idGroup)
+                .getSingleResult();
+    }
+
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
     public void persist(Groups groups){
         em.persist(groups);

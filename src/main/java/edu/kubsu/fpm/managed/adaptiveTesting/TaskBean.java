@@ -1,8 +1,6 @@
 package edu.kubsu.fpm.managed.adaptiveTesting;
 
-import edu.kubsu.fpm.DAO.FactDAO;
-import edu.kubsu.fpm.DAO.SynAntDAO;
-import edu.kubsu.fpm.DAO.WordsDAO;
+import edu.kubsu.fpm.DAO.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -74,31 +72,39 @@ public class TaskBean {
     @EJB
     private SynAntDAO synAntDAO;
 
+    @EJB
+    private AdditionalQuestionDAO additionalQuestionDAO;
+
+    @EJB
+    private GroupsDAO groupsDAO;
+
 //    Конструктор класса
     public TaskBean(){
         idFactList = new ArrayList<>();  //  По-идее их нужно получать из класса генерции лекции
         idObligitaryFactList = new ArrayList<>();
         wasAsked = new ArrayList<>();
         idFactList.add(2);  //  Но мы пока что будем извращаться
-        idFactList.add(5);
-        idFactList.add(1);
         idFactList.add(6);
-        idFactList.add(3);
-        idFactList.add(4);
-        idCourse = 1;
+        idFactList.add(7);
+        idFactList.add(8);
+        idFactList.add(9);
+        idCourse = 1;         // TODO выяснить, нужно ли и сколько нужно, если нужно!
         idGroup = 1;
-        List<Integer> obligitaryFactList;
 //        Теперь вообще хотелось бы знать число обязательных фактов в лекции
         for (Integer id : idFactList){
-            obligitaryFactList = factDAO.getObligitaryFactById(id);
-            for(Integer obligatory: obligitaryFactList){
-                if (obligatory == 1)
-                    idObligitaryFactList.add(id);   //  Добавляем id обязательного факта
-            }
+            int oblig = getObligitaryFactById(id); // factDAO.getObligitaryFactById(id);
+            if (oblig == 1)
+                idObligitaryFactList.add(id);   //  Добавляем id обязательного факта
         }
 
 //        Число обязательных фактов, на основе которых будут заданы вопросы
-        countAnswer = idObligitaryFactList.size()/5; // TODO учесть, что процент обязат. вопросов настравиается.
+        int idClassifValues = groupsDAO.getClassiferValuesById(idGroup);
+        int obligPersent = additionalQuestionDAO.getPercentObligatoryQuestion(idGroup, idClassifValues);
+        if (obligPersent == 0){       // Если в базе ничего не нашли, исп. значение по-умолчанию.
+            obligPersent = 20;        // TODO Проверить.
+        }
+//        Учитываем, что процент обязательных вопросов задается из базы.
+        countAnswer = idObligitaryFactList.size() * obligPersent / 100;
         if (countAnswer == 0)
             countAnswer = 1;
         countQuestion = countAnswer;
@@ -108,8 +114,12 @@ public class TaskBean {
             wasAsked.add(false);
     }
 
+    private int getObligitaryFactById(Integer id) {
+        return 0;
+    }
 
-//    Проверяет текущий ответ студента
+
+    //    Проверяет текущий ответ студента
     public String checkAnswer(){
         String url = "student_test";
 //        if (rightAnswer.equals(studentAnswer)){

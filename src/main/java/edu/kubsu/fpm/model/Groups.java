@@ -31,7 +31,7 @@ public class Groups implements Serializable {
     @ManyToOne(optional = false)
     private ClassifierValue classifValuesid;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "groupid")
-    private Collection<AditionalQuestion> aditionalQuestionCollection;
+    private Collection<AdditionalQuestion> aditionalQuestionCollection;
 
     public Groups() {
     }
@@ -69,11 +69,11 @@ public class Groups implements Serializable {
         this.classifValuesid = classifValuesid;
     }
 
-    public Collection<AditionalQuestion> getAditionalQuestionCollection() {
+    public Collection<AdditionalQuestion> getAditionalQuestionCollection() {
         return aditionalQuestionCollection;
     }
 
-    public void setAditionalQuestionCollection(Collection<AditionalQuestion> aditionalQuestionCollection) {
+    public void setAditionalQuestionCollection(Collection<AdditionalQuestion> aditionalQuestionCollection) {
         this.aditionalQuestionCollection = aditionalQuestionCollection;
     }
 

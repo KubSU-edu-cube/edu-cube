@@ -63,24 +63,24 @@ public class InitFactBean {
             e.printStackTrace();
         }
         persistSynAnt();
-        persistAditionalQuestion();
+        persistAdditionalQuestion();
     }                                                     
 
-    private void persistAditionalQuestion() {     // TODO Проверить!
-        persistAditionalQuestionValue(0, 22, 50, 100, 0);
-        persistAditionalQuestionValue(0, 22, 50, 80, 10);
-        persistAditionalQuestionValue(0, 22, 50, 60, 20);
-        persistAditionalQuestionValue(0, 22, 50, 40, 30);
-        persistAditionalQuestionValue(0, 22, 50, 20, 40);
+    private void persistAdditionalQuestion() {     // TODO Проверить!
+        persistAdditionalQuestionValue(1, 22, 50, 100, 0);
+        persistAdditionalQuestionValue(1, 22, 50, 80, 10);
+        persistAdditionalQuestionValue(1, 22, 50, 60, 20);
+        persistAdditionalQuestionValue(1, 22, 50, 40, 30);
+        persistAdditionalQuestionValue(1, 22, 50, 20, 40);
     }
 
-    private void persistAditionalQuestionValue(int groupId, int classifValuesId, int percentObligQuest, int percentRightAnsw, int percentAddQuest){
-        AditionalQuestion aditionalQuestion = new AditionalQuestion();
-        aditionalQuestion.setGroupid(groupsDAO.getGroupsById(groupId));
-        aditionalQuestion.setClassifValuesid(classifierValueDAO.getClassifierValueById(classifValuesId));
-        aditionalQuestion.setPercentObligatoryQuestion(percentObligQuest);
-        aditionalQuestion.setPercentAdditionalQuestion(percentAddQuest);
-        aditionalQuestion.setPercentRigthAnswers(percentRightAnsw);
+    private void persistAdditionalQuestionValue(int groupId, int classifValuesId, int percentObligQuest, int percentRightAnsw, int percentAddQuest){
+        AdditionalQuestion additionalQuestion = new AdditionalQuestion();
+        additionalQuestion.setGroupid(groupsDAO.getGroupsById(groupId));
+        additionalQuestion.setClassifValuesid(classifierValueDAO.getClassifierValueById(classifValuesId));
+        additionalQuestion.setPercentObligatoryQuestion(percentObligQuest);
+        additionalQuestion.setPercentAdditionalQuestion(percentAddQuest);
+        additionalQuestion.setPercentRigthAnswers(percentRightAnsw);
     }
 
     private void persistSynAnt() {
@@ -197,23 +197,24 @@ public class InitFactBean {
     }
 
     private void persistFact() throws FileNotFoundException {
-        persistFactValue(1, "text", "temp_facts/fact_1.xml", "легкая");
-        persistFactValue(1, "text", "temp_facts/fact_2.xml", "средняя");
-        persistFactValue(2, "text", "temp_facts/fact_3.xml", "легкая");
-        persistFactValue(2, "text", "temp_facts/fact_4.xml", "средняя");
-        persistFactValue(3, "text", "temp_facts/fact_5.xml", "легкая");
-        persistFactValue(3, "text", "temp_facts/fact_6.xml", "средняя");
-        persistFactValue(4, "text", "temp_facts/fact_7.xml", "легкая");
-        persistFactValue(5, "text", "temp_facts/fact_8.xml", "легкая");
-        persistFactValue(6, "text", "temp_facts/fact_8.xml", "легкая");
+        persistFactValue(1, "text", "temp_facts/fact_1.xml", "легкая", 1);
+        persistFactValue(1, "text", "temp_facts/fact_2.xml", "средняя", 1);
+        persistFactValue(2, "text", "temp_facts/fact_3.xml", "легкая", 1);
+        persistFactValue(2, "text", "temp_facts/fact_4.xml", "средняя", 1);
+        persistFactValue(3, "text", "temp_facts/fact_5.xml", "легкая", 0);
+        persistFactValue(3, "text", "temp_facts/fact_6.xml", "средняя", 0);
+        persistFactValue(4, "text", "temp_facts/fact_7.xml", "легкая", 1);
+        persistFactValue(5, "text", "temp_facts/fact_8.xml", "легкая", 0);
+        persistFactValue(6, "text", "temp_facts/fact_9.xml", "легкая", 0);
     }
 
-    private void persistFactValue(Integer collId, String contentType, String fNname, String difficulty) {
+    private void persistFactValue(Integer collId, String contentType, String fNname, String difficulty, int obligatory) {
         Fact fact = new Fact();
         fact.setCollection(factCollectionDAO.getCollectionById(collId));
         fact.setContentType(contentType);
         fact.setContent(getBytesFromTextFile(fNname));
         fact.setDifficultie(difficulty);
+        fact.setObligatory(obligatory);
         factDAO.persist(fact);
     }
 

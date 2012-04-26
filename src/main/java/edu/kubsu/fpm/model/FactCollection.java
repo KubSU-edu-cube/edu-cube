@@ -5,22 +5,10 @@
 
 package edu.kubsu.fpm.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import java.util.List;
 
 /**
  *
@@ -52,7 +40,7 @@ public class FactCollection implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "factCollection")
     private Collection<CollfactClassifvalue> collfactClassifvalueCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "collection")
-    private Collection<Fact> factCollection;
+    private List<Fact> listFact;
 
     public FactCollection() {
     }
@@ -113,12 +101,12 @@ public class FactCollection implements Serializable {
         this.collfactClassifvalueCollection = collfactClassifvalueCollection;
     }
 
-    public Collection<Fact> getFactCollection() {
-        return factCollection;
+    public List<Fact> getFactList() {
+        return listFact;
     }
 
-    public void setFactCollection(Collection<Fact> factCollection) {
-        this.factCollection = factCollection;
+    public void setFactList(List<Fact> factList) {
+        this.listFact = factList;
     }
 
     @Override

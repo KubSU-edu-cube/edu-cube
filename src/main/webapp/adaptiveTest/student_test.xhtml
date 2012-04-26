@@ -1,7 +1,6 @@
 <ui:composition template="/templates/test_template.xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:p="http://primefaces.org/ui"
                 xmlns="http://www.w3.org/1999/xhtml">
 
 
@@ -12,7 +11,7 @@
                <h:inputTextarea cols="100" rows="7" value="#{taskBean.studentAnswer}"/> <br />
                <h:panelGroup>
                    <h:commandButton value="Дальше" action="#{taskBean.checkAnswer}" />
-                   <h:commandButton value="Выйти" action="stud_home.jsf"/>
+                   <h:commandButton value="Выйти" action="index"/>
                    <!-- По-хорошему нужно запоминать результат даже при выходе и предлагать студенту в следующий раз продолжить тест-->
                    <!-- Или предлагать запомнить/не запомнить, и в соответствии от этого потом плясать-->
                </h:panelGroup>

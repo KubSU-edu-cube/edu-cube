@@ -1,12 +1,10 @@
 package edu.kubsu.fpm.DAO;
 
 import edu.kubsu.fpm.model.Fact;
-import edu.kubsu.fpm.model.FactCollection;
 
 import javax.ejb.*;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.List;
 
 /**
  * User: Marina
@@ -19,14 +17,10 @@ public class FactDAO {
     @PersistenceContext(unitName = "sample")
     EntityManager em;
     
-    public List<Fact> getFactByCollection(FactCollection collection){
-        return (List<Fact>)em.createQuery("from Fact f where f.collection = collection").getResultList();
-    }
-    
-    public List<Integer> getObligitaryFactById(Integer idFact){
-        return (List<Integer>) em.createQuery("SELECT obligatory FROM Fact WHERE id = :id")
+    public Integer getObligitaryFactById(Integer idFact){
+        return (Integer) em.createQuery("SELECT obligatory FROM Fact WHERE id = :id")
                 .setParameter("id", idFact)
-                .getResultList();
+                .getSingleResult();
     }
 
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)

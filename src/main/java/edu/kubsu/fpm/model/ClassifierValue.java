@@ -40,7 +40,7 @@ public class ClassifierValue implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "classifValuesid")
     private Collection<Groups> groupsCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "classifValuesid")
-    private Collection<AditionalQuestion> aditionalQuestionCollection;
+    private Collection<AdditionalQuestion> aditionalQuestionCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "classifierValue")
     private Collection<CollfactClassifvalue> collfactClassifvalueCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "classifValuesid")
@@ -109,11 +109,11 @@ public class ClassifierValue implements Serializable {
         this.groupsCollection = groupsCollection;
     }
 
-    public Collection<AditionalQuestion> getAditionalQuestionCollection() {
+    public Collection<AdditionalQuestion> getAditionalQuestionCollection() {
         return aditionalQuestionCollection;
     }
 
-    public void setAditionalQuestionCollection(Collection<AditionalQuestion> aditionalQuestionCollection) {
+    public void setAditionalQuestionCollection(Collection<AdditionalQuestion> aditionalQuestionCollection) {
         this.aditionalQuestionCollection = aditionalQuestionCollection;
     }
 

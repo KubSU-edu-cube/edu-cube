@@ -5,19 +5,8 @@
 
 package edu.kubsu.fpm.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
 
 /**
  *
@@ -37,16 +26,13 @@ public class Fact implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Integer id;
-    @Basic(optional = false)
     @Column(name = "CONTENT_TYPE", nullable = false, length = 300)
     private String contentType;
-    @Basic(optional = false)
     @Lob
     @Column(name = "CONTENT", nullable = false)
     private Serializable content;
     @Column(name = "DIFFICULTIE", length = 30)
     private String difficultie;
-    @Basic(optional = false)
     @Column(name = "OBLIGATORY", nullable = false)
     private int obligatory;
     @JoinColumn(name = "COLLID", referencedColumnName = "ID", nullable = false)

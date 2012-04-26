@@ -1,6 +1,6 @@
 package edu.kubsu.fpm.DAO;
 
-import edu.kubsu.fpm.model.AditionalQuestion;
+import edu.kubsu.fpm.model.AdditionalQuestion;
 
 import javax.ejb.*;
 import javax.persistence.EntityManager;
@@ -17,10 +17,16 @@ public class AdditionalQuestionDAO {
     @PersistenceContext(unitName = "sample")
     EntityManager em;
 
-//    public  getAditionalQuestion
+    public Integer getPercentObligatoryQuestion(int groupId, int classifValuesId){
+        return (Integer) em.createQuery("select distinct percentObligatoryQuestion from AdditionalQuestion " +
+                "where classifValuesid = :classifId and groupid = :groupId")
+                .setParameter("classifId", classifValuesId)
+                .setParameter("groupId", groupId)
+                .getSingleResult();
+    }
 
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
-    public void persist(AditionalQuestion aditionalQuestion){
-        em.persist(aditionalQuestion);
+    public void persist(AdditionalQuestion additionalQuestion){
+        em.persist(additionalQuestion);
     }
 }

@@ -15,9 +15,9 @@ import java.io.Serializable;
 @Entity
 @Table(name = "ADITIONAL_QUESTION")
 @NamedQueries({
-    @NamedQuery(name = "AditionalQuestion.findAll", query = "SELECT a FROM AditionalQuestion a"),
-    @NamedQuery(name = "AditionalQuestion.findById", query = "SELECT a FROM AditionalQuestion a WHERE a.id = :id")})
-public class AditionalQuestion implements Serializable {
+    @NamedQuery(name = "AditionalQuestion.findAll", query = "SELECT a FROM AdditionalQuestion a"),
+    @NamedQuery(name = "AditionalQuestion.findById", query = "SELECT a FROM AdditionalQuestion a WHERE a.id = :id")})
+public class AdditionalQuestion implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,14 +36,14 @@ public class AditionalQuestion implements Serializable {
     @ManyToOne(optional = false)
     private ClassifierValue classifValuesid;
 
-    public AditionalQuestion() {
+    public AdditionalQuestion() {
     }
 
-    public AditionalQuestion(Integer id) {
+    public AdditionalQuestion(Integer id) {
         this.id = id;
     }
 
-    public AditionalQuestion(Integer id, int percentObligatoryQuestion, int percentAdditionalQuestion, int percentRigthAnswers) {
+    public AdditionalQuestion(Integer id, int percentObligatoryQuestion, int percentAdditionalQuestion, int percentRigthAnswers) {
         this.id = id;
         this.percentObligatoryQuestion = percentObligatoryQuestion;
         this.percentAdditionalQuestion = percentAdditionalQuestion;
@@ -108,10 +108,10 @@ public class AditionalQuestion implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof AditionalQuestion)) {
+        if (!(object instanceof AdditionalQuestion)) {
             return false;
         }
-        AditionalQuestion other = (AditionalQuestion) object;
+        AdditionalQuestion other = (AdditionalQuestion) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -120,7 +120,7 @@ public class AditionalQuestion implements Serializable {
 
     @Override
     public String toString() {
-        return "edu.kubsu.fpm.model.AditionalQuestion[id=" + id + "]";
+        return "edu.kubsu.fpm.model.AdditionalQuestion[id=" + id + "]";
     }
 
 }
