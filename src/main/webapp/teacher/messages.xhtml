@@ -2,47 +2,18 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core">
+                xmlns="http://www.w3.org/1999/xhtml">
     <ui:define name="page_content">
         <h:form id="message_form">
+            <h:outputLabel value="Это страница учителя с идентификатором #{teacherPS.teacherId}"/>
             <p:tabView effect="fade" effectDuration="normal">
                 <p:tab title="Личные">
-                    <h:panelGrid columns="2">
-                        <p:inputText id="searchmsg" value="введите строку поиска..." size="50"/>
-                        <p:commandButton id="btnsearchmsg" value="Найти" style="margin-left:10px"/>
-                    </h:panelGrid>
-                    <p:selectOneButton value="">
-                        <f:selectItem itemLabel="Option 1" itemValue="1" />
-                        <f:selectItem itemLabel="Option 2" itemValue="2" />
-                        <f:selectItem itemLabel="Option 3" itemValue="3" />
-                    </p:selectOneButton>
-
-                    <p:tabView effect="fade" orientation="right" style="border">
-                        <p:tab title="Входящие" >
-                            <h:outputText value="Всего: 0"/>
-                            <p:separator/>
-
-                            <p:dataList value="">
-                                <p:column>
-                                    Сообщение
-                                    <p:separator style="height:2px; border: none;"/>
-                                </p:column>
-                            </p:dataList>
-                        </p:tab>
-                        <p:tab title="Исходящие">
-                            <h:outputText value="Всего: 0"/>
-                            <p:separator/>
-
-                            <p:dataList value="">
-                                <p:column>
-                                    Сообщение
-                                    <p:separator style="height:2px; border: none;"/>
-                                </p:column>
-                            </p:dataList>
-                        </p:tab>
-                    </p:tabView>
+                    <p:dataList value="#{messageBean.messages}" var="message">
+                        <h:outputFormat rendered="#{messageBean.messages.size}">У вас нет сообщений</h:outputFormat>
+                        <p:column rendered=""></p:column>
+                    </p:dataList>
                 </p:tab>
-                <p:tab title="От студентов" disabled="true"/>
+                <p:tab title="От студентов" />
             </p:tabView>
         </h:form>
     </ui:define>
