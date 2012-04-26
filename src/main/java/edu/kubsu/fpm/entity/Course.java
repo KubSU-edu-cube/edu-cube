@@ -22,6 +22,9 @@ public class Course implements Serializable {
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     List<Course_variation> variationList;
 
+    @ManyToMany(mappedBy = "courses", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private List<Lection> lections;
+
     public String getName() {
         return name;
     }
@@ -44,5 +47,13 @@ public class Course implements Serializable {
 
     public void setVariationList(List<Course_variation> variationList) {
         this.variationList = variationList;
+    }
+
+    public List<Lection> getLections() {
+        return lections;
+    }
+
+    public void setLections(List<Lection> lections) {
+        this.lections = lections;
     }
 }

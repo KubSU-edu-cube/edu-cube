@@ -1,6 +1,7 @@
 <ui:composition template="/templates/teacher_ps_template.xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns="http://www.w3.org/1999/xhtml">
     <ui:define name="page_content">
@@ -8,6 +9,9 @@
             <h:outputLabel value="Курсы Это страница учителя с идентификатором #{teacherPS.teacherId}"/>
             <p:commandLink value="Создать новый курс" ajax="false" action="course_creation"/>
             <p:dataGrid value="#{teacherPS.variationList}" var="list">
+                <h:commandLink value="#{list.courseName}" ajax="false" action="#{coursesBean.moveToCourse}">
+                    <f:param name="chosenCourse" value="#{list.id}"/>
+                </h:commandLink>
                 <h:outputLabel value="#{list.course.name}"/>
                 <h:outputLabel value="#{list.description}"/>
                 <h:outputLabel value="#{list.duration}"/>
