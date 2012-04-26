@@ -21,6 +21,6 @@ public class CourseDAO {
     EntityManager em;
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
     public void persist(Course course){
-        em.persist(course);
+        em.merge(course);
     }
 }

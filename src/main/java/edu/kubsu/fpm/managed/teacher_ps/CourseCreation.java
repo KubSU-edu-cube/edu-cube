@@ -10,6 +10,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -48,6 +49,13 @@ public class CourseCreation {
         course_variation.setCourse(course);
 
         course_variationDAO.persist(course_variation);
+        // достаем список курсов
+        List<Course_variation> course_variations = (List<Course_variation>) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("courseVariationList");
+        // добавляем туда новый
+        course_variations.add(course_variation);
+        // и кладем обратно
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("courseVariationList",course_variations);
+
 
     }
 

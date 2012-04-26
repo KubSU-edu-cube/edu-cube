@@ -76,6 +76,6 @@ public class PersonDAO {
 
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
     public void persist(Person person){
-        em.persist(person);
+        em.merge(person);
     }
 }
