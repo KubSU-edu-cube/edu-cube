@@ -24,7 +24,7 @@ public class Course_variation implements Serializable {
     @JoinColumn(name = "course_id", referencedColumnName = "id")
     private Course course;
 
-    @ManyToMany(mappedBy = "variationList", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "variationList", cascade = CascadeType.ALL)
     private List<Lection> lectionList;
 
     private String description;

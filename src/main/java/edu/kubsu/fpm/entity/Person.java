@@ -50,7 +50,7 @@ public class Person implements Serializable {
     @ManyToMany(mappedBy = "recipients")
     private List<Message> messages;
 
-    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     private List<Course_variation> variationList;
 
     public int getId() {

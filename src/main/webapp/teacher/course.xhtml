@@ -7,8 +7,11 @@
     <ui:define name="page_content">
         <h:form>
             <h:outputLabel value="Здесь будет информация по выбранному курсу"/>
-            <p:commandLink value="Лекции" ajax="false" action=""
-
+            <h:outputLabel value="Курс #{courseBean.course_variation.course.name}"/>
+            <p:commandLink value="Лекции" ajax="false" action="#{courseBean.moveToLections}"/>
+            <p:commandLink value="Заявки"/>
+            <p:commandLink value="Работы для проверки"/>
+            <p:commandLink value="Комната видеоконференций"/>
         </h:form>
     </ui:define>
 </ui:composition>

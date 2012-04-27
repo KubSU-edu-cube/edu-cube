@@ -23,7 +23,7 @@ public class Lection implements Serializable {
     @JoinColumn(name="prev_ver_id", referencedColumnName="id")
     private Lection lection;
 
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name="LECTION_COURSE",
             joinColumns=

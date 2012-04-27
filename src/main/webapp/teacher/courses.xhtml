@@ -9,13 +9,15 @@
             <h:outputLabel value="Курсы Это страница учителя с идентификатором #{teacherPS.teacherId}"/>
             <p:commandLink value="Создать новый курс" ajax="false" action="course_creation"/>
             <p:dataGrid value="#{teacherPS.variationList}" var="list">
-                <h:commandLink value="#{list.courseName}" ajax="false" action="#{coursesBean.moveToCourse}">
+                <p:column>
+                <p:commandLink value="#{list.course.name}" ajax="false" action="#{coursesBean.moveToCourse}">
                     <f:param name="chosenCourse" value="#{list.id}"/>
-                </h:commandLink>
+                </p:commandLink>
                 <h:outputLabel value="#{list.course.name}"/>
                 <h:outputLabel value="#{list.description}"/>
                 <h:outputLabel value="#{list.duration}"/>
                 <h:outputLabel value="#{list.level}"/>
+                </p:column>
             </p:dataGrid>
         </h:form>
     </ui:define>
