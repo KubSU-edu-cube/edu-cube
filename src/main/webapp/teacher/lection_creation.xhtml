@@ -7,18 +7,18 @@
     <ui:define name="page_content">
         <h:form enctype="multipart/form-data">
             <h:panelGrid columns="2">
-                <h:outputLabel value="Курс"/>
-                <h:outputLabel value="#{lectionCreationBean.courseName}"/>
-                <h:outputLabel value="Название лекции"/>
+                <h:outputLabel value="Курс" styleClass="labels"/>
+                <h:outputLabel value="#{lectionCreationBean.courseName}" styleClass="user_name"/>
+                <h:outputLabel value="Название лекции" styleClass="labels"/>
                 <p:inputText value="#{lectionCreationBean.lectionName}"/>
-                <h:outputLabel value="Краткое содержание лекции"/>
+                <h:outputLabel value="Краткое содержание лекции" styleClass="labels"/>
                 <p:inputTextarea value="#{lectionCreationBean.shortLectionContent}"/>
             </h:panelGrid>
-            <h:outputLabel value="Загрузить лекцию"/>
+            <h:outputLabel value="Загрузить лекцию" styleClass="labels"/>
             <p:fileUpload fileUploadListener="#{lectionCreationBean.handleFileUpload}"
                           mode="advanced"
                           allowTypes="/(\.|\/)(pdf)$/"/>
-            <p:commandLink value="Хотите просмотреть существующие лекции по выбранной теме?"/>
+            <p:commandLink value="Хотите просмотреть существующие лекции по выбранной теме?" styleClass="additional_info"/>
             <p:commandButton value="Готово" actionListener="#{lectionCreationBean.saveLection}"/>
         </h:form>
     </ui:define>
