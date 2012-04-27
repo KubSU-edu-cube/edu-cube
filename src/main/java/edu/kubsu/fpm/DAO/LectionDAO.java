@@ -2,9 +2,7 @@ package edu.kubsu.fpm.DAO;
 
 import edu.kubsu.fpm.entity.Lection;
 
-import javax.ejb.Stateless;
-import javax.ejb.TransactionManagement;
-import javax.ejb.TransactionManagementType;
+import javax.ejb.*;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -27,5 +25,9 @@ public class LectionDAO {
                 "select cv.lectionList from Course_variation  cv where cv.id = :id").
                 setParameter("id",courseVarId).getResultList();
         return lections;
+    }
+    @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
+    public void persist(Lection lection){
+        em.merge(lection);
     }
 }

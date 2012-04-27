@@ -1,7 +1,9 @@
 package edu.kubsu.fpm.managed.teacher_ps;
 
 import edu.kubsu.fpm.DAO.Course_variationDAO;
+import edu.kubsu.fpm.DAO.PersonDAO;
 import edu.kubsu.fpm.entity.Course_variation;
+import edu.kubsu.fpm.entity.Person;
 import edu.kubsu.fpm.managed.teacher_ps.CoursesBean;
 
 import javax.ejb.EJB;
@@ -24,6 +26,8 @@ public class teacherPS {
     private List<Course_variation> variationList;
     @EJB
     private Course_variationDAO variationDAO;
+    @EJB
+    private PersonDAO personDAO;
 
     public List<Course_variation> getVariationList() {
         if(variationList==null){
@@ -42,6 +46,8 @@ public class teacherPS {
     }
 
     public String getTeacherId() {
+        Person person = personDAO.getPersonById(Integer.parseInt(teacherId));
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("person",person);
         return teacherId;
     }
 

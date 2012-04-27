@@ -48,3 +48,21 @@
 .line_separator{
     color: #464747;
 }
+.t_area{
+    width: 600px;
+    height: 200px;
+}
+.course_name{
+    width: 600px;
+}
+.lec_count{
+    width: 50px;
+
+}
+.stud_level{
+    width: 100px;
+
+}
+.stud_count{
+    width: 50px;
+}

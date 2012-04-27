@@ -1,13 +1,16 @@
 package edu.kubsu.fpm.managed.teacher_ps;
 
 import edu.kubsu.fpm.DAO.LectionDAO;
+import edu.kubsu.fpm.ejb.DBLectionLocal;
 import edu.kubsu.fpm.entity.Course_variation;
 import edu.kubsu.fpm.entity.Lection;
+import edu.kubsu.fpm.managed.teacher_ps.classes.CourseLection;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,6 +28,8 @@ public class CourseBean {
 
     @EJB
     private LectionDAO lectionDAO;
+    @EJB
+    private DBLectionLocal lectionLocal;
 
     public String moveToLections(){
         // какая текущая версия курса?
@@ -34,6 +39,15 @@ public class CourseBean {
         List<Lection> lections = lectionDAO.findLectionsByCourseVarId(course_variation.getId());
         // складываем лекции по данному курсу контексту
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lectionVariationList",lections);
+        // складываем контент лекций сервлету
+        List<CourseLection> courseLections = new ArrayList<CourseLection>();
+        for(Lection lection: lections){
+            CourseLection courseLection = new CourseLection();
+            courseLection.setId(lection.getId());
+            courseLection.setContent(lection.getContent());
+            courseLections.add(courseLection);
+        }
+        lectionLocal.setLections(courseLections);
         return "lections";
     }
 

@@ -1,14 +1,18 @@
 package edu.kubsu.fpm.managed.teacher_ps.classes;
 
+import edu.kubsu.fpm.DAO.LectionDAO;
 import edu.kubsu.fpm.entity.Course_variation;
 import edu.kubsu.fpm.entity.Lection;
+import edu.kubsu.fpm.entity.Person;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,13 +33,32 @@ public class LectionCreationBean {
     private UploadedFile uploadedFile;
     private Date lectionDate;
 
+    @EJB
+    LectionDAO lectionDAO;
+
     public void handleFileUpload(FileUploadEvent event) {
         FacesMessage msg = new FacesMessage("Успешно загружен файл "+ event.getFile().getFileName());
         FacesContext.getCurrentInstance().addMessage(null, msg);
         this.setUploadedFile(event.getFile());
     }
     public void saveLection(){
+        Person person =
+                (Person) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("person");
+        List<Course_variation> variationList = new ArrayList<Course_variation>();
+        variationList.add(
+                (Course_variation) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("courseVariation")
+        );
+
+
         Lection lection = new Lection();
+        lection.setAuthor(person);
+        lection.setVariationList(variationList);
+        lection.setContent(uploadedFile.getContents());
+        lection.setLection(null);
+        lection.setName(this.lectionName);
+
+        lectionDAO.persist(lection);
+
     }
     public String getCourseName() {
         Course_variation course_variation =
