@@ -27,7 +27,8 @@ public class Course_variation implements Serializable {
     @ManyToMany(mappedBy = "variationList", cascade = CascadeType.ALL)
     private List<Lection> lectionList;
 
-    @Column(length = 100500)
+
+    @Column(length = 2000)
     private String description;
     private String duration;
     private String level;

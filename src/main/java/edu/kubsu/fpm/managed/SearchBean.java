@@ -83,9 +83,9 @@ public class SearchBean {
 //                this.selectedFromAge,
 //                this.selectedToAge,
 //                this.sex);
-        this.shortPersonInfos = findPersons("Ирина Семенова",
-                cities.get(1).getCountry(),
-                cities.get(1),
+        this.shortPersonInfos = findPersons("Елена Молчалина",
+                "",
+                "",
                 "18",
                 "99",
                 "любой");
@@ -97,7 +97,7 @@ public class SearchBean {
         smallImgs.clear();
     }
 
-    private List<ShortPersonInfo> findPersons(String simpleQuery, Country selectedCountry, City selectedCity, String selectedFromAge, String selectedToAge, String sex) {
+    private List<ShortPersonInfo> findPersons(String simpleQuery, String selectedCountry, String selectedCity, String selectedFromAge, String selectedToAge, String sex) {
         String[] query = simpleQuery.split(" ");
         String fName;
         String lName;
@@ -109,8 +109,8 @@ public class SearchBean {
                     lName,
                     Integer.parseInt(selectedFromAge),
                     Integer.parseInt(selectedToAge),
-                    selectedCity.getName(),
-                    selectedCountry.getName(),
+                    selectedCity,
+                    selectedCountry,
                     sex);
             // заполняем краткую информацию о найденных людях
             for (Person person: foundPersons){
