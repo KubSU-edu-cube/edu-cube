@@ -6,7 +6,7 @@
     <ui:define name="page_content">
         <h:form>
             <h:outputLabel value="Создание нового курса Это страница учителя с идентификатором #{teacherPS.teacherId}"/>
-            <h:panelGrid columns="1">
+            <h:panelGrid columns="1" styleClass="td_class">
 
                 <h:outputLabel value="Создание нового курса" styleClass="user_name"/>
                 <h:outputLabel value="Название курса" styleClass="labels"/>
@@ -15,7 +15,7 @@
                 <p:inputTextarea value="#{courseCreation.courseDescription}" style="width:600px;height:150px" />
                 <h:outputLabel value="Количество лекций" styleClass="labels" />
                 <p:inputText value="#{courseCreation.hoursCount}" style = "width:60px"/>
-                <h:outputLabel value="Уровень студентов"/>
+                <h:outputLabel value="Уровень студентов" styleClass="labels"/>
                 <p:inputText value="#{courseCreation.level}" label="Уровень" style="width:200px"/>
                 <h:outputLabel value="Максимальное количество студентов" styleClass="labels"/>
                 <p:inputText style="width:60px"/>
