@@ -83,12 +83,12 @@ public class SearchBean {
 //                this.selectedFromAge,
 //                this.selectedToAge,
 //                this.sex);
-        this.shortPersonInfos = findPersons("Елена Молчалина",
-                "",
-                "",
-                "18",
-                "99",
-                "любой");
+        this.shortPersonInfos = findPersons(this.simpleQuery,
+                this.city,
+                this.country,
+                this.selectedFromAge,
+                this.selectedToAge,
+                this.sex);
     }
 
     private void clearLsts() {
