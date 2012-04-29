@@ -58,10 +58,7 @@ public class SynAntPK implements Serializable {
             return false;
         }
         SynAntPK other = (SynAntPK) object;
-        if (this.id != other.id) {
-            return false;
-        }
-        return this.iddepend == other.iddepend;
+        return this.id == other.id && this.iddepend == other.iddepend;
     }
 
     @Override

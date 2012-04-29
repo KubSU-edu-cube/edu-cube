@@ -13,10 +13,10 @@ import java.io.Serializable;
  * @author Марина
  */
 @Entity
-@Table(name = "ADITIONAL_QUESTION")
+@Table(name = "ADDITIONAL_QUESTION")
 @NamedQueries({
-    @NamedQuery(name = "AditionalQuestion.findAll", query = "SELECT a FROM AdditionalQuestion a"),
-    @NamedQuery(name = "AditionalQuestion.findById", query = "SELECT a FROM AdditionalQuestion a WHERE a.id = :id")})
+    @NamedQuery(name = "AdditionalQuestion.findAll", query = "SELECT a FROM AdditionalQuestion a"),
+    @NamedQuery(name = "AdditionalQuestion.findById", query = "SELECT a FROM AdditionalQuestion a WHERE a.id = :id")})
 public class AdditionalQuestion implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -31,10 +31,10 @@ public class AdditionalQuestion implements Serializable {
     private int percentRigthAnswers;
     @JoinColumn(name = "GROUPID", referencedColumnName = "ID", nullable = false)
     @ManyToOne(optional = false)
-    private Groups groupid;
+    private Groups group;
     @JoinColumn(name = "CLASSIF_VALUESID", referencedColumnName = "ID", nullable = false)
     @ManyToOne(optional = false)
-    private ClassifierValue classifValuesid;
+    private ClassifierValue classifValues;
 
     public AdditionalQuestion() {
     }
@@ -83,19 +83,19 @@ public class AdditionalQuestion implements Serializable {
     }
 
     public Groups getGroupid() {
-        return groupid;
+        return group;
     }
 
     public void setGroupid(Groups groupid) {
-        this.groupid = groupid;
+        this.group = groupid;
     }
 
     public ClassifierValue getClassifValuesid() {
-        return classifValuesid;
+        return classifValues;
     }
 
     public void setClassifValuesid(ClassifierValue classifValuesid) {
-        this.classifValuesid = classifValuesid;
+        this.classifValues = classifValuesid;
     }
 
     @Override
@@ -112,10 +112,7 @@ public class AdditionalQuestion implements Serializable {
             return false;
         }
         AdditionalQuestion other = (AdditionalQuestion) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override

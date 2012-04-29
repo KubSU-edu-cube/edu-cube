@@ -1,5 +1,6 @@
 package edu.kubsu.fpm.DAO;
 
+import edu.kubsu.fpm.model.ClassifierValue;
 import edu.kubsu.fpm.model.Groups;
 
 import javax.ejb.*;
@@ -18,14 +19,14 @@ public class GroupsDAO {
     EntityManager em;
 
     public Groups getGroupsById(Integer id){
-        return (Groups) em.createNamedQuery("Groups.findById")
+        return (Groups) em.createQuery("from Groups where id = :id")
                 .setParameter("id", id)
                 .getSingleResult();
     }
 
-    public Integer getClassiferValuesById(int idGroup){
-        return (Integer) em.createQuery("select classifValuesid from Groups where id = :id")
-                .setParameter("id", idGroup)
+    public ClassifierValue getClassiferValuesById(int idGroup){
+        return (ClassifierValue ) em.createQuery("select g.classifValues from Groups g where g.id = :idGroup")
+                .setParameter("idGroup", idGroup)
                 .getSingleResult();
     }
 

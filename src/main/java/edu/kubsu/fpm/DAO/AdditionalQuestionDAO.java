@@ -1,9 +1,12 @@
 package edu.kubsu.fpm.DAO;
 
 import edu.kubsu.fpm.model.AdditionalQuestion;
+import edu.kubsu.fpm.model.ClassifierValue;
+import edu.kubsu.fpm.model.Groups;
 
 import javax.ejb.*;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -17,12 +20,17 @@ public class AdditionalQuestionDAO {
     @PersistenceContext(unitName = "sample")
     EntityManager em;
 
-    public Integer getPercentObligatoryQuestion(int groupId, int classifValuesId){
-        return (Integer) em.createQuery("select distinct percentObligatoryQuestion from AdditionalQuestion " +
-                "where classifValuesid = :classifId and groupid = :groupId")
-                .setParameter("classifId", classifValuesId)
-                .setParameter("groupId", groupId)
-                .getSingleResult();
+    public Integer getPercentObligatoryQuestion(Groups group, ClassifierValue classifValues){
+        try{
+            return (Integer) em.createQuery("select distinct aq.percentObligatoryQuestion from AdditionalQuestion aq " +
+                    "where aq.classifValues = :classif and aq.group = :group")
+                    .setParameter("classif", classifValues)
+                    .setParameter("group", group)
+                    .getSingleResult();
+        } catch (NoResultException e){
+            return 0;
+        }
+
     }
 
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)

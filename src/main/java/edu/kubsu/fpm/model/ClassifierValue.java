@@ -37,9 +37,9 @@ public class ClassifierValue implements Serializable {
     @JoinColumn(name = "CLASSIFID", referencedColumnName = "ID", nullable = false)
     @ManyToOne(optional = false)
     private Classifier classifier;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "classifValuesid")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "classifValues")
     private Collection<Groups> groupsCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "classifValuesid")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "classifValues")
     private Collection<AdditionalQuestion> aditionalQuestionCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "classifierValue")
     private Collection<CollfactClassifvalue> collfactClassifvalueCollection;

@@ -17,7 +17,7 @@ import java.util.Collection;
 @Table(name = "GROUPS")
 @NamedQueries({
     @NamedQuery(name = "Groups.findAll", query = "SELECT g FROM Groups g"),
-    @NamedQuery(name = "Groups.findById", query = "SELECT g FROM Groups g WHERE g.id = :id"),
+    @NamedQuery(name = "Groups.findById", query = "SELECT g from Groups g where g.id = :id"),
     @NamedQuery(name = "Groups.findByGroupName", query = "SELECT g FROM Groups g WHERE g.groupName = :groupName")})
 public class Groups implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -29,8 +29,8 @@ public class Groups implements Serializable {
     private String groupName;
     @JoinColumn(name = "CLASSIF_VALUESID", referencedColumnName = "ID", nullable = false)
     @ManyToOne(optional = false)
-    private ClassifierValue classifValuesid;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "groupid")
+    private ClassifierValue classifValues;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "group")
     private Collection<AdditionalQuestion> aditionalQuestionCollection;
 
     public Groups() {
@@ -62,11 +62,11 @@ public class Groups implements Serializable {
     }
 
     public ClassifierValue getClassifValuesid() {
-        return classifValuesid;
+        return classifValues;
     }
 
     public void setClassifValuesid(ClassifierValue classifValuesid) {
-        this.classifValuesid = classifValuesid;
+        this.classifValues = classifValuesid;
     }
 
     public Collection<AdditionalQuestion> getAditionalQuestionCollection() {
@@ -91,10 +91,7 @@ public class Groups implements Serializable {
             return false;
         }
         Groups other = (Groups) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override

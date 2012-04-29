@@ -1,25 +1,24 @@
 package edu.kubsu.fpm.managed.adaptiveTesting;
 
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import edu.kubsu.fpm.DAO.*;
+import edu.kubsu.fpm.ejb.DBImageLocal;
+import edu.kubsu.fpm.model.ClassifierValue;
+import edu.kubsu.fpm.model.FactCollection;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.persistence.EntityManager;
+import javax.faces.context.FacesContext;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Blob;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -48,20 +47,19 @@ public class TaskBean {
 
     private String testResult = "";     //  Возвращает строчку с результатом тестирования
     private Double countRightAnswer = 0.0;    //  Содержит колличество парвильных ответов студента
-    private Integer countAnswer = 0;    //  Содержит колличество заданных вопросов
+    private Integer countAnswer;    //  Содержит колличество заданных вопросов
     private String studentAnswer = "";  //  Содержит текущий ответ студента
     private String rightAnswer;         //  Содержит текущий правильный ответ на заданный вопрос
-    private String currentQuestion;     //  Содержит текст текущего вопроса
+    private String currentQuestion = "abc";     //  Содержит текст текущего вопроса
     private List<Integer> idFactList;   //  Лист id-ов фактов, кот. входят в прочитанную лекцию
     private List<Boolean> wasAsked;     //  Лист, показывающий, спрашивали мы по этому факту уже или нет
     private List<Integer> idObligitaryFactList;    //   Список id-ов обязательных фактов
-    private Connection conn;            //  Устанавливает соединение с базой
-    private int countQuestion;      //  Колличество вопросов, кот. еще нужно задать
+    private Integer countQuestion;      //  Колличество вопросов, кот. еще нужно задать
     private boolean isOblig = true;   //  Сейчас будут задаваться обязательные вопросы или нет
     private int typeQuestion = 0;       //  Тип генерируемого вопроса
     private int idGroup;                //  id текущей группы
     private int idCourse;               //  id текущего курса
-    private EntityManager entityManager;
+    private List<Integer> obligFactList;
 
     @EJB
     private FactDAO factDAO;
@@ -78,46 +76,83 @@ public class TaskBean {
     @EJB
     private GroupsDAO groupsDAO;
 
+    @EJB
+    private DBImageLocal dbImage; // сюда будут переданы все картинки
+
 //    Конструктор класса
     public TaskBean(){
         idFactList = new ArrayList<>();  //  По-идее их нужно получать из класса генерции лекции
-        idObligitaryFactList = new ArrayList<>();
         wasAsked = new ArrayList<>();
         idFactList.add(2);  //  Но мы пока что будем извращаться
-        idFactList.add(6);
+        idFactList.add(5);
         idFactList.add(7);
         idFactList.add(8);
         idFactList.add(9);
+        idFactList.add(10);
         idCourse = 1;         // TODO выяснить, нужно ли и сколько нужно, если нужно!
         idGroup = 1;
-//        Теперь вообще хотелось бы знать число обязательных фактов в лекции
-        for (Integer id : idFactList){
-            int oblig = getObligitaryFactById(id); // factDAO.getObligitaryFactById(id);
-            if (oblig == 1)
-                idObligitaryFactList.add(id);   //  Добавляем id обязательного факта
-        }
-
-//        Число обязательных фактов, на основе которых будут заданы вопросы
-        int idClassifValues = groupsDAO.getClassiferValuesById(idGroup);
-        int obligPersent = additionalQuestionDAO.getPercentObligatoryQuestion(idGroup, idClassifValues);
-        if (obligPersent == 0){       // Если в базе ничего не нашли, исп. значение по-умолчанию.
-            obligPersent = 20;        // TODO Проверить.
-        }
-//        Учитываем, что процент обязательных вопросов задается из базы.
-        countAnswer = idObligitaryFactList.size() * obligPersent / 100;
-        if (countAnswer == 0)
-            countAnswer = 1;
-        countQuestion = countAnswer;
+        isOblig = true;
 
 //        Инициализируем список посещенных фактов
-        for (int i=0; i < idFactList.size(); i++)
-            wasAsked.add(false);
+        for (Integer anIdFactList : idFactList) wasAsked.add(false);
     }
 
-    private int getObligitaryFactById(Integer id) {
-        return 0;
+    //   Генерирует текущий тестовый вопрос
+    public String getCurrentQuestion() {
+//        Получаем число обязательных фактов в лекции
+        idObligitaryFactList = getObligitaryFactList();
+//        Число обязательных фактов, на основе которых будут заданы вопросы
+        countQuestion = getCountQuestion();
+        countAnswer = getCountAnswer();
+//        Если задаем обязательный вопрос
+        if (isOblig){
+//            Выбираем произвольно id факта, на основе кот. сейчас будем задавать вопрос
+            int id = getId(idObligitaryFactList.size());
+            currentQuestion = generateQuestion(id);
+            countQuestion --;
+            if (countQuestion == 0){
+                isOblig = false;
+            }
+        }
+//        else{
+////            Если обязательные вопросы кончились
+//            int id = getId(idFactList.size());
+//            currentQuestion = generateQuestion(id);
+////            Для того, чтобы не зациклится и не получить число доп. вопросов во второй раз
+//            if (countQuestion != 1)
+//                countQuestion--;
+//        }
+        return currentQuestion;
     }
 
+    public Integer getCountQuestion() {
+        if (countQuestion == null){
+            ClassifierValue classifierValue = groupsDAO.getClassiferValuesById(idGroup);
+            int obligPersent = additionalQuestionDAO.getPercentObligatoryQuestion(groupsDAO.getGroupsById(idGroup), classifierValue);
+
+            if (obligPersent == 0){       // Если в базе ничего не нашли или задан 0, исп. значение по-умолчанию.
+                obligPersent = 20;        // TODO Проверить.
+            }
+    //        Учитываем, что процент обязательных вопросов задается из базы.
+            int count = idObligitaryFactList.size() * obligPersent / 100;
+            return count == 0 ? 1 : count;
+        }
+        else
+            return countQuestion;
+    }
+    
+    public List<Integer> getObligitaryFactList() {
+        if (obligFactList == null){
+            obligFactList = new ArrayList<>();
+            for (Integer id : idFactList){
+                if (factDAO.getObligitaryFactById(id) == 1)
+                    obligFactList.add(id);   //  Добавляем id обязательного факта
+            }
+            return obligFactList;
+        }
+        else
+            return obligFactList;
+    }
 
     //    Проверяет текущий ответ студента
     public String checkAnswer(){
@@ -199,31 +234,6 @@ public class TaskBean {
         return testResult;
     }
 
-//   Генерирует текущий тестовый вопрос
-    public String getCurrentQuestion() {
-//        Почему-то не переводится каретка
-        currentQuestion = "abc";
-//        Если задаем обязательный вопрос
-        if (isOblig){
-//            Выбираем произвольно id факта, на основе кот. сейчас будем задавать вопрос
-            int id = getId(idObligitaryFactList.size());
-            currentQuestion = generateQuestion(id);
-            countQuestion --;
-            if (countQuestion == 0){
-                isOblig = false;
-            }
-        }
-        else{
-//            Если обязательные вопросы кончились
-            int id = getId(idFactList.size());
-            currentQuestion = generateQuestion(id);
-//            Для того, чтобы не зациклится и не получить число доп. вопросов во второй раз
-            if (countQuestion != 1)
-                countQuestion--;
-        }
-        return currentQuestion;
-    }
-
 //    Возвращает id факта из диапазона от 0..n, на основе которого еще не задавался вопрос
     private int getId(int n){
         Random r = new Random();
@@ -239,14 +249,66 @@ public class TaskBean {
         return id;
     }
 
+    public String addImgContent(int curImg) {
+        String contextPath = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
+        return "<img src=\"http://localhost:8080" + contextPath +"/DBImageServlet?imgcount="+ curImg
+                + "\" alt=\"Вопрос-картика\" height=\"200\" width=\"200\"/>";
+    }
+
+    private String getStringFromByteText(byte[] bytes) {
+        InputStreamReader isr = new InputStreamReader(new ByteArrayInputStream(bytes));
+        BufferedReader br = new BufferedReader(isr);
+        StringBuilder buf = new StringBuilder();
+        String line;
+        try {
+            while ((line = br.readLine()) != null) {
+                buf.append(line).append("\n");
+            }
+            return buf.toString();
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            return null;
+        }
+    }
+
 //    Генерирует текст вопроса на основе факта с заданным id
 //    Должен сохранять правильный ответ на сгенерированный вопрос
     private String generateQuestion(int id){
+        int curImg = 0;
         String quest = "";
-//        Connection conn = getConn();
-//            try{
-//                PreparedStatement statement = conn.prepareStatement("SELECT CONTENT, CONTENT_TYPE FROM APP.FACT WHERE ID =" + id);
-//                ResultSet resultSet = statement.executeQuery();
+        List<byte[]> byteImgList = new ArrayList<>();
+        Element root = getRootElementByFactId(id);
+        NodeList children = root.getChildNodes();
+        String factText = null;
+        for (int i = 0; i < children.getLength(); i++){
+            Node currentNode = children.item(i);
+            if (currentNode.getNodeType() == Node.ELEMENT_NODE){
+                Element currentElement = (Element) currentNode;
+                String content = currentElement.getTextContent();
+
+                // Если факт содержит картинку, то на ее основе и созадем вопрос.
+                // TODO Добавить сюда отображение SVG.
+                if (currentElement.getTagName().equals("fact_image")) {
+                    byteImgList.add(curImg, Base64.decode(content));    //складываем картинки в лист
+                    quest = "Что изображено на рисунке?<br /><br />" + addImgContent(curImg);  //наращиваем строку вопроса
+                    curImg += 1;
+                    FactCollection factCollection = factDAO.getCollectionByFactId(id);
+                    rightAnswer = factCollection.getFactcollName();
+                    break;
+                }
+
+                // Иначе, если текст, то генерирум текстовый вопрос
+                // TODO Добавить отображение mathml
+                else if (currentElement.getTagName().equals("fact_text")) {
+                    String text = getStringFromByteText(content.getBytes());    // Вот эта строка уже содержимое - текст!!!
+                    factText += text;
+
+                }
+            }
+        }
+        dbImage.setImgList(byteImgList);
+        curImg += 1;
+//        curImg = 0;
 ////                Получаем содержимое факта
 //                if (resultSet.next()){
 //                    String content = resultSet.getString("CONTENT_TYPE");
@@ -332,10 +394,28 @@ public class TaskBean {
 //                            break;
 //                    }
 //                }
-//            } catch (SQLException ex) {
-//            Logger.getLogger(TaskBean.class.getName()).log(Level.SEVERE, null, ex);
-//            }
         return quest;
+    }
+
+    private Element getRootElementByFactId(int id) {
+        Element root = null;
+        Serializable factContent = factDAO.getContentFactById(id);
+        byte[] bContent = (byte[]) factContent;
+        InputStream is = new ByteArrayInputStream(bContent);
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        try {
+            DocumentBuilder builder = dbf.newDocumentBuilder();
+            Document doc = null;
+            try {
+                doc = builder.parse(is);
+            } catch (SAXException | IOException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            root = doc.getDocumentElement();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        return root;
     }
 
     //     Преобразует массив строк в одну строку
@@ -346,35 +426,35 @@ public class TaskBean {
     }
 
 //    Получаем содержимое факта, если оно - текст
-    private String getContentFact(ResultSet resultSet){
-        Blob text;
-        InputStream is = null;
-        try {
-            text = resultSet.getBlob("CONTENT");
-            is = new ByteArrayInputStream(text.getBytes(1, (int)text.length()));
-        } catch (SQLException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-//                    Получаем структуру DOM факта
-        DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder;
-        Document fact = null;
-        try {
-                            builder = builderFactory.newDocumentBuilder();
-                            fact = builder.parse(is);
-                        } catch (ParserConfigurationException | SAXException | IOException e) {
-                            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                        }
-        //                    Получаем корневой элемент
-                        Element root;
-                        root = fact.getDocumentElement();
-        //                    Идем по всем узлам
-        String txt = "";
-                        for (Node child = root.getFirstChild(); child != null; child = root.getNextSibling()){
-                            txt += child.getFirstChild().getNodeValue();  //  Получаем листы - текст факта
-                        }
-        return txt;
-    }
+//    private String getContentFact(ResultSet resultSet){
+//        Blob text;
+//        InputStream is = null;
+//        try {
+//            text = resultSet.getBlob("CONTENT");
+//            is = new ByteArrayInputStream(text.getBytes(1, (int)text.length()));
+//        } catch (SQLException e) {
+//            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+//        }
+////                    Получаем структуру DOM факта
+//        DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+//        DocumentBuilder builder;
+//        Document fact = null;
+//        try {
+//                            builder = builderFactory.newDocumentBuilder();
+//                            fact = builder.parse(is);
+//                        } catch (ParserConfigurationException | SAXException | IOException e) {
+//                            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+//                        }
+//        //                    Получаем корневой элемент
+//                        Element root;
+//                        root = fact.getDocumentElement();
+//        //                    Идем по всем узлам
+//        String txt = "";
+//                        for (Node child = root.getFirstChild(); child != null; child = root.getNextSibling()){
+//                            txt += child.getFirstChild().getNodeValue();  //  Получаем листы - текст факта
+//                        }
+//        return txt;
+//    }
 
     public void setCurrentQuestion(String currentQuestion) {
         this.currentQuestion = currentQuestion;
@@ -385,7 +465,11 @@ public class TaskBean {
     }
 
     public Integer getCountAnswer() {
-        return countAnswer;
+        if ((countAnswer == null)&&(countQuestion != null)){
+            return countQuestion;
+        }
+        else
+            return countAnswer;
     }
 
     public void setCountAnswer(Integer countAnswer) {
@@ -415,5 +499,5 @@ public class TaskBean {
     public void setStudentAnswer(String studentAnswer) {
         this.studentAnswer = studentAnswer;
     }
-
+    
 }

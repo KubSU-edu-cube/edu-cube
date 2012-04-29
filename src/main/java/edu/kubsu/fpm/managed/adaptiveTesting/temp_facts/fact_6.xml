@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
-	<fact-content>
+	<fact_text>
 	Последовательность {Xn} называется монотонно возрастающей(убывающей), если для каждого n = 1, 2,... выполняется неравенство
 		Xn+1 >= Xn (Xn >= Xn+1). 
-	</fact-content>	
+	</fact_text>	
 </root>

@@ -1,12 +1,19 @@
 package edu.kubsu.fpm.managed.adaptiveTesting;
 
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import edu.kubsu.fpm.DAO.*;
+import edu.kubsu.fpm.managed.classes.ImgConverter;
 import edu.kubsu.fpm.model.*;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import java.io.*;
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -63,8 +70,16 @@ public class InitFactBean {
             e.printStackTrace();
         }
         persistSynAnt();
+        persistGroups();
         persistAdditionalQuestion();
-    }                                                     
+    }
+
+    private void persistGroups() {
+        Groups groups = new Groups();
+        groups.setGroupName("55");
+        groups.setClassifValuesid(classifierValueDAO.getClassifierValueById(22));
+        groupsDAO.persist(groups);
+    }
 
     private void persistAdditionalQuestion() {     // TODO Проверить!
         persistAdditionalQuestionValue(1, 22, 50, 100, 0);
@@ -81,6 +96,7 @@ public class InitFactBean {
         additionalQuestion.setPercentObligatoryQuestion(percentObligQuest);
         additionalQuestion.setPercentAdditionalQuestion(percentAddQuest);
         additionalQuestion.setPercentRigthAnswers(percentRightAnsw);
+        additionalQuestionDAO.persist(additionalQuestion);
     }
 
     private void persistSynAnt() {
@@ -201,6 +217,7 @@ public class InitFactBean {
         persistFactValue(1, "text", "temp_facts/fact_2.xml", "средняя", 1);
         persistFactValue(2, "text", "temp_facts/fact_3.xml", "легкая", 1);
         persistFactValue(2, "text", "temp_facts/fact_4.xml", "средняя", 1);
+        persistFactValue(2, "image", "temp_facts/predel2.jpg", "легкая", 0);
         persistFactValue(3, "text", "temp_facts/fact_5.xml", "легкая", 0);
         persistFactValue(3, "text", "temp_facts/fact_6.xml", "средняя", 0);
         persistFactValue(4, "text", "temp_facts/fact_7.xml", "легкая", 1);
@@ -212,7 +229,13 @@ public class InitFactBean {
         Fact fact = new Fact();
         fact.setCollection(factCollectionDAO.getCollectionById(collId));
         fact.setContentType(contentType);
-        fact.setContent(getBytesFromTextFile(fNname));
+        if (contentType.equals("text"))
+            fact.setContent(getBytesFromTextFile(fNname));
+        else if (contentType.equals("image")){
+            String imageText = Base64.encode(getBytesFromFile(fNname));
+            String factImage = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><root><fact_image>" + imageText + "</fact_image></root>";    // + imageText +
+            fact.setContent(factImage.getBytes());
+        }
         fact.setDifficultie(difficulty);
         fact.setObligatory(obligatory);
         factDAO.persist(fact);
@@ -235,6 +258,17 @@ public class InitFactBean {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private byte[] getBytesFromFile(String fName) {
+        try {
+            File imgFile = new File(fName);
+            Image image = ImageIO.read(new FileInputStream(fName));
+            return ImgConverter.changeProportion(imgFile,null, image.getWidth(null), image.getHeight(null), 200, 150);
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            return null;
         }
     }
 

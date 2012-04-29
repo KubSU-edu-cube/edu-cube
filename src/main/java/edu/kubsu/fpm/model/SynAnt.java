@@ -94,10 +94,7 @@ public class SynAnt implements Serializable {
             return false;
         }
         SynAnt other = (SynAnt) object;
-        if ((this.synAntPK == null && other.synAntPK != null) || (this.synAntPK != null && !this.synAntPK.equals(other.synAntPK))) {
-            return false;
-        }
-        return true;
+        return !((this.synAntPK == null && other.synAntPK != null) || (this.synAntPK != null && !this.synAntPK.equals(other.synAntPK)));
     }
 
     @Override

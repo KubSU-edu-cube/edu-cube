@@ -74,13 +74,7 @@ public class CollfactClassifvaluePK implements Serializable {
         if (this.collid != other.collid) {
             return false;
         }
-        if (this.classifid != other.classifid) {
-            return false;
-        }
-        if (this.classifValueid != other.classifValueid) {
-            return false;
-        }
-        return true;
+        return this.classifid == other.classifid && this.classifValueid == other.classifValueid;
     }
 
     @Override
