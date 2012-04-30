@@ -29,7 +29,7 @@ public class Words implements Serializable {
     private String word;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "words")
     private List<SynAnt> synAntList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "words1")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "wordsDepend")
     private List<SynAnt> synAntCollection1;
 
     public Words() {

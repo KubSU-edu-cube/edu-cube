@@ -19,6 +19,12 @@ public class FactDAO {
     @PersistenceContext(unitName = "sample")
     EntityManager em;
 
+    public String getContentTypeFactById(int idFact){
+        return (String) em.createQuery("select f.contentType from Fact f where f.id = :id")
+                .setParameter("id", idFact)
+                .getSingleResult();
+    }
+    
     public Serializable getContentFactById(int idFact){
         return (Serializable) em.createQuery("select f.content from Fact f where f.id = :id")
                 .setParameter("id", idFact)

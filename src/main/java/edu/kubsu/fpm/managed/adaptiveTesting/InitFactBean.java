@@ -118,8 +118,8 @@ public class InitFactBean {
         persistWordValue("не может");      // 10
         persistSynAntValue(9, 10, "ANT");
         persistWordValue("представим");    // 11
-        persistWordValue("не представим"); // 12
-        persistSynAntValue(11, 12, "ANT");
+        persistWordValue("вообразим");     // 12
+        persistSynAntValue(11, 12, "SYN");    // A может быть 'ANT'?
         persistWordValue("остальных");     // 13
         persistWordValue("других");        // 14
         persistSynAntValue(13, 14, "SYN");
@@ -198,6 +198,20 @@ public class InitFactBean {
         persistWordValue("конечный");            // 52
         persistWordValue("бесконечный");         // 53
         persistSynAntValue(52, 53, "ANT");
+        persistWordValue("линейном");            // 54
+        persistWordValue("векторном");           // 55
+        persistSynAntValue(54, 55, "ANT");
+        persistWordValue("любой");               // 56
+        persistWordValue("некоторый");           // 57
+        persistSynAntValue(56, 57, "ANT");
+        persistSynAntValue(50, 36, "SYN");
+        persistSynAntValue(50, 38, "SYN");
+        persistSynAntValue(50, 39, "SYN");
+        persistSynAntValue(57, 37, "SYN");
+        persistWordValue("скаляров");            // 58
+        persistWordValue("векторов");            // 59
+        persistSynAntValue(58, 59, "ANT");
+
     }
 
     private void persistWordValue(String value) {

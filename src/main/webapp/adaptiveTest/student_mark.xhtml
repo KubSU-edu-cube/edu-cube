@@ -5,8 +5,10 @@
 
 
         <ui:define name="page_content">
-           <h:outputText value="#{taskBean.testResult}"/>    <br />
-           <h:commandLink action="/student/stud_home.jsf">К домашней странице</h:commandLink>
+           <h:form>
+                <h:outputText value="#{taskBean.testResult}"/>    <br />
+                <h:commandLink action="../index.jsf">На главную</h:commandLink>
+           </h:form>
         </ui:define>
 
 </ui:composition>

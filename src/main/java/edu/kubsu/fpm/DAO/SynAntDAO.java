@@ -17,12 +17,6 @@ public class SynAntDAO {
     @PersistenceContext(unitName = "sample")
     EntityManager em;
 
-    public SynAnt getSynAntById(Integer id) {
-        return (SynAnt) em.createNamedQuery("SynAnt.findById")
-                .setParameter("id", id)
-                .getSingleResult();
-    }
-
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
     public void persist(SynAnt synAnt){
         em.persist(synAnt);

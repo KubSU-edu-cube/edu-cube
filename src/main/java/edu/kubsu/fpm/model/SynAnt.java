@@ -4,9 +4,8 @@
  */
 package edu.kubsu.fpm.model;
 
-import java.io.Serializable;
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 /**
  *
@@ -30,7 +29,7 @@ public class SynAnt implements Serializable {
     private Words words;
     @JoinColumn(name = "IDDEPEND", referencedColumnName = "ID", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Words words1;
+    private Words wordsDepend;
 
     public SynAnt() {
     }
@@ -73,11 +72,11 @@ public class SynAnt implements Serializable {
     }
 
     public Words getWords1() {
-        return words1;
+        return wordsDepend;
     }
 
     public void setWords1(Words words1) {
-        this.words1 = words1;
+        this.wordsDepend = words1;
     }
 
     @Override

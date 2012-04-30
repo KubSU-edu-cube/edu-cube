@@ -8,6 +8,7 @@ import javax.ejb.*;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 /**
  * User: Marina
@@ -30,7 +31,12 @@ public class AdditionalQuestionDAO {
         } catch (NoResultException e){
             return 0;
         }
+    }
 
+    public List<AdditionalQuestion> getAddQuestByGroup(Groups group){
+        return (List<AdditionalQuestion>) em.createQuery("from AdditionalQuestion where group = :group")
+                .setParameter("group", group)
+                .getResultList();
     }
 
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
