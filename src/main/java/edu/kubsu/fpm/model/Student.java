@@ -3,10 +3,7 @@
  * and open the template in the editor.
  */
 
-package edu.kubsu.fpm.entity;
-
-import edu.kubsu.fpm.model.Answer;
-import edu.kubsu.fpm.model.Mark;
+package edu.kubsu.fpm.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -120,7 +117,7 @@ public class Student implements Serializable {
 
     @Override
     public String toString() {
-        return "edu.kubsu.fpm.entity.Student[id=" + id + "]";
+        return "edu.kubsu.fpm.model.Student[id=" + id + "]";
     }
 
 }
