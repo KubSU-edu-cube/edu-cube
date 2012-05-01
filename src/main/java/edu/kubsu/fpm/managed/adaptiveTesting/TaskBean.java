@@ -4,7 +4,7 @@ import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import edu.kubsu.fpm.DAO.*;
 import edu.kubsu.fpm.ejb.DBImageLocal;
 import edu.kubsu.fpm.model.AdditionalQuestion;
-import edu.kubsu.fpm.model.ClassifierValue;
+import edu.kubsu.fpm.model.Classifier;
 import edu.kubsu.fpm.model.FactCollection;
 import edu.kubsu.fpm.model.SynAnt;
 import net.sourceforge.jeuclid.context.LayoutContextImpl;
@@ -35,10 +35,6 @@ import java.util.*;
  * Time: 18:27
  * To change this template use File | Settings | File Templates.
  */
-
-//  TODO
-//   1. Вместо группы Group использовать StudentGroup, и к Group или к Course привязать ClassifValues.
-//
 
 @ManagedBean(name = "taskBean")
 @SessionScoped
@@ -73,12 +69,12 @@ public class TaskBean {
     private AdditionalQuestionDAO additionalQuestionDAO;
 
     @EJB
-    private GroupsDAO groupsDAO;
+    private GroupDAO groupDAO;
 
     @EJB
     private DBImageLocal dbImage; // сюда будут переданы все картинки
 
-//    Конструктор класса
+    //    Конструктор класса
     public TaskBean(){
         idFactList = new ArrayList<>();  //  По-идее их нужно получать из класса генерции лекции
         wasAsked = new ArrayList<>();
@@ -119,17 +115,20 @@ public class TaskBean {
 //        Число обязательных фактов, на основе которых будут заданы вопросы
         countQuestion = getCountQuestion();
         countAnswer = getCountAnswer();
-         int id = getId(idFactList.size());
-        currentQuestion = generateQuestion(id);
+
 //        Если задаем обязательный вопрос
         if (isOblig){
 //            Выбираем произвольно id факта, на основе кот. сейчас будем задавать вопрос
+            int id = getId(idObligitaryFactList);
+            currentQuestion = generateQuestion(id);
             countQuestion --;
             if (countQuestion == 0){
                 isOblig = false;
             }
         }
         else{
+            int id = getId(idFactList);
+            currentQuestion = generateQuestion(id);
 //            Для того, чтобы не зациклится и не получить число доп. вопросов во второй раз
             if (countQuestion != 1)
                 countQuestion--;
@@ -141,8 +140,7 @@ public class TaskBean {
         if (countQuestion == null){
             int obligPersent;
             if (idGroup > 0){  // Если пользователь - зарегестрирован и отноится к некоторой группе
-                ClassifierValue classifierValue = groupsDAO.getClassiferValuesById(idGroup);
-                obligPersent = additionalQuestionDAO.getPercentObligatoryQuestion(groupsDAO.getGroupsById(idGroup), classifierValue);
+                obligPersent = additionalQuestionDAO.getPercentObligatoryQuestion(groupDAO.getGroupsById(idGroup));
 
                 if (obligPersent == 0){       // Если в базе ничего не нашли или задан 0, исп. значение по-умолчанию.
                     obligPersent = 20;
@@ -174,12 +172,12 @@ public class TaskBean {
     //    Проверяет текущий ответ студента
     public String checkAnswer(){
         String url = "student_test";
-        try {
-            studentAnswer = new String(studentAnswer.getBytes("UTF-16"));    // TODO Получить русский текст в нормальной кодировке (UTF-8).
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        if (rightAnswer.equals(studentAnswer)){
+//        try {
+//            studentAnswer = new String(studentAnswer.getBytes("UTF-16"));    // TODO Получить русский текст в нормальной кодировке (UTF-8).
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+//        }
+        if (rightAnswer.toLowerCase().equals(studentAnswer.toLowerCase())){
             countRightAnswer++;
         }
         else if(typeQuestion == 2){
@@ -214,7 +212,7 @@ public class TaskBean {
         int count = amountRemainQuestion * 50 / 100;  // значение по-умолчанию.
 
         if (idGroup > 0){
-            List<AdditionalQuestion> addQuestList = additionalQuestionDAO.getAddQuestByGroup(groupsDAO.getGroupsById(idGroup));
+            List<AdditionalQuestion> addQuestList = additionalQuestionDAO.getAddQuestByGroup(groupDAO.getGroupsById(idGroup));
             if (addQuestList.size() > 0){
                 int percent = getClosePercent(percentRightAnswers, addQuestList);
                 for (AdditionalQuestion addQuest: addQuestList){
@@ -254,18 +252,20 @@ public class TaskBean {
     }
 
 //    Возвращает id факта из диапазона от 0..n, на основе которого еще не задавался вопрос
-    private int getId(int n){
+    private int getId(List<Integer> list){
         Random r = new Random();
         int id = 0;
         boolean t = true;
+        Classifier classifier;
         while (t){
-            id = r.nextInt(n);
-            if (!wasAsked.get(id)){
+            id = r.nextInt(list.size());
+            FactCollection factCollection = factDAO.getCollectionByFactId(list.get(id));
+            if ((!wasAsked.get(id))&&(!factCollection.getFactcollName().equals("доказательство"))){
                 wasAsked.set(id, true);
                 t = false;
             }
         }
-        return id;
+        return list.get(id);
     }
 
     public String addImgContent(int curImg) {
@@ -474,7 +474,7 @@ public class TaskBean {
                 } while (f);
                 rightAnswer = word[j];
                 quest = "Введите пропущенное слово.<br/ ><br />";
-                String editFact = questTetx.replace(word[j], "...");
+                String editFact = questTetx.toLowerCase().replaceFirst(word[j], "...");
                 for (String fact: factList){
                     if (factList.get(idFactList).equals(fact))
                         quest += editFact;
@@ -508,6 +508,8 @@ public class TaskBean {
     private String[] getWordsArrayByString(String text) {
         String tempText = text.replace("\n\t", "")
                 .replace("\t\n", "")
+                .replace("\n", "")
+                .replace("\t", "")
                 .replace(",", "")
                 .replace(".", "")
                 .replace(":", "")

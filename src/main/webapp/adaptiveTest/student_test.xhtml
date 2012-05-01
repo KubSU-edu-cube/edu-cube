@@ -1,7 +1,8 @@
 <ui:composition template="/templates/test_template.xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns="http://www.w3.org/1999/xhtml">
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui">
 
 
         <ui:define name="page_content">
@@ -9,8 +10,8 @@
                <h:outputText escape="false" value="#{taskBean.currentQuestion}"/> <br /> <br />
                <h:inputTextarea cols="100" rows="7" value="#{taskBean.studentAnswer}"/> <br />
                <h:panelGroup>
-                   <h:commandButton value="Дальше" action="#{taskBean.checkAnswer}" />
-                   <h:commandButton value="Выйти" action="../index.jsf"/>
+                   <p:commandButton value="Дальше" action="#{taskBean.checkAnswer}" ajax="false" />
+                   <p:commandButton value="Выйти" action="../index.jsf" ajax="false" />
                </h:panelGroup>
            </h:form>
         </ui:define>

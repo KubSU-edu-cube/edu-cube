@@ -27,6 +27,8 @@ public class Course_variation implements Serializable {
     @ManyToMany(mappedBy = "variationList", cascade = CascadeType.ALL)
     private List<Lection> lectionList;
 
+//    @OneToMany(mappedBy = "courseVariation", cascade = CascadeType.ALL)
+//    List<Group> groupList;
 
     @Column(length = 2000)
     private String description;
@@ -40,6 +42,14 @@ public class Course_variation implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
+
+//    public List<Group> getGroupList() {
+//        return groupList;
+//    }
+//
+//    public void setGroupList(List<Group> groupList) {
+//        this.groupList = groupList;
+//    }
 
     public Person getPerson() {
         return person;

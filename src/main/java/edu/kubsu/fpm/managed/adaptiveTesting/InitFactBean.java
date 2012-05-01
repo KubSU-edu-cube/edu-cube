@@ -2,7 +2,7 @@ package edu.kubsu.fpm.managed.adaptiveTesting;
 
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import edu.kubsu.fpm.DAO.*;
-import edu.kubsu.fpm.entity.Groups;
+import edu.kubsu.fpm.model.Group;
 import edu.kubsu.fpm.model.AdditionalQuestion;
 import edu.kubsu.fpm.managed.classes.ImgConverter;
 import edu.kubsu.fpm.model.*;
@@ -55,7 +55,7 @@ public class InitFactBean {
     private AdditionalQuestionDAO additionalQuestionDAO;
 
     @EJB
-    private GroupsDAO groupsDAO;
+    private GroupDAO groupDAO;
 
     public InitFactBean(){
 
@@ -77,10 +77,10 @@ public class InitFactBean {
     }
 
     private void persistGroups() {
-        Groups groups = new Groups();
-        groups.setGroupName("55");
-        groups.setClassifValuesid(classifierValueDAO.getClassifierValueById(22));
-        groupsDAO.persist(groups);
+        Group group = new Group();
+        group.setCourseId(1);
+//        group.setCourseVariation();
+        groupDAO.persist(group);
     }
 
     private void persistAdditionalQuestion() {     // TODO Проверить!
@@ -93,7 +93,7 @@ public class InitFactBean {
 
     private void persistAdditionalQuestionValue(int groupId, int classifValuesId, int percentObligQuest, int percentRightAnsw, int percentAddQuest){
         AdditionalQuestion additionalQuestion = new AdditionalQuestion();
-        additionalQuestion.setGroupid(groupsDAO.getGroupsById(groupId));
+        additionalQuestion.setGroupid(groupDAO.getGroupsById(groupId));
         additionalQuestion.setClassifValuesid(classifierValueDAO.getClassifierValueById(classifValuesId));
         additionalQuestion.setPercentObligatoryQuestion(percentObligQuest);
         additionalQuestion.setPercentAdditionalQuestion(percentAddQuest);

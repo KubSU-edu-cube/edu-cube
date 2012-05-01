@@ -5,8 +5,6 @@
 
 package edu.kubsu.fpm.model;
 
-import edu.kubsu.fpm.entity.Groups;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -33,7 +31,7 @@ public class AdditionalQuestion implements Serializable {
     private int percentRigthAnswers;
     @JoinColumn(name = "GROUPID", referencedColumnName = "ID", nullable = false)
     @ManyToOne(optional = false)
-    private Groups group;
+    private Group group;
     @JoinColumn(name = "CLASSIF_VALUESID", referencedColumnName = "ID", nullable = false)
     @ManyToOne(optional = false)
     private ClassifierValue classifValues;
@@ -84,11 +82,11 @@ public class AdditionalQuestion implements Serializable {
         this.percentRigthAnswers = percentRigthAnswers;
     }
 
-    public Groups getGroupid() {
+    public Group getGroupid() {
         return group;
     }
 
-    public void setGroupid(Groups groupid) {
+    public void setGroupid(Group groupid) {
         this.group = groupid;
     }
 

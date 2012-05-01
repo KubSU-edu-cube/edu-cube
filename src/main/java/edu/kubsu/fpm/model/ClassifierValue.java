@@ -5,8 +5,6 @@
 
 package edu.kubsu.fpm.model;
 
-import edu.kubsu.fpm.entity.Groups;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
@@ -39,8 +37,6 @@ public class ClassifierValue implements Serializable {
     @JoinColumn(name = "CLASSIFID", referencedColumnName = "ID", nullable = false)
     @ManyToOne(optional = false)
     private Classifier classifier;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "classifValues")
-    private Collection<Groups> groupsCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "classifValues")
     private Collection<AdditionalQuestion> aditionalQuestionCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "classifierValue")
@@ -101,14 +97,6 @@ public class ClassifierValue implements Serializable {
 
     public void setClassifier(Classifier classifier) {
         this.classifier = classifier;
-    }
-
-    public Collection<Groups> getGroupsCollection() {
-        return groupsCollection;
-    }
-
-    public void setGroupsCollection(Collection<Groups> groupsCollection) {
-        this.groupsCollection = groupsCollection;
     }
 
     public Collection<AdditionalQuestion> getAditionalQuestionCollection() {
