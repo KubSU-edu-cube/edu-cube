@@ -1,6 +1,5 @@
 package edu.kubsu.fpm.DAO;
 
-import edu.kubsu.fpm.entity.Course;
 import edu.kubsu.fpm.entity.Course_variation;
 
 import javax.ejb.*;

@@ -1,14 +1,15 @@
 <ui:composition template="/templates/test_template.xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns="http://www.w3.org/1999/xhtml">
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui">
 
 
     <ui:define name="page_content">
         <h:form>
             <h:outputText value="После прочетния адаптивной лекции вам необходимо пройти
                 контрольное тестирование по прочитанному материалу" /><br />
-            <h:commandButton value="Начать" action="student_test" />
+            <p:commandButton value="Начать" action="student_test" ajax="false"/>
         </h:form>
     </ui:define>
 

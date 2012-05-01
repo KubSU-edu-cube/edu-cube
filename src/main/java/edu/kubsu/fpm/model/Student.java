@@ -18,9 +18,8 @@ import java.util.Collection;
 @NamedQueries({
     @NamedQuery(name = "Student.findAll", query = "SELECT s FROM Student s"),
     @NamedQuery(name = "Student.findById", query = "SELECT s FROM Student s WHERE s.id = :id"),
-    @NamedQuery(name = "Student.findByStudentName", query = "SELECT s FROM Student s WHERE s.studentName = :studentName"),
-    @NamedQuery(name = "Student.findByNickname", query = "SELECT s FROM Student s WHERE s.nickname = :nickname"),
-    @NamedQuery(name = "Student.findByFamily", query = "SELECT s FROM Student s WHERE s.family = :family")})
+    @NamedQuery(name = "Student.findByStudentName", query = "SELECT s FROM Student s WHERE s.studentName = :studentName")
+})
 public class Student implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -29,10 +28,6 @@ public class Student implements Serializable {
     private Integer id;
     @Column(name = "STUDENT_NAME", nullable = false, length = 200)
     private String studentName;
-    @Column(name = "NICKNAME", nullable = false, length = 200)
-    private String nickname;
-    @Column(name = "FAMILY", nullable = false, length = 200)
-    private String family;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "groupid")
     private Collection<Student> studentCollection;
     @JoinColumn(name = "GROUPID", referencedColumnName = "ID", nullable = false)
@@ -53,8 +48,6 @@ public class Student implements Serializable {
     public Student(Integer id, String studentName, String nickname, String family) {
         this.id = id;
         this.studentName = studentName;
-        this.nickname = nickname;
-        this.family = family;
     }
 
     public Integer getId() {
@@ -71,22 +64,6 @@ public class Student implements Serializable {
 
     public void setStudentName(String studentName) {
         this.studentName = studentName;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public String getFamily() {
-        return family;
-    }
-
-    public void setFamily(String family) {
-        this.family = family;
     }
 
     public Collection<Student> getStudentCollection() {

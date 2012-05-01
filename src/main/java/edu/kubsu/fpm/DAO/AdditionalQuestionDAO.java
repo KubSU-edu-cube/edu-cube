@@ -1,8 +1,7 @@
 package edu.kubsu.fpm.DAO;
 
+import edu.kubsu.fpm.model.Group;
 import edu.kubsu.fpm.model.AdditionalQuestion;
-import edu.kubsu.fpm.model.ClassifierValue;
-import edu.kubsu.fpm.model.Groups;
 
 import javax.ejb.*;
 import javax.persistence.EntityManager;
@@ -21,11 +20,10 @@ public class AdditionalQuestionDAO {
     @PersistenceContext(unitName = "sample")
     EntityManager em;
 
-    public Integer getPercentObligatoryQuestion(Groups group, ClassifierValue classifValues){
+    public Integer getPercentObligatoryQuestion(Group group){
         try{
             return (Integer) em.createQuery("select distinct aq.percentObligatoryQuestion from AdditionalQuestion aq " +
-                    "where aq.classifValues = :classif and aq.group = :group")
-                    .setParameter("classif", classifValues)
+                    "where aq.group = :group")
                     .setParameter("group", group)
                     .getSingleResult();
         } catch (NoResultException e){
@@ -33,7 +31,7 @@ public class AdditionalQuestionDAO {
         }
     }
 
-    public List<AdditionalQuestion> getAddQuestByGroup(Groups group){
+    public List<AdditionalQuestion> getAddQuestByGroup(Group group){
         return (List<AdditionalQuestion>) em.createQuery("from AdditionalQuestion where group = :group")
                 .setParameter("group", group)
                 .getResultList();
