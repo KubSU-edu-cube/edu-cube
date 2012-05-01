@@ -36,6 +36,10 @@ import java.util.*;
  * To change this template use File | Settings | File Templates.
  */
 
+//  TODO
+//   1. Вместо группы Group использовать StudentGroup, и к Group или к Course привязать ClassifValues.
+//
+
 @ManagedBean(name = "taskBean")
 @SessionScoped
 public class TaskBean {
@@ -135,12 +139,17 @@ public class TaskBean {
 
     public Integer getCountQuestion() {
         if (countQuestion == null){
-            ClassifierValue classifierValue = groupsDAO.getClassiferValuesById(idGroup);
-            int obligPersent = additionalQuestionDAO.getPercentObligatoryQuestion(groupsDAO.getGroupsById(idGroup), classifierValue);
+            int obligPersent;
+            if (idGroup > 0){  // Если пользователь - зарегестрирован и отноится к некоторой группе
+                ClassifierValue classifierValue = groupsDAO.getClassiferValuesById(idGroup);
+                obligPersent = additionalQuestionDAO.getPercentObligatoryQuestion(groupsDAO.getGroupsById(idGroup), classifierValue);
 
-            if (obligPersent == 0){       // Если в базе ничего не нашли или задан 0, исп. значение по-умолчанию.
-                obligPersent = 20;        // TODO Проверить.
+                if (obligPersent == 0){       // Если в базе ничего не нашли или задан 0, исп. значение по-умолчанию.
+                    obligPersent = 20;
+                }
             }
+            else
+                obligPersent = 20;
     //        Учитываем, что процент обязательных вопросов задается из базы.
             int count = idObligitaryFactList.size() * obligPersent / 100;
             return count == 0 ? 1 : count;
@@ -204,13 +213,15 @@ public class TaskBean {
         int amountRemainQuestion = idFactList.size() - countAnswer;
         int count = amountRemainQuestion * 50 / 100;  // значение по-умолчанию.
 
-        List<AdditionalQuestion> addQuestList = additionalQuestionDAO.getAddQuestByGroup(groupsDAO.getGroupsById(idGroup));
-        if (addQuestList.size() > 0){
-            int percent = getClosePercent(percentRightAnswers, addQuestList);
-            for (AdditionalQuestion addQuest: addQuestList){
-                if (addQuest.getPercentRigthAnswers() == percent) {
-                    int percentAddQuest = addQuest.getPercentAdditionalQuestion();
-                    count = amountRemainQuestion * percentAddQuest / 100;
+        if (idGroup > 0){
+            List<AdditionalQuestion> addQuestList = additionalQuestionDAO.getAddQuestByGroup(groupsDAO.getGroupsById(idGroup));
+            if (addQuestList.size() > 0){
+                int percent = getClosePercent(percentRightAnswers, addQuestList);
+                for (AdditionalQuestion addQuest: addQuestList){
+                    if (addQuest.getPercentRigthAnswers() == percent) {
+                        int percentAddQuest = addQuest.getPercentAdditionalQuestion();
+                        count = amountRemainQuestion * percentAddQuest / 100;
+                    }
                 }
             }
         }
@@ -236,8 +247,9 @@ public class TaskBean {
     }
 
 //    Формирует вывод результатов тестирования
-    public String getTestResult() {
+    public String getTestResult() {    // Подумать над формированием результата. На что смотреть при выборе функции оценивания?
         testResult = "Вы получили ".concat(this.getCountRightAnswer().toString()).concat(" балов из ").concat(this.getCountAnswer().toString());
+
         return testResult;
     }
 
