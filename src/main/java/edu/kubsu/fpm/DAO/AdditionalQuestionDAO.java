@@ -1,8 +1,8 @@
 package edu.kubsu.fpm.DAO;
 
+import edu.kubsu.fpm.entity.Groups;
 import edu.kubsu.fpm.model.AdditionalQuestion;
 import edu.kubsu.fpm.model.ClassifierValue;
-import edu.kubsu.fpm.model.Groups;
 
 import javax.ejb.*;
 import javax.persistence.EntityManager;

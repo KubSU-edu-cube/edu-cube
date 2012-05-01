@@ -2,6 +2,8 @@ package edu.kubsu.fpm.managed.adaptiveTesting;
 
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import edu.kubsu.fpm.DAO.*;
+import edu.kubsu.fpm.entity.Groups;
+import edu.kubsu.fpm.model.AdditionalQuestion;
 import edu.kubsu.fpm.managed.classes.ImgConverter;
 import edu.kubsu.fpm.model.*;
 

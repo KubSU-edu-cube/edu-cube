@@ -5,6 +5,8 @@
 
 package edu.kubsu.fpm.model;
 
+import edu.kubsu.fpm.entity.Groups;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;

@@ -5,6 +5,8 @@
 
 package edu.kubsu.fpm.model;
 
+import edu.kubsu.fpm.entity.Student;
+
 import javax.persistence.*;
 import java.io.Serializable;
 

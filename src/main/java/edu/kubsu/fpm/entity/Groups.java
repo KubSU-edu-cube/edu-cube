@@ -3,7 +3,10 @@
  * and open the template in the editor.
  */
 
-package edu.kubsu.fpm.model;
+package edu.kubsu.fpm.entity;
+
+import edu.kubsu.fpm.model.AdditionalQuestion;
+import edu.kubsu.fpm.model.ClassifierValue;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -96,7 +99,7 @@ public class Groups implements Serializable {
 
     @Override
     public String toString() {
-        return "edu.kubsu.fpm.model.Groups[id=" + id + "]";
+        return "edu.kubsu.fpm.entity.Groups[id=" + id + "]";
     }
 
 }
