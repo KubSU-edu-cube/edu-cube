@@ -96,10 +96,7 @@ public class FactClassifvalue implements Serializable {
             return false;
         }
         FactClassifvalue other = (FactClassifvalue) object;
-        if ((this.factClassifvaluePK == null && other.factClassifvaluePK != null) || (this.factClassifvaluePK != null && !this.factClassifvaluePK.equals(other.factClassifvaluePK))) {
-            return false;
-        }
-        return true;
+        return !((this.factClassifvaluePK == null && other.factClassifvaluePK != null) || (this.factClassifvaluePK != null && !this.factClassifvaluePK.equals(other.factClassifvaluePK)));
     }
 
     @Override

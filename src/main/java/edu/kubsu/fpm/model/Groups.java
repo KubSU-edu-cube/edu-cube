@@ -5,21 +5,9 @@
 
 package edu.kubsu.fpm.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 /**
  *
@@ -29,23 +17,21 @@ import javax.persistence.Table;
 @Table(name = "GROUPS")
 @NamedQueries({
     @NamedQuery(name = "Groups.findAll", query = "SELECT g FROM Groups g"),
-    @NamedQuery(name = "Groups.findById", query = "SELECT g FROM Groups g WHERE g.id = :id"),
+    @NamedQuery(name = "Groups.findById", query = "SELECT g from Groups g where g.id = :id"),
     @NamedQuery(name = "Groups.findByGroupName", query = "SELECT g FROM Groups g WHERE g.groupName = :groupName")})
 public class Groups implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "ID", nullable = false)
     private Integer id;
-    @Basic(optional = false)
     @Column(name = "GROUP_NAME", nullable = false, length = 200)
     private String groupName;
     @JoinColumn(name = "CLASSIF_VALUESID", referencedColumnName = "ID", nullable = false)
     @ManyToOne(optional = false)
-    private ClassifierValue classifValuesid;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "groupid")
-    private Collection<AditionalQuestion> aditionalQuestionCollection;
+    private ClassifierValue classifValues;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "group")
+    private Collection<AdditionalQuestion> aditionalQuestionCollection;
 
     public Groups() {
     }
@@ -76,18 +62,18 @@ public class Groups implements Serializable {
     }
 
     public ClassifierValue getClassifValuesid() {
-        return classifValuesid;
+        return classifValues;
     }
 
     public void setClassifValuesid(ClassifierValue classifValuesid) {
-        this.classifValuesid = classifValuesid;
+        this.classifValues = classifValuesid;
     }
 
-    public Collection<AditionalQuestion> getAditionalQuestionCollection() {
+    public Collection<AdditionalQuestion> getAditionalQuestionCollection() {
         return aditionalQuestionCollection;
     }
 
-    public void setAditionalQuestionCollection(Collection<AditionalQuestion> aditionalQuestionCollection) {
+    public void setAditionalQuestionCollection(Collection<AdditionalQuestion> aditionalQuestionCollection) {
         this.aditionalQuestionCollection = aditionalQuestionCollection;
     }
 
@@ -105,10 +91,7 @@ public class Groups implements Serializable {
             return false;
         }
         Groups other = (Groups) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override

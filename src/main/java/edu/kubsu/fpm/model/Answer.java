@@ -5,19 +5,8 @@
 
 package edu.kubsu.fpm.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
 
 /**
  *
@@ -33,13 +22,10 @@ public class Answer implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "ID", nullable = false)
     private Integer id;
-    @Basic(optional = false)
     @Column(name = "PATH_ANSW_FILE", nullable = false, length = 500)
     private String pathAnswFile;
-    @Basic(optional = false)
     @Lob
     @Column(name = "TEXT_QUESTION", nullable = false)
     private Serializable textQuestion;
@@ -117,10 +103,7 @@ public class Answer implements Serializable {
             return false;
         }
         Answer other = (Answer) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override

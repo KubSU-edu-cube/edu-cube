@@ -45,10 +45,10 @@ public class DBImageServlet extends HttpServlet {
             }
         }
 
-//        String count = request.getParameter("imgcount");  // получаем параметр запроса - номер картинки в лекции
+        String count = request.getParameter("imgcount");  // получаем параметр запроса - номер картинки в лекции
         response.setContentType("image/png");
         OutputStream os = response.getOutputStream();
-//        byte[] img = DBImage.getImgList().get(Integer.parseInt(count));
+        byte[] img = DBImage.getImgList().get(Integer.parseInt(count));
         os.write(img);
         os.flush();
     }
@@ -59,6 +59,5 @@ public class DBImageServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
-
     }
 }

@@ -5,21 +5,9 @@
 
 package edu.kubsu.fpm.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 /**
  *
@@ -36,7 +24,6 @@ public class ClassifierValue implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "ID", nullable = false)
     private Integer id;
     @Column(name = "VALUE_", length = 1000)
@@ -49,11 +36,11 @@ public class ClassifierValue implements Serializable {
     private Collection<Mark> markCollection;
     @JoinColumn(name = "CLASSIFID", referencedColumnName = "ID", nullable = false)
     @ManyToOne(optional = false)
-    private Classifier classifid;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "classifValuesid")
+    private Classifier classifier;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "classifValues")
     private Collection<Groups> groupsCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "classifValuesid")
-    private Collection<AditionalQuestion> aditionalQuestionCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "classifValues")
+    private Collection<AdditionalQuestion> aditionalQuestionCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "classifierValue")
     private Collection<CollfactClassifvalue> collfactClassifvalueCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "classifValuesid")
@@ -106,12 +93,12 @@ public class ClassifierValue implements Serializable {
         this.markCollection = markCollection;
     }
 
-    public Classifier getClassifid() {
-        return classifid;
+    public Classifier getClassifier() {
+        return classifier;
     }
 
-    public void setClassifid(Classifier classifid) {
-        this.classifid = classifid;
+    public void setClassifier(Classifier classifier) {
+        this.classifier = classifier;
     }
 
     public Collection<Groups> getGroupsCollection() {
@@ -122,11 +109,11 @@ public class ClassifierValue implements Serializable {
         this.groupsCollection = groupsCollection;
     }
 
-    public Collection<AditionalQuestion> getAditionalQuestionCollection() {
+    public Collection<AdditionalQuestion> getAditionalQuestionCollection() {
         return aditionalQuestionCollection;
     }
 
-    public void setAditionalQuestionCollection(Collection<AditionalQuestion> aditionalQuestionCollection) {
+    public void setAditionalQuestionCollection(Collection<AdditionalQuestion> aditionalQuestionCollection) {
         this.aditionalQuestionCollection = aditionalQuestionCollection;
     }
 
@@ -160,10 +147,7 @@ public class ClassifierValue implements Serializable {
             return false;
         }
         ClassifierValue other = (ClassifierValue) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override

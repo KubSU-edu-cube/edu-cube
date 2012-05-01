@@ -96,10 +96,7 @@ public class CollfactClassifvalue implements Serializable {
             return false;
         }
         CollfactClassifvalue other = (CollfactClassifvalue) object;
-        if ((this.collfactClassifvaluePK == null && other.collfactClassifvaluePK != null) || (this.collfactClassifvaluePK != null && !this.collfactClassifvaluePK.equals(other.collfactClassifvaluePK))) {
-            return false;
-        }
-        return true;
+        return !((this.collfactClassifvaluePK == null && other.collfactClassifvaluePK != null) || (this.collfactClassifvaluePK != null && !this.collfactClassifvaluePK.equals(other.collfactClassifvaluePK)));
     }
 
     @Override
