@@ -38,7 +38,8 @@ public class Person implements Serializable {
     @Lob
     private byte[] photo;
 
-
+    @OneToMany(mappedBy = "author")
+    private List<Lection> lections;
 
     @OneToMany(mappedBy = "person")
     private List<Education> educations;
@@ -49,6 +50,8 @@ public class Person implements Serializable {
     @ManyToMany(mappedBy = "recipients")
     private List<Message> messages;
 
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
+    private List<Course_variation> variationList;
 
     public int getId() {
         return id;
@@ -208,6 +211,22 @@ public class Person implements Serializable {
 
     public void setPhoto(byte[] photo) {
         this.photo = photo;
+    }
+
+    public List<Course_variation> getVariationList() {
+        return variationList;
+    }
+
+    public void setVariationList(List<Course_variation> variationList) {
+        this.variationList = variationList;
+    }
+
+    public List<Lection> getLections() {
+        return lections;
+    }
+
+    public void setLections(List<Lection> lections) {
+        this.lections = lections;
     }
 }
 

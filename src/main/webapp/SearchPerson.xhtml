@@ -7,61 +7,82 @@
     <ui:define name="page_content">
         Здесь редактируется личная информация учителя
         <h:form id="form">
-            <div>
+            <div class="div_search">
                 <h:panelGrid columns="2">
-                    <p:inputText value="#{searchBean.simpleQuery}"/>
-                    <p:commandButton value="Поикс" actionListener="#{searchBean.testShowPerson}" process="@this"/>
+                    <p:inputText value="#{searchBean.simpleQuery}" style="width:300px"/>
+                    <p:commandButton value="Поиск" actionListener="#{searchBean.search}" update="@form"/>
                 </h:panelGrid>
             </div>
-            <div>
-                <div>
-                    <p:dataGrid var="shortInfo" value="#{searchBean.shortPersonInfos}">
+            <div class="div_found_param">
+                <div class="div_found">
+                    <p:dataGrid var="shortInfo" value="#{searchBean.shortPersonInfos}" columns ="1">
                         <p:column>
-                            <h:panelGrid columns="2">
+                            <div class="div_photo_info">
+                                <div class="div_photo">
                                 <p:graphicImage value="#{shortInfo.src}"/>
+                                </div>
+                                <div class="div_info">
                                 <h:panelGrid columns="1">
-                                    <h:outputLabel value="#{shortInfo.surmane} #{shortInfo.name}"/>
-                                    <h:outputLabel value="#{shortInfo.age}"/>
-                                    <h:outputLabel value="#{shortInfo.city}"/>
+                                    <h:outputLabel value="#{shortInfo.surmane} #{shortInfo.name}" styleClass="user_name"/>
+                                    <h:outputLabel value="#{shortInfo.age}" styleClass="labels"/>
+                                    <h:outputLabel value="#{shortInfo.city}" styleClass="labels"/>
                                 </h:panelGrid>
-                            </h:panelGrid>
+                                </div>
+                            </div>
                         </p:column>
                     </p:dataGrid>
 
                 </div>
-                <div>
-                    <h:panelGrid columns="1">
-                        <h:outputLabel value="Страна"/>
-                        <p:selectOneMenu value="#{searchBean.selectedCountry}"
-                                         var="countries"
-                                         converter="edu.kubsu.fpm.converter.SelectOneConverter">
-                            <f:selectItem itemLabel="Выбор страны" itemValue="" />
-                            <f:selectItems value="#{searchBean.countries}"
-                                           var="country"
-                                           itemLabel="#{country.name}"
-                                           itemValue="#{country}"/>
-                            <p:ajax event="change" update="selectCity" process="@parent"/>
-                        </p:selectOneMenu>
-                        <h:outputLabel value="Город"/>
-                        <p:selectOneMenu id="selectCity">
+                <div class="div_params">
 
-                        </p:selectOneMenu>
-                        <h:outputLabel value="Возраст"/>
-                        <h:panelGrid columns="2">
-                            <p:selectOneMenu>
-
+                        <h:outputLabel value="Страна" styleClass="labels"/>
+                        <p:inputText value="#{searchBean.country}" style="width:150px"/>
+                        <h:outputLabel value="Город" styleClass="labels" />
+                        <p:inputText value="#{searchBean.city}" style="width:150px"/>
+                        <h:outputLabel value="Возраст" styleClass="labels" />
+                        <div>
+                            <div>
+                            <p:selectOneMenu value="#{searchBean.selectedFromAge}">
+                                <f:selectItem itemValue="от" itemLabel="от"/>
+                                <f:selectItems value="#{searchBean.ageList}"
+                                               itemLabel="#{age}"
+                                               var="age"
+                                               itemValue="#{age}"/>
                             </p:selectOneMenu>
-                            <p:selectOneMenu>
-
+                            </div>
+                            <div>
+                            <p:selectOneMenu value="#{searchBean.selectedToAge}">
+                                <f:selectItem itemValue="до" itemLabel="до"/>
+                                <f:selectItems value="#{searchBean.ageList}"
+                                               itemLabel="#{age}"
+                                               var="age"
+                                               itemValue="#{age}"/>
                             </p:selectOneMenu>
-                        </h:panelGrid>
-                        <h:outputLabel value="Пол"/>
-                        <p:selectOneRadio id="customRadio" value="#{searchBean.sex}" layout="custom">
-                            <f:selectItem itemLabel="Женский" itemValue="Женский" />
-                            <f:selectItem itemLabel="Мужской" itemValue="Мужской" />
-                            <f:selectItem itemLabel="Любой" itemValue="Любой" />
-                        </p:selectOneRadio>
-                    </h:panelGrid>
+                            </div>
+                        </div>
+                        <h:outputLabel value="Пол" styleClass="labels"/>
+
+                            <p:selectOneRadio id="customRadio" value="#{searchBean.sex}" layout="custom">
+                                <f:selectItem itemLabel="Мужской" itemValue="мужской" />
+                                <f:selectItem itemLabel="Женский" itemValue="женский" />
+                                <f:selectItem itemLabel="Любой" itemValue="любой" />
+                            </p:selectOneRadio>
+
+                            <h:panelGrid columns="2">
+                                <p:radioButton id="opt1" for="customRadio" itemIndex="0"/>
+                                <h:outputLabel for="opt1" value="Мужской" />
+
+
+                                <p:radioButton id="opt2" for="customRadio" itemIndex="1"/>
+                                <h:outputLabel for="opt2" value="Женский" />
+
+
+                                <p:radioButton id="opt3" for="customRadio" itemIndex="2"/>
+                                <h:outputLabel for="opt3" value="Любой" />
+
+                            </h:panelGrid>
+
+
                 </div>
             </div>
 

@@ -7,6 +7,7 @@ import edu.kubsu.fpm.ejb.DBImageLocal;
 import edu.kubsu.fpm.entity.City;
 import edu.kubsu.fpm.entity.Country;
 import edu.kubsu.fpm.entity.Person;
+import edu.kubsu.fpm.managed.classes.DateConverter;
 import edu.kubsu.fpm.managed.teacher_ps.classes.PersonalPhoto;
 import edu.kubsu.fpm.managed.teacher_ps.classes.ShortPersonInfo;
 
@@ -43,6 +44,9 @@ public class SearchBean {
     private List<City> cities;
     private List<Country> countries;
 
+    private List<Person> foundPersons;
+    private List<PersonalPhoto> smallImgs;
+
     @EJB
     private PersonDAO personDAO;
     @EJB
@@ -54,8 +58,10 @@ public class SearchBean {
 
     public SearchBean() {
         ageList = new ArrayList<String>();
-        initAgeList(0,90);
-
+        initAgeList(0,100);
+        shortPersonInfos = new ArrayList<ShortPersonInfo>();
+        smallImgs = new ArrayList<PersonalPhoto>();
+        foundPersons = new ArrayList<Person>();
     }
 
     private void initAgeList(int from, int to) {
@@ -65,27 +71,72 @@ public class SearchBean {
         }
     }
 
-    public void testShowPerson(){
-       List<Person> personList = personDAO.findBy2Names("Ирина","Семенова");
-       List<PersonalPhoto> smalImgs = new ArrayList<PersonalPhoto>();
+    public void search(){
+        // очищаем необходимые списки
+        clearLsts();
+        // находим всех людей, соответствующих запросу, заполняем список короткой информации, отправляем их фотографии сервлету
 
-       Person person = personList.get(0);
+//        После перехода, все поля бина = null!!!!!!!!!!!!!!!!!!!
+//        this.shortPersonInfos = findPersons(this.simpleQuery,
+//                this.selectedCountry,
+//                this.selectedCity,
+//                this.selectedFromAge,
+//                this.selectedToAge,
+//                this.sex);
+        this.shortPersonInfos = findPersons(this.simpleQuery,
+                this.city,
+                this.country,
+                this.selectedFromAge,
+                this.selectedToAge,
+                this.sex);
+    }
 
-       shortPersonInfos = new ArrayList<ShortPersonInfo>();
-       ShortPersonInfo personInfo = new ShortPersonInfo();
-       personInfo.setName(person.getName());
-       personInfo.setSurmane(person.getSurname());
-       personInfo.setCity(person.getCurrentCity());
-       personInfo.setAge(getPersonAge(person.getDateOfBirth()));
-       personInfo.setSrc(String.valueOf(person.getId()));
+    private void clearLsts() {
+        shortPersonInfos.clear();
+        foundPersons.clear();
+        smallImgs.clear();
+    }
 
-        PersonalPhoto photo = new PersonalPhoto(person.getPhoto(),person.getId());
-        smalImgs.add(photo);
-        imageLocal.setSmallImgs(smalImgs);
+    private List<ShortPersonInfo> findPersons(String simpleQuery, String selectedCountry, String selectedCity, String selectedFromAge, String selectedToAge, String sex) {
+        String[] query = simpleQuery.split(" ");
+        String fName;
+        String lName;
+        if (query.length >= 2){
+            fName = query[0];
+            lName = query[1];
+            // находим всех людей, которые соответствуют запросу
+            foundPersons = personDAO.fullSearch(fName,
+                    lName,
+                    Integer.parseInt(selectedFromAge),
+                    Integer.parseInt(selectedToAge),
+                    selectedCity,
+                    selectedCountry,
+                    sex);
+            // заполняем краткую информацию о найденных людях
+            for (Person person: foundPersons){
+                ShortPersonInfo shortPersonInfo = new ShortPersonInfo();
+                shortPersonInfo.setAge(DateConverter.getAgeByDofBirth(person.getDateOfBirth()));
+                shortPersonInfo.setCity(person.getCurrentCity());
+                shortPersonInfo.setName(person.getName());
+                shortPersonInfo.setSurmane(person.getSurname());
+                shortPersonInfo.setSrc(String.valueOf(person.getId()));
 
+                shortPersonInfos.add(shortPersonInfo);
 
+                // добавляем байт-фото в лист фогографий, соответствующих найденным людям
+                PersonalPhoto photo = new PersonalPhoto(person.getPhoto(),person.getId());
+                smallImgs.add(photo);
+            }
+            // отправляем лист фотографий сервлету
+            imageLocal.setSmallImgs(smallImgs);
+            return shortPersonInfos;
+        }else {
+            return null;
+        }
+    }
 
-
+    private void clearShortPersonInfosLst() {
+        this.shortPersonInfos.clear();
     }
 
     private int getPersonAge(Date dateOfBirth) {
@@ -187,12 +238,31 @@ public class SearchBean {
     public List<Country> getCountries() {
         if(countries==null){
             countries = countryDAO.getAllCountries();
+            if(cities==null){
+                cities = new ArrayList<City>();
+            }
+            for(Country c: countries){
+                for (City ci: c.getCities()){
+                    cities.add(ci);
+                }
+            }
         }
         return countries;
     }
 
     public void setCountries(List<Country> countries) {
         this.countries = countries;
+    }
+    public void testListner(){
+        String s = selectedCountry.getName();
+    }
+
+    public List<Person> getFoundPersons() {
+        return foundPersons;
+    }
+
+    public void setFoundPersons(List<Person> foundPersons) {
+        this.foundPersons = foundPersons;
     }
 }
 

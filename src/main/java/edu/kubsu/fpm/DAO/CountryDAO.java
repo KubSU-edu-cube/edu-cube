@@ -29,5 +29,8 @@ public class CountryDAO {
     public List<Country> getAllCountries() {
         return (List<Country>)em.createQuery("from Country").getResultList();
     }
+    public Country find(int id){
+        return em.find(Country.class, id);
+    }
 
 }

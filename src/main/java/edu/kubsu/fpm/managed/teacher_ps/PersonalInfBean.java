@@ -32,7 +32,8 @@ import java.util.List;
 @RequestScoped
 public class PersonalInfBean {
     private int beanUniqueId = 0;
-    
+
+    private String teacherId;   // кому принадлежит страница
     private String name = "Анна";
     private String surname = "Жуланова";
     private String patronymic = "Павловна";
@@ -71,9 +72,10 @@ public class PersonalInfBean {
 //    ***************************************************************************************************************
     public PersonalInfBean() {
 
+       ///////// чей вообще кабинет?? //////////////////////
+        this.setTeacherId((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("teacherId"));
 
-
-       this.tmpJob = new Job();
+        this.tmpJob = new Job();
         tmpJob.setCountry(null);
         tmpJob.setCity(null);
 
@@ -86,7 +88,18 @@ public class PersonalInfBean {
         dateOfBirth = null;
         GregorianCalendar calendar = new GregorianCalendar();
         calendar.set(2012, 9, 1);
+
         dateOfBirth = calendar.getTime();
+
+        GregorianCalendar curDate = new GregorianCalendar();
+        calendar.setTime(new Date());
+
+        GregorianCalendar age = new GregorianCalendar();
+        calendar.set(18,0,0);
+
+
+
+
 
         
         educations = new ArrayList<Education>();
@@ -142,81 +155,52 @@ public class PersonalInfBean {
     }
 
     private void persistPerson() throws FileNotFoundException {
+
+//        savePerson("Доктор наук","ул. Рашпилевская 50, кв. 14","Москва","Москва"
+//        ,"Россия",InsertDate(21, 05, 1951),"254-93-77","1957203","+7(951)2304978",
+//                "Ирина","Викторовна","женский" ,"orf_541","Семенова","","temp_img/gy.jpeg");
+
+//        edu.kubsu.fpm.entity.Job job1 = new edu.kubsu.fpm.entity.Job();
+//        job1.setBeginDate(InsertDate(1,7,2000));
+//        job1.setEndDate(InsertDate(1,7,2008));
+//
+//        Post post1 = new Post();
+//        post1.setName("Архитектор");
+//
+//        Organization organization1 = new Organization();
+//        organization1.setName("ОАО Тандер");
+//        organization1.setAdress("Солнечная и Московская");
+        savePerson("Доктор наук","ул. Восточная 340, кв. 54","Иваново","Иваново"
+                ,"Россия",InsertDate(21, 05, 1960),"254-93-77","1957203","+7(951)2304978",
+                "Елена","Ивановна","женский" ,"orf_541","Молчалина","","temp_img/molchalina_e_i.jpg");
+
+        savePerson("Кандидат наук","ул. Гоголя 30, кв. 7","Москва","Москва"
+                ,"Россия",InsertDate(2, 06, 1987),"254-93-77","1957203","+7(951)2304978",
+                "Елена","Викторовна","женский" ,"orf_541","Молчалина","","temp_img/molchalina_e_v.jpg");
+
+
+    }
+
+    private void savePerson(String additionalInfo, String addr, String cityOfBirth, String currentCity, String currentCountry, Date dateOfBirth, String homeTel, String icq, String mobtel, String name, String patronymic, String sex, String skype, String surname, String site, String photo) {
         Person person1 = new Person();
-        person1.setAdditionalInformation("Доктор наук");
-        person1.setAdress("ул. Рашпилевская 50, кв. 14");
-        person1.setCityOfBirth("Ижевск");
-        person1.setCurrentCity("Краснодар");
-        person1.setCurrentCountry("Россия");
-        person1.setDateOfBirth(InsertDate(21, 05, 1951));
-        person1.setHomeTel("254-93-77");
-        person1.setIcq("1957203");
-        person1.setMobTel("+7(951)2304978");
-        person1.setName("Ирина");
-        person1.setPatronymic("Викторовна");
-        person1.setSex("женский");
-        person1.setSkype("orf_541");
-        person1.setSurname("Семенова");
-        person1.setWebSite("");
-        person1.setPhoto(getBytesFromFile("temp_img/gy.png"));
-
-
-
-
-        edu.kubsu.fpm.entity.Job job1 = new edu.kubsu.fpm.entity.Job();
-        job1.setBeginDate(InsertDate(1,7,2000));
-        job1.setEndDate(InsertDate(1,7,2008));
-        
-        Post post1 = new Post();
-        post1.setName("Архитектор");
-
-        Organization organization1 = new Organization();
-        organization1.setName("ОАО Тандер");
-        organization1.setAdress("Солнечная и Московская");
-
-
+        person1.setAdditionalInformation(additionalInfo);
+        person1.setAdress(addr);
+        person1.setCityOfBirth(cityOfBirth);
+        person1.setCurrentCity(currentCity);
+        person1.setCurrentCountry(currentCountry);
+        person1.setDateOfBirth(dateOfBirth);
+        person1.setHomeTel(homeTel);
+        person1.setIcq(icq);
+        person1.setMobTel(mobtel);
+        person1.setName(name);
+        person1.setPatronymic(patronymic);
+        person1.setSex(sex);
+        person1.setSkype(skype);
+        person1.setSurname(surname);
+        person1.setWebSite(site);
+        person1.setPhoto(getBytesFromFile(photo));
 
         personDAO.persist(person1);
-
-        Person person2 = new Person();
-        person2.setAdditionalInformation("");
-        person2.setAdress("ул Севастопольская 8");
-        person2.setCityOfBirth("Краснодар");
-        person2.setCurrentCity("Краснодар");
-        person2.setCurrentCountry("Россия");
-        person2.setDateOfBirth(InsertDate(11, 05, 1963));
-        person2.setHomeTel("");
-        person2.setIcq("");
-        person2.setMobTel("+7(918)2333367");
-        person2.setName("Александр");
-        person2.setPatronymic("Петрович");
-        person2.setSex("мужской");
-        person2.setSkype("");
-        person2.setSurname("Дроботько");
-        person2.setWebSite("");
-        person2.setPhoto(getBytesFromFile("temp_img/jojo.jpg"));
-
-        personDAO.persist(person2);
-
-        Person person3 = new Person();
-        person3.setAdditionalInformation("студент");
-        person3.setAdress("");
-        person3.setCityOfBirth("");
-        person3.setCurrentCity("");
-        person3.setCurrentCountry("");
-        person3.setDateOfBirth(InsertDate(20, 8, 1991));
-        person3.setHomeTel("");
-        person3.setIcq("");
-        person3.setMobTel("");
-        person3.setName("Константин");
-        person3.setPatronymic("");
-        person3.setSex("");
-        person3.setSkype("");
-        person3.setSurname("Васильев");
-        person3.setWebSite("");
-        person3.setPhoto(getBytesFromFile("temp_img/tip.jpg"));
-
-        personDAO.persist(person3);
     }
 
     private byte[] getBytesFromFile(String fName) {
@@ -224,7 +208,7 @@ public class PersonalInfBean {
         try {
             File imgFile = new File(fName);
             Image image = ImageIO.read(new FileInputStream(fName));
-            byte[] resisedImg = ImgConverter.changeProportion(imgFile,null, image.getWidth(null), image.getHeight(null), 400, 300);
+            byte[] resisedImg = ImgConverter.changeProportion(imgFile,null, image.getWidth(null), image.getHeight(null), 100, 150);
             return resisedImg;
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
@@ -522,5 +506,15 @@ public class PersonalInfBean {
 
     public void setTmpJob(Job tmpJob) {
         this.tmpJob = tmpJob;
+    }
+
+    public String getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(String teacherId) {
+        this.teacherId = teacherId;
+
+
     }
 }

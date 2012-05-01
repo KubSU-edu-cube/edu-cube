@@ -6,6 +6,7 @@
     <ui:define name="page_content">
         Здесь личная информация учителя
         <h:form>
+            <h:outputLabel value="Это страница учителя с идентификатором #{teacherPS.teacherId}"/>
             <p:commandLink value="Редактировать основную информацию" action="edit_personal_information" ajax="false"/>
             <p:commandButton value="Инициализация БД" actionListener="#{personalInfBean.tempBaseInit}" process="@this"/>
 
