@@ -1,6 +1,5 @@
 package edu.kubsu.fpm.DAO;
 
-import edu.kubsu.fpm.entity.City;
 import edu.kubsu.fpm.entity.Course;
 
 import javax.ejb.*;
@@ -22,5 +21,11 @@ public class CourseDAO {
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
     public void persist(Course course){
         em.merge(course);
+    }
+
+    public Course getCourseById(int id){
+        return (Course) em.createQuery("from Course c where c.id = :id")
+                .setParameter("id", id)
+                .getSingleResult();
     }
 }

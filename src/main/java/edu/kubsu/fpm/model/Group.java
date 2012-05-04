@@ -5,9 +5,13 @@
 
 package edu.kubsu.fpm.model;
 
+import edu.kubsu.fpm.entity.Course_variation;
+import edu.kubsu.fpm.entity.EstimationFunc_Group;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 /**
  *
@@ -21,13 +25,14 @@ public class Group implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Integer id;
-    @Column(name = "course_id")
-    private Integer courseId;
-//    @JoinColumn(name = "COURSE_ID", referencedColumnName = "ID")     // , nullable = false
-//    @ManyToOne(optional = false)
-//    private Course_variation courseVariation;
+    @JoinColumn(name = "COURSE_ID", referencedColumnName = "ID", nullable = false)
+    @ManyToOne(optional = false)
+    private Course_variation courseVariation;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "group")
     private Collection<AdditionalQuestion> aditionalQuestionCollection;
+
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    private List<EstimationFunc_Group> estimationFuncGroupList;
 
     public Group() {
     }
@@ -36,12 +41,12 @@ public class Group implements Serializable {
         this.id = id;
     }
 
-    public Integer getCourseId() {
-        return courseId;
+    public List<EstimationFunc_Group> getEstimationFuncGroupList() {
+        return estimationFuncGroupList;
     }
 
-    public void setCourseId(Integer courseId) {
-        this.courseId = courseId;
+    public void setEstimationFuncGroupList(List<EstimationFunc_Group> estimationFuncGroupList) {
+        this.estimationFuncGroupList = estimationFuncGroupList;
     }
 
     public Integer getId() {
@@ -52,13 +57,13 @@ public class Group implements Serializable {
         this.id = id;
     }
 
-//    public Course_variation getCourseVariation() {
-//        return courseVariation;
-//    }
-//
-//    public void setCourseVariation(Course_variation courseVariation) {
-//        this.courseVariation = courseVariation;
-//    }
+    public Course_variation getCourseVariation() {
+        return courseVariation;
+    }
+
+    public void setCourseVariation(Course_variation courseVariation) {
+        this.courseVariation = courseVariation;
+    }
 
     public Collection<AdditionalQuestion> getAditionalQuestionCollection() {
         return aditionalQuestionCollection;

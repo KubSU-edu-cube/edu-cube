@@ -1,5 +1,6 @@
 package edu.kubsu.fpm.DAO;
 
+import edu.kubsu.fpm.entity.Course_variation;
 import edu.kubsu.fpm.model.Group;
 
 import javax.ejb.*;
@@ -18,8 +19,12 @@ public class GroupDAO {
     EntityManager em;
 
     public Group getGroupsById(Integer id){
-        return (Group) em.createQuery("from Group where id = :id")
-                .setParameter("id", id)
+        return em.find(Group.class, id);
+    }
+
+    public Group getGroupByCourseVar(Course_variation course_variation){
+        return (Group) em.createQuery("from Group g where g.courseVariation = :course")
+                .setParameter("course", course_variation)
                 .getSingleResult();
     }
 

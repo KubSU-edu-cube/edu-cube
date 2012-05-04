@@ -30,6 +30,8 @@ import java.util.List;
 @RequestScoped
 public class InitFactBean {
 
+//    private int idCourse = 1;
+
     @EJB
     private ClassifierDAO classifierDAO;
 
@@ -57,6 +59,9 @@ public class InitFactBean {
     @EJB
     private GroupDAO groupDAO;
 
+    @EJB
+    private Course_variationDAO course_variationDAO;
+
     public InitFactBean(){
 
     }
@@ -78,23 +83,25 @@ public class InitFactBean {
 
     private void persistGroups() {
         Group group = new Group();
-        group.setCourseId(1);
-//        group.setCourseVariation();
+        group.setCourseVariation(course_variationDAO.getCourseVarById(1));  //idCourse
         groupDAO.persist(group);
+
+        Group group2 = new Group();
+                group2.setCourseVariation(course_variationDAO.getCourseVarById(2));  //idCourse
+        groupDAO.persist(group2);
     }
 
-    private void persistAdditionalQuestion() {     // TODO Проверить!
-        persistAdditionalQuestionValue(1, 22, 50, 100, 0);
-        persistAdditionalQuestionValue(1, 22, 50, 80, 10);
-        persistAdditionalQuestionValue(1, 22, 50, 60, 20);
-        persistAdditionalQuestionValue(1, 22, 50, 40, 30);
-        persistAdditionalQuestionValue(1, 22, 50, 20, 40);
+    private void persistAdditionalQuestion() {
+        persistAdditionalQuestionValue(1, 50, 100, 0);
+        persistAdditionalQuestionValue(1, 50, 80, 10);
+        persistAdditionalQuestionValue(1, 50, 60, 20);
+        persistAdditionalQuestionValue(1, 50, 40, 30);
+        persistAdditionalQuestionValue(1, 50, 20, 40);
     }
 
-    private void persistAdditionalQuestionValue(int groupId, int classifValuesId, int percentObligQuest, int percentRightAnsw, int percentAddQuest){
+    private void persistAdditionalQuestionValue(int groupId, int percentObligQuest, int percentRightAnsw, int percentAddQuest){
         AdditionalQuestion additionalQuestion = new AdditionalQuestion();
         additionalQuestion.setGroupid(groupDAO.getGroupsById(groupId));
-        additionalQuestion.setClassifValuesid(classifierValueDAO.getClassifierValueById(classifValuesId));
         additionalQuestion.setPercentObligatoryQuestion(percentObligQuest);
         additionalQuestion.setPercentAdditionalQuestion(percentAddQuest);
         additionalQuestion.setPercentRigthAnswers(percentRightAnsw);

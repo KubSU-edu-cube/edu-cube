@@ -31,14 +31,28 @@ public class AdditionalQuestionDAO {
         }
     }
 
+    public AdditionalQuestion findByID(Integer pk){
+        return em.find(AdditionalQuestion.class, pk);
+    }
+
     public List<AdditionalQuestion> getAddQuestByGroup(Group group){
         return (List<AdditionalQuestion>) em.createQuery("from AdditionalQuestion where group = :group")
                 .setParameter("group", group)
                 .getResultList();
     }
+    
+    public List<AdditionalQuestion> getAll(){
+        return (List<AdditionalQuestion>) em.createQuery("from AdditionalQuestion ad").getResultList();
+    }
 
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
     public void persist(AdditionalQuestion additionalQuestion){
         em.persist(additionalQuestion);
+    }
+
+    @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
+    public void remove(int id){
+        AdditionalQuestion additionalQuestion = em.find(AdditionalQuestion.class, id);
+        em.remove(additionalQuestion);
     }
 }

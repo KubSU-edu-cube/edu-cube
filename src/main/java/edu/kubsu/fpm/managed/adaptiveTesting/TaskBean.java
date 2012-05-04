@@ -4,7 +4,6 @@ import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import edu.kubsu.fpm.DAO.*;
 import edu.kubsu.fpm.ejb.DBImageLocal;
 import edu.kubsu.fpm.model.AdditionalQuestion;
-import edu.kubsu.fpm.model.Classifier;
 import edu.kubsu.fpm.model.FactCollection;
 import edu.kubsu.fpm.model.SynAnt;
 import net.sourceforge.jeuclid.context.LayoutContextImpl;
@@ -55,6 +54,7 @@ public class TaskBean {
     private int idGroup;                //  id текущей группы
     private List<Integer> obligFactList;
     private List<String> participleList;    // Слова-частцы, а так же предлоги, союзы и т.п. на основе кот. не нужно строить вопросы.
+    private String targetURL;
 
     @EJB
     private FactDAO factDAO;
@@ -170,13 +170,8 @@ public class TaskBean {
     }
 
     //    Проверяет текущий ответ студента
-    public String checkAnswer(){
-        String url = "student_test";
-//        try {
-//            studentAnswer = new String(studentAnswer.getBytes("UTF-16"));    // TODO Получить русский текст в нормальной кодировке (UTF-8).
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-//        }
+    public void checkAnswer(){
+        targetURL = "student_test";
         if (rightAnswer.toLowerCase().equals(studentAnswer.toLowerCase())){
             countRightAnswer++;
         }
@@ -189,7 +184,7 @@ public class TaskBean {
         }
 //        Если заданы все вопросы
         if ((countQuestion == 1)&&(!isOblig))
-            url = "student_mark";
+            targetURL = "student_mark";
 //         Если у нас закончились обязательные вопросы, то получаем число доп. вопросов
         if ((countQuestion == 0)&&(!isOblig)){
 //            Процент вопросов, на кот. студен ответил верно.
@@ -198,12 +193,11 @@ public class TaskBean {
             countQuestion = getAmountAddQuest(percentRightAnswers);
             countAnswer += countQuestion;
             if (countQuestion == 0)
-                url = "student_mark";
+                targetURL = "student_mark";
             else
                 countQuestion++;
         }
         studentAnswer = "";
-        return url;
     }
 
 //      Возвращает число доплнительных вопросов из базы
@@ -256,7 +250,6 @@ public class TaskBean {
         Random r = new Random();
         int id = 0;
         boolean t = true;
-        Classifier classifier;
         while (t){
             id = r.nextInt(list.size());
             FactCollection factCollection = factDAO.getCollectionByFactId(list.get(id));
@@ -602,5 +595,10 @@ public class TaskBean {
     public void setStudentAnswer(String studentAnswer) {
         this.studentAnswer = studentAnswer;
     }
-    
+
+    public String getURL() {
+        studentAnswer = "";
+        return targetURL;
+    }
+
 }

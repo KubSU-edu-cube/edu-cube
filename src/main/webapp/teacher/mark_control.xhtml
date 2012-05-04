@@ -1,0 +1,16 @@
+<ui:composition template="/templates/teacher_ps_template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="page_content">
+        <h:form>
+            <h:outputLabel value="Курсы Это страница учителя с идентификатором #{teacherPS.teacherId}"/><br /><br />
+
+            <p:commandLink value="Создать функцию оценивания" action="create_est_function" ajax="false" /><br /><br />
+            <p:commandLink value="Назначить функцию оценивания группе" action="assign_est_function" ajax="false" /><br /><br />
+            <p:commandLink value="Задать проценты для адаптивного тестирования" action="assign_at_percent" ajax="false" />
+        </h:form>
+    </ui:define>
+</ui:composition>

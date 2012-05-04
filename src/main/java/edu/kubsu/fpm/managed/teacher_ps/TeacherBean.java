@@ -120,13 +120,10 @@ public class TeacherBean {
         try{
              Class.forName("org.apache.derby.jdbc.ClientDriver");
              conn = DriverManager.getConnection("jdbc:derby://localhost:1527/FactsStore", "admin", "admin");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(TaskBean.class.getName()).log(Level.SEVERE, null, ex);
-
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(TaskBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-         return conn;
+        return conn;
     }
 
     public Integer getSelectedGroup() {

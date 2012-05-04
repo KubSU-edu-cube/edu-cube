@@ -16,13 +16,10 @@ import java.io.Serializable;
  */
 @Embeddable
 public class FactClassifvaluePK implements Serializable {
-    @Basic(optional = false)
     @Column(name = "FACTID", nullable = false)
     private int factid;
     @Basic(optional = false)
-    @Column(name = "CLASSIFID", nullable = false)
     private int classifid;
-    @Basic(optional = false)
     @Column(name = "CLASSIF_VALUEID", nullable = false)
     private int classifValueid;
 
