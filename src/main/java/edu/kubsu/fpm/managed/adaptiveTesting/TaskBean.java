@@ -172,11 +172,6 @@ public class TaskBean {
     //    Проверяет текущий ответ студента
     public String checkAnswer(){
         String url = "student_test";
-//        try {
-//            studentAnswer = new String(studentAnswer.getBytes("UTF-16"));    // TODO Получить русский текст в нормальной кодировке (UTF-8).
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-//        }
         if (rightAnswer.toLowerCase().equals(studentAnswer.toLowerCase())){
             countRightAnswer++;
         }
