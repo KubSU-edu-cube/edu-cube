@@ -1,6 +1,7 @@
 package edu.kubsu.fpm.servlet;
 
 import edu.kubsu.fpm.ejb.DBImageLocal;
+import edu.kubsu.fpm.managed.teacher_ps.classes.PersonalPhoto;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -22,6 +23,7 @@ import java.io.OutputStream;
 public class DBImageServlet extends HttpServlet {
     @EJB
     private DBImageLocal DBImage;
+    private byte[] img;
 
     /**
      * в результате выполнения DBImageServlet в окне браузера отобразится одна из картинок,
@@ -33,10 +35,20 @@ public class DBImageServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String count = request.getParameter("imgcount");  // получаем параметр запроса - номер картинки в лекции
+        String personId = request.getParameter("personId");
+        if(personId!=null){
+            for (PersonalPhoto personalPhoto:DBImage.getSmallImgs()){
+                if(personalPhoto.getPersonId()==Integer.parseInt(personId)){
+                    img = personalPhoto.getContent();
+                    break;
+                }
+            }
+        }
+
+//        String count = request.getParameter("imgcount");  // получаем параметр запроса - номер картинки в лекции
         response.setContentType("image/png");
         OutputStream os = response.getOutputStream();
-        byte[] img = DBImage.getImgList().get(Integer.parseInt(count));
+//        byte[] img = DBImage.getImgList().get(Integer.parseInt(count));
         os.write(img);
         os.flush();
     }

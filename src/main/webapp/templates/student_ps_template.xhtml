@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+    <title>Система дистанционного обучения EduCube</title>
+    <meta http-equiv="content-type" content="text/xhtml; charset=UTF-8"/>
+
+    <link href="#{application.contextPath}/css/default.css" rel="stylesheet" type="text/css"/>
+</h:head>
+
+<h:body>
+    <div id="header" class="header">
+        <a href="#{application.contextPath}/index.jsf" title="В начало" id="img_books" class="img_books"/>
+
+        <div id="text_and_menu" class="text_and_menu">
+            <div id="menu" class="menu">
+                <ul class="clear">
+                    <li class="menu_item"><a class="btn_course" href="#"></a></li>
+                    <li class="menu_item"><a class="btn_prepod" href="#"></a></li>
+                    <li class="menu_item"><a class="btn_tests" href="#"></a></li>
+                    <li class="menu_item"><a class="btn_certif" href="#"></a></li>
+                    <li class="menu_item"><a class="btn_about" href="#"></a></li>
+                </ul>
+            </div>
+            <div class="header_text"/>
+        </div>
+    </div>
+
+    <div id="left_box" class="left_box">
+        <div id="left_box_text" class="left_box_text">
+            <h:form>
+                <h:commandButton value="Личная информация" action="personal_information"/>
+            </h:form>
+            <h:form>
+                <h:commandButton value="Сообщния" action="messages"/>
+            </h:form>
+            <h:form>
+                <h:commandButton value="Курсы" action="courses"/>
+            </h:form>
+
+        </div>
+    </div>
+
+
+    <div id="content" class="login_content">
+        <ui:insert name="page_content">Page Content</ui:insert>
+    </div>
+
+    <div id="footer" class="footer">
+        <ui:insert name="footer">Footer Content</ui:insert>
+    </div>
+
+
+</h:body>
+</html>

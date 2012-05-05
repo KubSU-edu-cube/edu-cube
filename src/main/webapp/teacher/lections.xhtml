@@ -1,0 +1,21 @@
+<ui:composition template="/templates/teacher_ps_template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="page_content">
+        <h:form>
+            <h:outputLabel value="#{lectionsBean.course_variation.course.name}"/>
+            <h:commandLink value="Создать" ajax="false" action="lection_creation"/>
+            <p:dataGrid value="#{lectionsBean.lectionVariationList}" var="lection">
+                <p:column>
+                    <p:commandLink value="#{lection.name}" ajax="false" action="#{lectionsBean.moveToLection}">
+                        <f:param name="chosenLection" value="#{lection.id}"/>
+                    </p:commandLink>
+
+                </p:column>
+            </p:dataGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>
