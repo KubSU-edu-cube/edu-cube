@@ -83,18 +83,17 @@ public class InitFactBean {
         groupDAO.persist(group);
     }
 
-    private void persistAdditionalQuestion() {     // TODO Проверить!
-        persistAdditionalQuestionValue(1, 22, 50, 100, 0);
-        persistAdditionalQuestionValue(1, 22, 50, 80, 10);
-        persistAdditionalQuestionValue(1, 22, 50, 60, 20);
-        persistAdditionalQuestionValue(1, 22, 50, 40, 30);
-        persistAdditionalQuestionValue(1, 22, 50, 20, 40);
+    private void persistAdditionalQuestion() {
+        persistAdditionalQuestionValue(1, 50, 100, 0);
+        persistAdditionalQuestionValue(1, 50, 80, 10);
+        persistAdditionalQuestionValue(1, 50, 60, 20);
+        persistAdditionalQuestionValue(1, 50, 40, 30);
+        persistAdditionalQuestionValue(1, 50, 20, 40);
     }
 
-    private void persistAdditionalQuestionValue(int groupId, int classifValuesId, int percentObligQuest, int percentRightAnsw, int percentAddQuest){
+    private void persistAdditionalQuestionValue(int groupId, int percentObligQuest, int percentRightAnsw, int percentAddQuest){
         AdditionalQuestion additionalQuestion = new AdditionalQuestion();
         additionalQuestion.setGroupid(groupDAO.getGroupsById(groupId));
-        additionalQuestion.setClassifValuesid(classifierValueDAO.getClassifierValueById(classifValuesId));
         additionalQuestion.setPercentObligatoryQuestion(percentObligQuest);
         additionalQuestion.setPercentAdditionalQuestion(percentAddQuest);
         additionalQuestion.setPercentRigthAnswers(percentRightAnsw);

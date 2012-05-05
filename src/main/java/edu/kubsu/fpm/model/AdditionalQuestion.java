@@ -32,9 +32,6 @@ public class AdditionalQuestion implements Serializable {
     @JoinColumn(name = "GROUPID", referencedColumnName = "ID", nullable = false)
     @ManyToOne(optional = false)
     private Group group;
-    @JoinColumn(name = "CLASSIF_VALUESID", referencedColumnName = "ID", nullable = false)
-    @ManyToOne(optional = false)
-    private ClassifierValue classifValues;
 
     public AdditionalQuestion() {
     }
@@ -88,31 +85,6 @@ public class AdditionalQuestion implements Serializable {
 
     public void setGroupid(Group groupid) {
         this.group = groupid;
-    }
-
-    public ClassifierValue getClassifValuesid() {
-        return classifValues;
-    }
-
-    public void setClassifValuesid(ClassifierValue classifValuesid) {
-        this.classifValues = classifValuesid;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof AdditionalQuestion)) {
-            return false;
-        }
-        AdditionalQuestion other = (AdditionalQuestion) object;
-        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
