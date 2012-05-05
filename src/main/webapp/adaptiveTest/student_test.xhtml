@@ -10,7 +10,8 @@
                <h:outputText escape="false" value="#{taskBean.currentQuestion}"/> <br /> <br />
                <h:inputTextarea cols="100" rows="7" value="#{taskBean.studentAnswer}"/> <br />
                <h:panelGroup>
-                   <p:commandButton value="Дальше" action="#{taskBean.checkAnswer}" ajax="false" />
+                   <p:commandButton value="Ответить" actionListener="#{taskBean.checkAnswer}" />
+                   <p:commandButton value="Дальше" action="#{taskBean.getURL}" ajax="false" />
                    <p:commandButton value="Выйти" action="../index.jsf" ajax="false" />
                </h:panelGroup>
            </h:form>
