@@ -11,8 +11,6 @@
             <h:outputLabel value="f(x) = " for="funcText" />
             <h:inputText id="funcText" value="#{estFunctionBean.newEstFunc}" /><br /><br />
 
-            <!-- В идеале функцию еще и нарисовать - http://code.google.com/p/flot4jsf2/wiki/Examples -->
-
             <h:panelGroup>
                 <p:commandButton value="Сохранить" actionListener="#{estFunctionBean.saveNewFunc}" ajax="false" />
                 <p:commandButton value="Назад" action="mark_control" ajax="false" />
@@ -33,6 +31,8 @@
                     <h:outputText value="#{item.function}" />
                 </h:column>
             </h:dataTable>
+
+            <!-- В идеале функцию еще и нарисовать - http://code.google.com/p/flot4jsf2/wiki/Examples -->
 
         </h:form>
     </ui:define>
