@@ -15,32 +15,29 @@
             <h:outputLabel value="Введите текст задания." /><br />
             <h:inputTextarea cols="100" rows="7" value="#{tasksCreateBean.taskText}"/> <br />
 
-            <h:panelGroup>
-                <p:commandButton value="Сохранить" actionListener="#{tasksCreateBean.saveCheckedTask}" />
-                <p:commandButton value="Назад" action="check_task_type" ajax="false" />
-            </h:panelGroup>
+            <p:commandButton value="Сохранить" actionListener="#{tasksCreateBean.saveCheckedTask}" /><br />
 
-            <h:outputLabel value="Группы с уже назначенными функциями оценки" />
-            <h:dataTable value="#{estFunctionBean.func_groupList}" var="item" border="1">
+            <p:commandLink value="Перечень уже созданных заданий по выбранной лекции" action="task_creation" ajax="false" />
+            <h:dataTable value="#{tasksCreateBean.creativeTaskList}" var="task" border="1">
                 <h:column>
-                    <h:selectBooleanCheckbox value="#{estFunctionBean.selectedIDs[item.estimationFuncGroupPK]}" />
+                    <h:selectBooleanCheckbox value="#{tasksCreateBean.selectedIDs[task.test.id]}" />
                 </h:column>
                 <h:column>
                     <f:facet name="header">
-                        <h:outputText value="Курс" />
+                        <h:outputText value="Лекция" />
                     </f:facet>
-                    <h:outputText value="#{item.group.courseVariation.course.name}" />
+                    <h:outputText value="#{task.test.lection.name}" />
                 </h:column>
                 <h:column>
                     <f:facet name="header">
-                        <h:outputText value="Функция" />
+                        <h:outputText value="Задание" />
                     </f:facet>
-                    <h:outputText value="#{item.function.function}" />
+                    <h:outputText value="#{task.content}" />
                 </h:column>
             </h:dataTable><br />
             <h:panelGroup>
-                <p:commandButton value="Удалить" actionListener="#{estFunctionBean.deleteFuncGroup}" ajax="false" />
-                <p:commandButton value="Назад" action="check_task_type" ajax="false"/><br /><br />
+                <p:commandButton value="Удалить" actionListener="#{tasksCreateBean.deleteCreativeTask}" ajax="false" />
+                <p:commandButton value="Назад" action="check_tasks_type" ajax="false"/><br /><br />
             </h:panelGroup>
 
 

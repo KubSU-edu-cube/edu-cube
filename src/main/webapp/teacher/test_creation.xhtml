@@ -6,7 +6,14 @@
                 xmlns="http://www.w3.org/1999/xhtml">
     <ui:define name="page_content">
         <h:form>
+            <h:outputLabel value="Выберете одну из своих лекций для создания по ней теста. Если по данной лекции уже есть
+            созданные задания, то добавится новое." /><br />
+            <h:selectOneMenu id="courseList" value="#{tasksCreateBean.currentLection}" >
+                <f:selectItems value="#{tasksCreateBean.lectionList}" />
+            </h:selectOneMenu><br /><br />
 
+            <h:outputLabel value="Название теста: " for="testName" />
+            <h:inputText id="testName" value="#{tasksCreateBean.testName}" />
         </h:form>
     </ui:define>
 </ui:composition>

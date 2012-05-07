@@ -28,7 +28,7 @@ public class TestDAO {
 
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
     public void remove(int pk){
-        Test test = em.find(Test.class, pk);
+        Test test = findById(pk);
         em.remove(test);
     }
 
@@ -36,4 +36,13 @@ public class TestDAO {
         return (List<Test>) em.createQuery("from Test").getResultList();
     }
 
+    public Test findById(Integer id) {
+        return em.find(Test.class, id);
+    }
+
+    public List<Test> getTestListByLectionId(Lection lection) {
+        return (List<Test>) em.createQuery("from Test t where t.lection = :lection")
+                .setParameter("lection", lection)
+                .getResultList();
+    }
 }

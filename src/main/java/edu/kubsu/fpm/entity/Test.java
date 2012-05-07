@@ -58,4 +58,12 @@ public class Test {
     public void setType(TestType type) {
         this.type = type;
     }
+
+    public List<Task> getTaskList() {
+        return taskList;
+    }
+
+    public void setTaskList(List<Task> taskList) {
+        this.taskList = taskList;
+    }
 }
