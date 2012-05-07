@@ -1,0 +1,49 @@
+<ui:composition template="/templates/teacher_ps_template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="page_content">
+        <h:form>
+            <h:outputLabel value="#{estFunctionBean.assignFuncMessage}" /><br />
+            <h:outputLabel value="Для назначения группе функции выберете в списках курс и функцию. Это можно сделать, даже если группе
+            уже назначена функция оценки. В данном случае она будет заменена на указанную." /><br /><br />
+            <h:outputLabel value="Перечень учебных курсов" for="courseList" /><br />
+            <h:selectOneMenu id="courseList" value="#{estFunctionBean.currentCourse}" >
+                <f:selectItems value="#{estFunctionBean.courseList}" />
+            </h:selectOneMenu><br /><br />
+
+            <h:outputLabel value="Перечень существующих функций" for="funcList" /><br />
+            <h:selectOneMenu id="funcList" value="#{estFunctionBean.currentFunction}" >
+                <f:selectItems value="#{estFunctionBean.funcList}" />
+            </h:selectOneMenu><br /><br />
+
+            <p:commandButton value="Сохранить" actionListener="#{estFunctionBean.saveAssign}" ajax="false"/><br />
+
+            <h:outputLabel value="Группы с уже назначенными функциями оценки" />
+            <h:dataTable value="#{estFunctionBean.func_groupList}" var="item" border="1">
+                <h:column>
+                    <h:selectBooleanCheckbox value="#{estFunctionBean.selectedIDs[item.estimationFuncGroupPK]}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Курс" />
+                    </f:facet>
+                    <h:outputText value="#{item.group.courseVariation.course.name}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Функция" />
+                    </f:facet>
+                    <h:outputText value="#{item.function.function}" />
+                </h:column>
+            </h:dataTable><br />
+            <h:panelGroup>
+                <p:commandButton value="Удалить" actionListener="#{estFunctionBean.deleteFuncGroup}" ajax="false" />
+                <p:commandButton value="Назад" action="mark_control" ajax="false"/><br /><br />
+            </h:panelGroup>
+
+        </h:form>
+    </ui:define>
+</ui:composition>

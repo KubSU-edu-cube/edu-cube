@@ -53,6 +53,17 @@ public class Person implements Serializable {
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     private List<Course_variation> variationList;
 
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
+    private List<StudentAnswer> student_answerList;
+
+    public List<StudentAnswer> getStudent_answerList() {
+        return student_answerList;
+    }
+
+    public void setStudent_answerList(List<StudentAnswer> student_answerList) {
+        this.student_answerList = student_answerList;
+    }
+
     public int getId() {
         return id;
     }

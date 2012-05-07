@@ -5,10 +5,10 @@
 
 package edu.kubsu.fpm.model;
 
-import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 
 /**
  *
@@ -16,13 +16,10 @@ import javax.persistence.Embeddable;
  */
 @Embeddable
 public class FactClassifvaluePK implements Serializable {
-    @Basic(optional = false)
     @Column(name = "FACTID", nullable = false)
     private int factid;
     @Basic(optional = false)
-    @Column(name = "CLASSIFID", nullable = false)
     private int classifid;
-    @Basic(optional = false)
     @Column(name = "CLASSIF_VALUEID", nullable = false)
     private int classifValueid;
 
@@ -62,9 +59,9 @@ public class FactClassifvaluePK implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (int) factid;
-        hash += (int) classifid;
-        hash += (int) classifValueid;
+        hash += factid;
+        hash += classifid;
+        hash += classifValueid;
         return hash;
     }
 
@@ -78,13 +75,7 @@ public class FactClassifvaluePK implements Serializable {
         if (this.factid != other.factid) {
             return false;
         }
-        if (this.classifid != other.classifid) {
-            return false;
-        }
-        if (this.classifValueid != other.classifValueid) {
-            return false;
-        }
-        return true;
+        return this.classifid == other.classifid && this.classifValueid == other.classifValueid;
     }
 
     @Override

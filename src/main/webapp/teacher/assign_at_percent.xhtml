@@ -1,0 +1,66 @@
+<ui:composition template="/templates/teacher_ps_template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="page_content">
+        <h:form>
+            <h:outputLabel value="#{addQuestionBean.assignFuncMessage}" /><br />
+            <h:outputLabel value="Для назначения группе процентов выберете в списках соответствующий курс, а затем введите проценты
+            в соответствующие ячейки. Это можно сделать, даже если группе уже назначены проценты. В данном случае они будут заменены
+            на указанные." /><br /><br />
+            <h:outputLabel value="Перечень учебных курсов" for="courseList" /><br />
+            <h:selectOneMenu id="courseList" value="#{addQuestionBean.currentCourse}" >
+                <f:selectItems value="#{addQuestionBean.courseList}" />
+            </h:selectOneMenu><br /><br />
+
+            <h:outputLabel value="Процент обязательных вопросов (рекомендуется не выше 75): " for="obligPercent" />
+            <h:inputText id="obligPercent" value="#{addQuestionBean.obligPercent}" /><br />
+
+            <h:outputLabel value="Процент правильно данных ответов студентом: " for="rightPercent" />
+            <h:inputText id="rightPercent" value="#{addQuestionBean.rightAnswerPercent}" /><br />
+
+            <h:outputLabel value="Процент дополнительных вопросов (в зависимости от предыдущего) : " for="addPercent" />
+            <h:inputText id="addPercent" value="#{addQuestionBean.addPercent}" /><br />
+
+            <p:commandButton value="Сохранить" actionListener="#{addQuestionBean.savePercent}" ajax="false" /><br />
+
+            <h:outputLabel value="Группы с уже назначенными процентами" /><br />
+            <h:dataTable value="#{addQuestionBean.additionalQuestionList}" var="item" border="1">
+                <h:column>
+                    <h:selectBooleanCheckbox value="#{addQuestionBean.selectedIDs[item.id]}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Курс" />
+                    </f:facet>
+                    <h:outputText value="#{item.groupid.courseVariation.course.name}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Процент обязательных вопросов" />
+                    </f:facet>
+                    <h:outputText value="#{item.percentObligatoryQuestion}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Процент правильных ответов" />
+                    </f:facet>
+                    <h:outputText value="#{item.percentRigthAnswers}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Процент дополнительных вопросов" />
+                    </f:facet>
+                    <h:outputText value="#{item.percentAdditionalQuestion}" />
+                </h:column>
+            </h:dataTable>
+            <h:panelGroup>
+                <p:commandButton value="Удалить" actionListener="#{addQuestionBean.deleteAddQuestions}" ajax="false" />
+                <p:commandButton value="Назад" action="mark_control" ajax="false" />
+            </h:panelGroup><br /><br />
+
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,6 +1,8 @@
 package edu.kubsu.fpm.managed.teacher_ps.classes;
 
+import edu.kubsu.fpm.DAO.Course_variationDAO;
 import edu.kubsu.fpm.DAO.LectionDAO;
+import edu.kubsu.fpm.entity.Course;
 import edu.kubsu.fpm.entity.Course_variation;
 import edu.kubsu.fpm.entity.Lection;
 import edu.kubsu.fpm.entity.Person;
@@ -32,9 +34,13 @@ public class LectionCreationBean {
     private String shortLectionContent;
     private UploadedFile uploadedFile;
     private Date lectionDate;
+    private int lectionId;
 
     @EJB
     LectionDAO lectionDAO;
+
+    @EJB
+    private Course_variationDAO course_variationDAO;
 
     public void handleFileUpload(FileUploadEvent event) {
         FacesMessage msg = new FacesMessage("Успешно загружен файл "+ event.getFile().getFileName());
@@ -44,21 +50,26 @@ public class LectionCreationBean {
     public void saveLection(){
         Person person =
                 (Person) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("person");
-        List<Course_variation> variationList = new ArrayList<Course_variation>();
-        variationList.add(
-                (Course_variation) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("courseVariation")
-        );
+        List<Course_variation> variationList = new ArrayList<>();
+        variationList.add(course_variationDAO.getCourseVarById(1));
+//                (Course_variation) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("courseVariation")
+//        );
 
+        List<Course> courseList = new ArrayList<>();
+        for (Course_variation course_variation: variationList){
+            courseList.add(course_variation.getCourse());
+        }
 
         Lection lection = new Lection();
         lection.setAuthor(person);
         lection.setVariationList(variationList);
-        lection.setContent(uploadedFile.getContents());
+//        lection.setContent(uploadedFile.getContents());
         lection.setLection(null);
         lection.setName(this.lectionName);
-
+        lection.setCourses(courseList);    // TODO Скорее всего не нужно
         lectionDAO.persist(lection);
 
+        this.setLectionId(lectionDAO.getLectionByName(lectionName).getId());
     }
     public String getCourseName() {
         Course_variation course_variation =
@@ -100,5 +111,13 @@ public class LectionCreationBean {
 
     public void setLectionDate(Date lectionDate) {
         this.lectionDate = lectionDate;
+    }
+
+    public int getLectionId() {
+        return lectionId;
+    }
+
+    public void setLectionId(int lectionId) {
+        this.lectionId = lectionId;
     }
 }

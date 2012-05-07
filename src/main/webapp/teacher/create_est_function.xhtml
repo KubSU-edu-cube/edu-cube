@@ -1,0 +1,39 @@
+<ui:composition template="/templates/teacher_ps_template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="page_content">
+        <h:form>
+            <h:outputLabel value="#{estFunctionBean.newFuncMessage}" /><br />
+            <h:outputLabel value="Введите текст функции оценивания. Например: x^2 + 3" /><br /><br />
+            <h:outputLabel value="f(x) = " for="funcText" />
+            <h:inputText id="funcText" value="#{estFunctionBean.newEstFunc}" /><br /><br />
+
+            <h:panelGroup>
+                <p:commandButton value="Сохранить" actionListener="#{estFunctionBean.saveNewFunc}" ajax="false" />
+                <p:commandButton value="Назад" action="mark_control" ajax="false" />
+            </h:panelGroup><br /><br />
+
+            <h:outputText value="Перечень уже существующих функций" />
+            <h:dataTable value="#{estFunctionBean.functionList}" var="item" border="1" >
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="№" />
+                    </f:facet>
+                    <h:outputText value="#{item.id}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Функция" />
+                    </f:facet>
+                    <h:outputText value="#{item.function}" />
+                </h:column>
+            </h:dataTable>
+
+            <!-- В идеале функцию еще и нарисовать - http://code.google.com/p/flot4jsf2/wiki/Examples -->
+
+        </h:form>
+    </ui:define>
+</ui:composition>

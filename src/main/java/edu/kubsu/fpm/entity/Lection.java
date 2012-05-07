@@ -2,6 +2,7 @@ package edu.kubsu.fpm.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,7 +41,7 @@ public class Lection implements Serializable {
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person author;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name="LECTION_COURSE_VARIATION",
             joinColumns=
@@ -48,7 +49,18 @@ public class Lection implements Serializable {
             inverseJoinColumns=
             @JoinColumn(name="COURSE_VARIATION_ID", referencedColumnName="ID")
     )
-    private List<Course_variation> variationList;
+    private List<Course_variation> variationList = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "lection", cascade = CascadeType.ALL)
+    private List<Test> testList;
+
+    public List<Test> getTestList() {
+        return testList;
+    }
+
+    public void setTestList(List<Test> testList) {
+        this.testList = testList;
+    }
 
     public int getId() {
         return id;

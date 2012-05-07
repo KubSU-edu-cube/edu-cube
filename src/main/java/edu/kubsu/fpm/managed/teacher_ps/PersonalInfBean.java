@@ -1,11 +1,8 @@
 package edu.kubsu.fpm.managed.teacher_ps;
 
-import edu.kubsu.fpm.DAO.CountryDAO;
-import edu.kubsu.fpm.DAO.DepartmentDAO;
-import edu.kubsu.fpm.DAO.PersonDAO;
+import edu.kubsu.fpm.DAO.*;
 import edu.kubsu.fpm.entity.*;
 import edu.kubsu.fpm.managed.classes.ImgConverter;
-import edu.kubsu.fpm.managed.teacher_ps.classes.DBFilling;
 import edu.kubsu.fpm.managed.teacher_ps.classes.Education;
 import edu.kubsu.fpm.managed.teacher_ps.classes.Job;
 
@@ -15,10 +12,11 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.*;
 import java.util.List;
 
 /**
@@ -66,6 +64,11 @@ public class PersonalInfBean {
     private CountryDAO countryDAO;
     @EJB 
     private PersonDAO personDAO;
+
+    @EJB
+    private TestTypeDAO testTypeDAO;
+    @EJB
+    private TaskTypeDAO taskTypeDAO;
 
 
 //    **************************************************************************************************************
@@ -142,7 +145,7 @@ public class PersonalInfBean {
         faculty.setName("ФКТиПМ");
         faculty.setUniversity(university);
         
-        List<Faculty> faculties = new ArrayList<Faculty>();
+        List<Faculty> faculties = new ArrayList<>();
         faculties.add(faculty);
 
         university.setFaculties(faculties);
@@ -152,6 +155,24 @@ public class PersonalInfBean {
         department.setName("Информационных Технологий");
 
         departmentDAO.persist(department);
+
+        List<String> testTypes = Arrays.asList("base", "checked", "psylogical");
+        for (String testType: testTypes)
+            persistTestType(testType);
+
+        List<String> taskTypes = Arrays.asList("input", "check", "creative");
+        for (String taskType: taskTypes)
+            persistTaskType(taskType);
+    }
+
+    private void persistTaskType(String type) {
+        TaskType taskType = new TaskType(type);
+        taskTypeDAO.persist(taskType);
+    }
+
+    private void persistTestType(String testType) {
+        TestType tType = new TestType(testType);
+        testTypeDAO.persist(tType);
     }
 
     private void persistPerson() throws FileNotFoundException {

@@ -26,8 +26,20 @@ public class LectionDAO {
                 setParameter("id",courseVarId).getResultList();
         return lections;
     }
+
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
     public void persist(Lection lection){
         em.merge(lection);
     }
+
+    public Lection findById(Integer id){
+        return em.find(Lection.class, id);
+    }
+    
+    public Lection getLectionByName(String name){
+        return (Lection) em.createQuery("from Lection l where l.name = :name")
+                .setParameter("name", name)
+                .getSingleResult();
+    }
+
 }

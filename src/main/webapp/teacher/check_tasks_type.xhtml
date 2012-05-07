@@ -1,0 +1,19 @@
+<ui:composition template="/templates/teacher_ps_template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="page_content">
+        <h:form>
+            <h:selectOneRadio value="#{tasksCreateBean.testType}">
+                <f:selectItem itemValue="1" itemLabel="Создать тест" /><br />
+                <f:selectItem itemValue="2" itemLabel="Создать проверяемое задание" /><br />
+            </h:selectOneRadio>
+            <h:panelGroup>
+                <p:commandButton value="ОК" action="#{tasksCreateBean.checkTestType}" ajax="false" />
+                <p:commandButton value="Назад" action="lection_creation" ajax="false" />
+            </h:panelGroup>
+        </h:form>
+    </ui:define>
+</ui:composition>

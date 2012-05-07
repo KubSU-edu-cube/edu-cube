@@ -16,6 +16,11 @@
     </properties>
     <dependencies>
         <dependency>
+            <groupId>net.sourceforge.jeuclid</groupId>
+            <artifactId>jeuclid-core</artifactId>
+            <version>3.1.9</version>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.8.2</version>
@@ -71,6 +76,11 @@
             <artifactId>slf4j-api</artifactId>
             <version>1.5.6</version>
         </dependency>
+        <dependency>
+            <groupId>antlr</groupId>
+            <artifactId>antlr</artifactId>
+            <version>2.7.7</version>
+        </dependency>
 
     </dependencies>
     <build>
@@ -79,7 +89,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
+                <!--<version>2.3.2</version>-->
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
@@ -90,7 +100,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.1.1</version>
+                <!--<version>2.1.1</version>-->
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>

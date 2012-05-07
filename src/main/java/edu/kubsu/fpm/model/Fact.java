@@ -5,19 +5,8 @@
 
 package edu.kubsu.fpm.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
 
 /**
  *
@@ -35,24 +24,20 @@ public class Fact implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "ID", nullable = false)
     private Integer id;
-    @Basic(optional = false)
     @Column(name = "CONTENT_TYPE", nullable = false, length = 300)
     private String contentType;
-    @Basic(optional = false)
     @Lob
     @Column(name = "CONTENT", nullable = false)
     private Serializable content;
     @Column(name = "DIFFICULTIE", length = 30)
     private String difficultie;
-    @Basic(optional = false)
     @Column(name = "OBLIGATORY", nullable = false)
     private int obligatory;
     @JoinColumn(name = "COLLID", referencedColumnName = "ID", nullable = false)
     @ManyToOne(optional = false)
-    private FactCollection collid;
+    private FactCollection collection;
 
     public Fact() {
     }
@@ -108,12 +93,12 @@ public class Fact implements Serializable {
         this.obligatory = obligatory;
     }
 
-    public FactCollection getCollid() {
-        return collid;
+    public FactCollection getCollection() {
+        return collection;
     }
 
-    public void setCollid(FactCollection collid) {
-        this.collid = collid;
+    public void setCollection(FactCollection collection) {
+        this.collection = collection;
     }
 
     @Override
@@ -130,10 +115,7 @@ public class Fact implements Serializable {
             return false;
         }
         Fact other = (Fact) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override

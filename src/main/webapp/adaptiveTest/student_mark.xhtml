@@ -1,0 +1,14 @@
+<ui:composition template="/templates/test_template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+
+        <ui:define name="page_content">
+           <h:form>
+                <h:outputText value="#{taskBean.testResult}"/>    <br />
+                <h:commandLink action="../index.jsf">На главную</h:commandLink>
+           </h:form>
+        </ui:define>
+
+</ui:composition>

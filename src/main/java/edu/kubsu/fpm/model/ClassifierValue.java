@@ -5,21 +5,9 @@
 
 package edu.kubsu.fpm.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 /**
  *
@@ -36,7 +24,6 @@ public class ClassifierValue implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "ID", nullable = false)
     private Integer id;
     @Column(name = "VALUE_", length = 1000)
@@ -45,19 +32,11 @@ public class ClassifierValue implements Serializable {
     private Integer parentid;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "classifierValue")
     private Collection<FactClassifvalue> factClassifvalueCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "classifValuesid")
-    private Collection<Mark> markCollection;
     @JoinColumn(name = "CLASSIFID", referencedColumnName = "ID", nullable = false)
     @ManyToOne(optional = false)
-    private Classifier classifid;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "classifValuesid")
-    private Collection<Groups> groupsCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "classifValuesid")
-    private Collection<AditionalQuestion> aditionalQuestionCollection;
+    private Classifier classifier;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "classifierValue")
     private Collection<CollfactClassifvalue> collfactClassifvalueCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "classifValuesid")
-    private Collection<Answer> answerCollection;
 
     public ClassifierValue() {
     }
@@ -98,36 +77,12 @@ public class ClassifierValue implements Serializable {
         this.factClassifvalueCollection = factClassifvalueCollection;
     }
 
-    public Collection<Mark> getMarkCollection() {
-        return markCollection;
+    public Classifier getClassifier() {
+        return classifier;
     }
 
-    public void setMarkCollection(Collection<Mark> markCollection) {
-        this.markCollection = markCollection;
-    }
-
-    public Classifier getClassifid() {
-        return classifid;
-    }
-
-    public void setClassifid(Classifier classifid) {
-        this.classifid = classifid;
-    }
-
-    public Collection<Groups> getGroupsCollection() {
-        return groupsCollection;
-    }
-
-    public void setGroupsCollection(Collection<Groups> groupsCollection) {
-        this.groupsCollection = groupsCollection;
-    }
-
-    public Collection<AditionalQuestion> getAditionalQuestionCollection() {
-        return aditionalQuestionCollection;
-    }
-
-    public void setAditionalQuestionCollection(Collection<AditionalQuestion> aditionalQuestionCollection) {
-        this.aditionalQuestionCollection = aditionalQuestionCollection;
+    public void setClassifier(Classifier classifier) {
+        this.classifier = classifier;
     }
 
     public Collection<CollfactClassifvalue> getCollfactClassifvalueCollection() {
@@ -136,34 +91,6 @@ public class ClassifierValue implements Serializable {
 
     public void setCollfactClassifvalueCollection(Collection<CollfactClassifvalue> collfactClassifvalueCollection) {
         this.collfactClassifvalueCollection = collfactClassifvalueCollection;
-    }
-
-    public Collection<Answer> getAnswerCollection() {
-        return answerCollection;
-    }
-
-    public void setAnswerCollection(Collection<Answer> answerCollection) {
-        this.answerCollection = answerCollection;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ClassifierValue)) {
-            return false;
-        }
-        ClassifierValue other = (ClassifierValue) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
     }
 
     @Override
