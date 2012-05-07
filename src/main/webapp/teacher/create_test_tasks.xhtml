@@ -1,0 +1,36 @@
+<ui:composition template="/templates/teacher_ps_template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="page_content">
+        <h:form>
+            <h:outputLabel value="Введите текст вопроса." /><br />
+            <h:inputTextarea cols="100" rows="7" value="#{tasksCreateBean.taskText}"/><br /><br />
+
+            <h:selectOneRadio value="#{tasksCreateBean.taskType}">
+                <f:selectItem itemValue="1" itemLabel="С полем ввода для ответа" /><br />
+                <f:selectItem itemValue="2" itemLabel="С вариантом выбора ответа" /><br />
+            </h:selectOneRadio><br /><br />
+
+            <h:outputLabel value="Правильный ответ" for="rightAnswer" />
+            <h:inputText id="rightAnswer" value="#{tasksCreateBean.rightAnswer}" /><br /><br />
+
+            <h:outputLabel value="Введите колличество дополнительных вариантов(если вы выбрали данный тип вопроса) от 1 до 3: "
+                           for="countAnswer" />
+            <h:inputText id="countAnswer" value="#{tasksCreateBean.countAnswer}" /><br />
+
+            <h:outputLabel value="Введите дополнительные варианты (если вы выбрали данный тип вопроса)." /><br />
+            <h:inputText value="#{tasksCreateBean.addAnswer1}" /><br />
+            <h:inputText value="#{tasksCreateBean.addAnswer2}" /><br />
+            <h:inputText value="#{tasksCreateBean.addAnswer3}" /><br />
+
+            <h:panelGroup>
+                <p:commandButton value="Сохранить" actionListener="#{tasksCreateBean.saveTask}" />
+                <p:commandButton value="Создать еще один вопрос" action="#{tasksCreateBean.initParam}" ajax="false" />
+                <p:commandButton value="Назад" action="check_tasks_type" ajax="false"/>
+            </h:panelGroup>
+        </h:form>
+    </ui:define>
+</ui:composition>

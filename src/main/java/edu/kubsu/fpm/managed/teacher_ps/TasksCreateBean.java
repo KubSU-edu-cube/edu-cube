@@ -22,14 +22,21 @@ public class TasksCreateBean {
     private int testType = 1;
     private Integer currentLection;
     private Map<String, Integer> lectionList;
-    private String taskText;
+    private String taskText = null;
     private List<Task> creativeTaskList;     // Список тестов для выбранной лекции
     private Map<Integer, Boolean> selectedIDs = new HashMap<>(); // Выбранные записи
 
     private int teacherId;
     Course_variation course_variation = new Course_variation();
 
+    Test test;
     private String testName;        // Имя создаваемого теста
+    private int taskType;
+    private String rightAnswer;
+    private int countAnswer;
+    private String addAnswer1;
+    private String addAnswer2;
+    private String addAnswer3;
 
     @EJB
     private Course_variationDAO course_variationDAO;
@@ -51,6 +58,12 @@ public class TasksCreateBean {
 
     @EJB
     private TaskDAO taskDAO;
+
+    @EJB
+    private AnswerDAO answerDAO;
+
+    @EJB
+    private AllAnswersDAO allAnswersDAO;
 
     public List<Task> getCreativeTaskList() {
         creativeTaskList = new ArrayList<>();
@@ -115,17 +128,78 @@ public class TasksCreateBean {
         taskText = null;
     }
 
-    // TODO
-//    * Реализовать страницу создания тестов. А так же страницу их удаления.
+    public void saveTest(){
+        test = new Test();
+        test.setName(testName);
+        test.setLection(lectionDAO.findById(currentLection));
+        test.setType(testTypeDAO.findByName("base"));
+        testDAO.persist(test);
+    }
 
+    public void saveTask(){
+        String type = taskType == 1 ? "input" : "check";
 
-//    private void CheckExistenceCheckedTest(Lection lection, TestType type) {
-//        List<Test> testList = testDAO.getAll();
-//        for(Test test: testList){
-//            if (test.getType() == type)
-//                testDAO.remove(test.getId());
-//        }
-//    }
+        List<String> falseAnswers = getFalseAnswerList();
+        if ((type == "check")&&(falseAnswers.size() > 0)&&(taskText.trim().length() > 0)){
+            Task taskCheck = new Task();
+            taskCheck.setContent(taskText);
+            taskCheck.setTaskType(taskTypeDAO.findByType(type));
+            taskCheck.setTest(test);
+            taskDAO.persist(taskCheck);
+
+            persistAllAnswer(taskCheck, rightAnswer, true);
+
+            for (int i = 0; i < falseAnswers.size(); i++){
+                if (i > countAnswer - 1)
+                    break;
+                persistAllAnswer(taskCheck, falseAnswers.get(i), false);
+            }
+        }
+        else if ((type == "input")&&(taskText.trim().length() > 0)) {
+            Task taskInput = new Task();
+            taskInput.setContent(taskText);
+            taskInput.setTaskType(taskTypeDAO.findByType(type));
+            taskInput.setTest(test);
+            taskDAO.persist(taskInput);
+
+            persistAllAnswer(taskInput, rightAnswer, true);
+        }
+    }
+
+    private List<String> getFalseAnswerList() {
+        List<String> addAnswers = Arrays.asList(addAnswer1, addAnswer2, addAnswer3);
+        List<String> list = new ArrayList<>();
+        for (String addAnswer: addAnswers){
+            if (addAnswer.trim().length() != 0){
+                list.add(addAnswer);
+            }
+        }
+        return list;
+    }
+
+    public String initParam() {
+        taskText = null;
+        rightAnswer = null;
+        addAnswer1 = null;
+        addAnswer2 = null;
+        addAnswer3 = null;
+        return "create_test_tasks";
+    }
+
+    private void persistAllAnswer(Task task, String content, boolean isRight) {
+        AllAnswers allAnswers = new AllAnswers();
+        allAnswers.setTask(task);
+        persistAnswer(allAnswers, content, isRight);
+    }
+
+    private void persistAnswer(AllAnswers allAnswers, String content, boolean isRight) {
+        Answer answer = new Answer();
+        answer.setContent(content);
+        answer.setRight(isRight);
+        answerDAO.persist(answer);
+        allAnswers.setAnswer(answer);
+        allAnswersDAO.persist(allAnswers);
+    }
 
     public String checkTestType(){
         if (testType == 1)
@@ -180,5 +254,53 @@ public class TasksCreateBean {
 
     public void setTestName(String testName) {
         this.testName = testName;
+    }
+
+    public int getTaskType() {
+        return taskType;
+    }
+
+    public void setTaskType(int taskType) {
+        this.taskType = taskType;
+    }
+
+    public String getRightAnswer() {
+        return rightAnswer;
+    }
+
+    public void setRightAnswer(String rightAnswer) {
+        this.rightAnswer = rightAnswer;
+    }
+
+    public int getCountAnswer() {
+        return countAnswer;
+    }
+
+    public void setCountAnswer(int countAnswer) {
+        this.countAnswer = countAnswer;
+    }
+
+    public String getAddAnswer1() {
+        return addAnswer1;
+    }
+
+    public void setAddAnswer1(String addAnswer1) {
+        this.addAnswer1 = addAnswer1;
+    }
+
+    public String getAddAnswer2() {
+        return addAnswer2;
+    }
+
+    public void setAddAnswer2(String addAnswer2) {
+        this.addAnswer2 = addAnswer2;
+    }
+
+    public String getAddAnswer3() {
+        return addAnswer3;
+    }
+
+    public void setAddAnswer3(String addAnswer3) {
+        this.addAnswer3 = addAnswer3;
     }
 }

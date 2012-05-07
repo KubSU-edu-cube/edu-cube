@@ -12,8 +12,29 @@
             </h:selectOneRadio>
             <h:panelGroup>
                 <p:commandButton value="ОК" action="#{tasksCreateBean.checkTestType}" ajax="false" />
-                <p:commandButton value="Назад" action="lections" ajax="false" />
+                <p:commandButton value="Назад" action="lections" ajax="false" /><br /><br />
             </h:panelGroup>
+
+            <h:outputText value="Перечень уже созданных заданий по выбранной лекции" action="check_tasks_type" />
+            <h:dataTable value="#{tasksCreateBean.creativeTaskList}" var="task" border="1">
+                <h:column>
+                    <h:selectBooleanCheckbox value="#{tasksCreateBean.selectedIDs[task.test.id]}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Лекция" />
+                    </f:facet>
+                    <h:outputText value="#{task.test.lection.name}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Задание" />
+                    </f:facet>
+                    <h:outputText value="#{task.content}" />
+                </h:column>
+            </h:dataTable><br />
+
+            <p:commandButton value="Удалить" actionListener="#{tasksCreateBean.deleteCreativeTask}" ajax="false" />
         </h:form>
     </ui:define>
 </ui:composition>

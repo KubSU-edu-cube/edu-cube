@@ -16,6 +16,8 @@ public class Test {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
+    private String name;
+
     @JoinColumn(name = "lection_id", referencedColumnName = "ID", nullable = false)
     @ManyToOne(optional = false)
     private Lection lection;
@@ -33,6 +35,14 @@ public class Test {
     public Test(Lection lection, TestType type) {
         this.lection = lection;
         this.type = type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getId() {
