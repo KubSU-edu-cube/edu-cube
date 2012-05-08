@@ -1,6 +1,5 @@
 package edu.kubsu.fpm.entity;
 
-import javax.ejb.EJB;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;

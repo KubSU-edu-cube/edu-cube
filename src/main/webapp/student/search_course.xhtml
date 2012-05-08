@@ -1,0 +1,45 @@
+<ui:composition template="/templates/student_ps_template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="page_content">
+        <h:form>
+            <h:outputText value="Введите параметры для поиска" /><br /><br />
+            <h:outputLabel value="Имя курса" for="courseName" />
+            <h:inputText value="#{coursesStudentBean.requiredCourseName}" id="courseName" /><br />
+            <h:outputLabel value="Преподаватель(ФИО)" />
+            <h:inputText value="#{coursesStudentBean.teacherName}" /><br />
+            <h:outputLabel value="Максимальное количество студентов"/>
+            <p:inputText style="width:60px"/><br />
+            <h:outputLabel value="Минимальное количество студентов"/>
+            <p:inputText style="width:60px"/><br />
+            <h:panelGroup>
+                <p:commandButton value="Найти" actionListener="#{coursesStudentBean.serchCourses}" />
+                <p:commandButton value="Показать" action="#{coursesStudentBean.showCourses}" ajax="false" />
+                <p:commandButton value="Назад" action="courses" ajax="false" /><br /><br />
+            </h:panelGroup>
+
+            <h:dataTable value="#{coursesStudentBean.course_variationList}" var="list">
+                <h:column>
+                    <h:selectBooleanCheckbox value="#{coursesStudentBean.selectedIDs[list.id]}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Название курса" />
+                    </f:facet>
+                    <h:outputText value="#{list.course.name}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Преподаватель" />
+                    </f:facet>
+                    <h:outputText value="#{list.person.surname} #{list.person.name} #{list.person.patronymic}" />
+                </h:column>
+            </h:dataTable>
+            <p:commandButton value="Записаться" actionListener="#{coursesStudentBean.takeCourse}" ajax="false" />
+        </h:form>
+
+    </ui:define>
+</ui:composition>

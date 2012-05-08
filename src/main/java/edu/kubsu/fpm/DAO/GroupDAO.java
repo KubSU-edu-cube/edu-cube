@@ -30,6 +30,6 @@ public class GroupDAO {
 
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
     public void persist(Group group){
-        em.persist(group);
+        em.merge(group);
     }
 }

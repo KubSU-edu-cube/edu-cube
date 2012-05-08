@@ -8,7 +8,6 @@ import edu.kubsu.fpm.entity.Person;
 import javax.ejb.*;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,5 +52,9 @@ public class Course_variationDAO {
         return em.createQuery("select cv.lectionList from Course_variation cv where cv.id = :id")
                 .setParameter("id", id)
                 .getResultList();
+    }
+    
+    public List<Course_variation> getAll(){
+        return em.createQuery("from Course_variation cv").getResultList();
     }
 }

@@ -1,10 +1,26 @@
 <ui:composition template="/templates/student_ps_template.xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
-
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
                 xmlns="http://www.w3.org/1999/xhtml">
     <ui:define name="page_content">
-        Здесь курсы, в которых принимает участие ученик
+        <h:form>
+            <h:outputLabel value="Это страница студента с идентификатором #{studentPS.studentId}"/><br />
+            <p:commandLink value="Поиск курсов" ajax="false" action="search_course"/>
+            <!-- Здесь будет список курсов, в кот. принимаеат участие ученик. -->
+            <!--<p:dataGrid value="#{teacherPS.variationList}" var="list">-->
+                <!--<p:column>-->
+                    <!--<p:commandLink value="#{list.course.name}" ajax="false" action="courses">-->
+                        <!--<f:param name="chosenCourse" value="#{list.id}"/>-->
+                    <!--</p:commandLink>-->
+                    <!--<h:outputLabel value="#{list.course.name}"/>-->
+                    <!--<h:outputLabel value="#{list.description}"/>-->
+                    <!--<h:outputLabel value="#{list.duration}"/>-->
+                    <!--<h:outputLabel value="#{list.level}"/>-->
+                <!--</p:column>-->
+            <!--</p:dataGrid>-->
+        </h:form>
 
     </ui:define>
 </ui:composition>

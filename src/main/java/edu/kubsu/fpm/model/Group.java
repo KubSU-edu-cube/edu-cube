@@ -7,6 +7,7 @@ package edu.kubsu.fpm.model;
 
 import edu.kubsu.fpm.entity.Course_variation;
 import edu.kubsu.fpm.entity.EstimationFunc_Group;
+import edu.kubsu.fpm.entity.Person;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -34,6 +35,16 @@ public class Group implements Serializable {
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<EstimationFunc_Group> estimationFuncGroupList;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "STUDENT_GROUP",
+            joinColumns =
+                    @JoinColumn(name = "GROUP_ID", referencedColumnName="ID"),
+                    inverseJoinColumns =
+                    @JoinColumn(name = "STUDENT_ID", referencedColumnName="ID")
+    )
+    private List<Person> students;
+
     public Group() {
     }
 
@@ -47,6 +58,14 @@ public class Group implements Serializable {
 
     public void setEstimationFuncGroupList(List<EstimationFunc_Group> estimationFuncGroupList) {
         this.estimationFuncGroupList = estimationFuncGroupList;
+    }
+
+    public List<Person> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Person> students) {
+        this.students = students;
     }
 
     public Integer getId() {

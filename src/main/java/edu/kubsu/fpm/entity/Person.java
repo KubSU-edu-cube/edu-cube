@@ -1,5 +1,7 @@
 package edu.kubsu.fpm.entity;
 
+import edu.kubsu.fpm.model.Group;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -56,12 +58,23 @@ public class Person implements Serializable {
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     private List<StudentAnswer> student_answerList;
 
+    @ManyToMany(mappedBy = "students", cascade = CascadeType.ALL)
+    private List<Group> groupList;
+
     public List<StudentAnswer> getStudent_answerList() {
         return student_answerList;
     }
 
     public void setStudent_answerList(List<StudentAnswer> student_answerList) {
         this.student_answerList = student_answerList;
+    }
+
+    public List<Group> getGroupList() {
+        return groupList;
+    }
+
+    public void setGroupList(List<Group> groupList) {
+        this.groupList = groupList;
     }
 
     public int getId() {
