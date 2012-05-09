@@ -53,7 +53,7 @@ public class TestsBean {
         return testList;
     }
 
-    private List<Test> getTestListByType(String type, List<Test> resultList) {
+    private List<Test> getTestListByType(String type, List<Test> resultList) {  // TODO В результирующий список должны входить только те тестовые задания, на кот. студент еще не дал ответ.
         //        Получаем список всех лекций для данного курса.
         List<Lection> lectionList = lectionDAO.findLectionsByCourseVarId(course_variation.getId());
         for (Lection lection : lectionList){
