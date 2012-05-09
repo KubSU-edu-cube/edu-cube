@@ -32,4 +32,11 @@ public class GroupDAO {
     public void persist(Group group){
         em.merge(group);
     }
+
+    public Course_variation getCourseVarByGroupId(Integer id) {
+        return (Course_variation) em.createQuery("select g.courseVariation from Group g where g.id = :id")
+                .setParameter("id", id)
+                .getSingleResult();
+
+    }
 }

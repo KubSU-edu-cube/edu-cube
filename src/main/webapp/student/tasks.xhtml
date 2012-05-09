@@ -1,0 +1,33 @@
+<ui:composition template="/templates/student_task_template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core">
+    <ui:define name="page_content">
+        <h:form id="message_form">
+            <h:outputLabel value="Это страница ученика с идентификатором #{studentPS.studentId}"/>
+
+            <p:tabView effect="fade" effectDuration="normal">
+                <p:tab title="Тесты" >
+                    <h:panelGrid columns="1" cellpadding="10">
+                        <p:dataList value="#{testsBean.testList}" var="test" >
+                            <p:commandLink value="#{test.name}" action="#{testsBean.moveToTest}" ajax="false">
+                                <f:param name="choosenTest" value="#{test.id}" />
+                            </p:commandLink>
+                        </p:dataList>
+                    </h:panelGrid>
+                </p:tab>
+                <p:tab title="Творческие задания" >
+                    <h:panelGrid columns="1" cellpadding="10">
+                        <p:dataList value="#{testsBean.creativeTestList}" var="test" >
+                            <p:commandLink value="#{test.lection.name}" action="#{testsBean.moveToCreativeTest}" ajax="false">
+                                <f:param name="choosenCreativeTest" value="#{test.id}" />
+                            </p:commandLink>
+                        </p:dataList>
+                    </h:panelGrid>
+                </p:tab>
+            </p:tabView>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

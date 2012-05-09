@@ -7,19 +7,18 @@
     <ui:define name="page_content">
         <h:form>
             <h:outputLabel value="Это страница студента с идентификатором #{studentPS.studentId}"/><br />
-            <p:commandLink value="Поиск курсов" ajax="false" action="search_course"/>
-            <!-- Здесь будет список курсов, в кот. принимаеат участие ученик. -->
-            <!--<p:dataGrid value="#{teacherPS.variationList}" var="list">-->
-                <!--<p:column>-->
-                    <!--<p:commandLink value="#{list.course.name}" ajax="false" action="courses">-->
-                        <!--<f:param name="chosenCourse" value="#{list.id}"/>-->
-                    <!--</p:commandLink>-->
-                    <!--<h:outputLabel value="#{list.course.name}"/>-->
-                    <!--<h:outputLabel value="#{list.description}"/>-->
-                    <!--<h:outputLabel value="#{list.duration}"/>-->
-                    <!--<h:outputLabel value="#{list.level}"/>-->
-                <!--</p:column>-->
-            <!--</p:dataGrid>-->
+            <p:commandLink value="Поиск курсов" ajax="false" action="search_course"/><br />
+
+            <h:outputText value="Список ваших курсов: " /><br />
+            <p:dataGrid value="#{studentPS.variationList}" var="list">
+                <p:column>
+                    <p:commandLink value="#{list.course.name}" ajax="false" action="#{studentPS.moveToCourse}">
+                        <f:param name="choseCourse" value="#{list.id}"/>
+                    </p:commandLink>
+                    <h:outputLabel value="#{list.course.name}"/>
+                    <h:outputLabel value="Преподаватель: #{list.person.surname} #{list.person.name} #{list.person.patronymic}"/>
+                </p:column>
+            </p:dataGrid>
         </h:form>
 
     </ui:define>

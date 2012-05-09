@@ -15,7 +15,7 @@
                 <p:commandButton value="Назад" action="lections" ajax="false" /><br /><br />
             </h:panelGroup>
 
-            <h:outputText value="Перечень уже созданных заданий по выбранной лекции" action="check_tasks_type" />
+            <h:outputText value="Перечень уже созданных творческих заданий по выбранной лекции" action="check_tasks_type" />
             <h:dataTable value="#{tasksCreateBean.creativeTaskList}" var="task" border="1">
                 <h:column>
                     <h:selectBooleanCheckbox value="#{tasksCreateBean.selectedIDs[task.test.id]}" />

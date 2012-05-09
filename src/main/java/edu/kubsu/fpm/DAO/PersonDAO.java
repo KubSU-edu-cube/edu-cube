@@ -2,10 +2,13 @@ package edu.kubsu.fpm.DAO;
 
 import edu.kubsu.fpm.entity.Person;
 import edu.kubsu.fpm.managed.classes.DateConverter;
+import edu.kubsu.fpm.model.Group;
 
 import javax.ejb.*;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -77,5 +80,15 @@ public class PersonDAO {
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
     public void persist(Person person){
         em.merge(person);
+    }
+    
+    public List<Group> getGroupListByPersonId(int id){
+        try{
+            return (List<Group>) em.createQuery("select p.groupList from Person p where p.id = :id")
+                    .setParameter("id", id)
+                    .getResultList();
+        } catch (NoResultException e){
+            return new ArrayList<>();
+        }
     }
 }

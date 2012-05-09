@@ -37,7 +37,7 @@ public class CoursesStudentBean {
     private GroupDAO groupDAO;
 
     public CoursesStudentBean() {
-        this.setStudent((Person) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("person"));
+        this.setStudent((Person) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("student"));
     }
 
     public void serchCourses(){
