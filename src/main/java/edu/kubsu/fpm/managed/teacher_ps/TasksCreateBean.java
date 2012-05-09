@@ -116,6 +116,7 @@ public class TasksCreateBean {
 
     public void saveCheckedTask(){
         Test test = new Test();
+        test.setName(testName);
         test.setLection(lectionDAO.findById(currentLection));
         test.setType(testTypeDAO.findByName("checked"));
         testDAO.persist(test);
@@ -126,6 +127,7 @@ public class TasksCreateBean {
         task.setTest(test);
         taskDAO.persist(task);
         taskText = null;
+        testName = null;
     }
 
     public void saveTest(){
@@ -178,6 +180,7 @@ public class TasksCreateBean {
     }
 
     public String initParam() {
+        testName = null;
         taskText = null;
         rightAnswer = null;
         addAnswer1 = null;
