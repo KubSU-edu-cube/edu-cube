@@ -12,6 +12,9 @@
                 <f:selectItems value="#{tasksCreateBean.lectionList}" />
             </h:selectOneMenu><br /><br />
 
+            <h:outputLabel value="Введите название тестового задания"  /><br />
+            <h:inputText value="#{tasksCreateBean.testName}" /><br />
+
             <h:outputLabel value="Введите текст задания." /><br />
             <h:inputTextarea cols="100" rows="7" value="#{tasksCreateBean.taskText}"/><br />
 
