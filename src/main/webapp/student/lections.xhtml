@@ -6,7 +6,14 @@
                 xmlns="http://www.w3.org/1999/xhtml">
     <ui:define name="page_content">
         <h:form>
-            Здесь будет список лекций для данного курса.
+            <h:dataTable value="#{studentLectionsBean.lectionList}" var="lection" >
+                <h:column>
+                    <p:commandLink value="#{lection.name}" action="#{studentLectionsBean.moveToLection}" ajax="false">
+                        <f:param name="lectionId" value="#{lection.id}" />
+                    </p:commandLink>
+                </h:column>
+            </h:dataTable><br />
+            <p:commandLink value="Назад" action="selected_course" ajax="false" />
         </h:form>
 
     </ui:define>
