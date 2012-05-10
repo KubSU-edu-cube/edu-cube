@@ -1,9 +1,11 @@
 package edu.kubsu.fpm.managed.student_ps;
 
 import edu.kubsu.fpm.DAO.LectionDAO;
+import edu.kubsu.fpm.DAO.TaskDAO;
 import edu.kubsu.fpm.DAO.TestDAO;
 import edu.kubsu.fpm.entity.Course_variation;
 import edu.kubsu.fpm.entity.Lection;
+import edu.kubsu.fpm.entity.Task;
 import edu.kubsu.fpm.entity.Test;
 
 import javax.ejb.EJB;
@@ -32,17 +34,12 @@ public class TestsBean {
 
     @EJB
     private TestDAO testDAO;
+    
+    @EJB
+    private TaskDAO taskDAO;
 
     public TestsBean() {
         this.course_variation = (Course_variation) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("studentCourseVar");
-    }
-
-    public Course_variation getCourse_variation() {
-        return course_variation;
-    }
-
-    public void setCourse_variation(Course_variation course_variation) {
-        this.course_variation = course_variation;
     }
 
     public List<Test> getTestList() {
@@ -83,10 +80,17 @@ public class TestsBean {
     }
 
     public String moveToTest(){
+        String url = null;
         Integer testID = Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("choosenTest"));
         Test test = testDAO.findById(testID);
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("test", test);
-        return "base_test";
+        List<Task> taskList = taskDAO.getTaskListByTest(test);
+
+        if (taskList.get(0).getTaskType().getTaskType().equals("input"))
+            url = "base_test";
+        else if (taskList.get(0).getTaskType().getTaskType().equals("check"))
+            url = "check_test";
+        return url;
     }
 
     public void setCreativeTestList(List<Test> creativeTestList) {
@@ -95,5 +99,13 @@ public class TestsBean {
 
     public void setTestList(List<Test> testList) {
         this.testList = testList;
+    }
+
+    public Course_variation getCourse_variation() {
+        return course_variation;
+    }
+
+    public void setCourse_variation(Course_variation course_variation) {
+        this.course_variation = course_variation;
     }
 }

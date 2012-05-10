@@ -9,22 +9,22 @@
 
             <p:tabView effect="fade" effectDuration="normal">
                 <p:tab title="Тесты" >
-                    <h:panelGrid columns="1" cellpadding="10">
-                        <p:dataList value="#{testsBean.testList}" var="test" >
+                    <h:dataTable value="#{testsBean.testList}" var="test" >
+                        <h:column>
                             <p:commandLink value="#{test.name}" action="#{testsBean.moveToTest}" ajax="false">
                                 <f:param name="choosenTest" value="#{test.id}" />
                             </p:commandLink>
-                        </p:dataList>
-                    </h:panelGrid>
+                        </h:column>
+                    </h:dataTable><br />
                 </p:tab>
                 <p:tab title="Творческие задания" >
-                    <h:panelGrid columns="1" cellpadding="10">
-                        <p:dataList value="#{testsBean.creativeTestList}" var="test" >
-                            <p:commandLink value="#{test.lection.name}" action="#{testsBean.moveToCreativeTest}" ajax="false">
+                    <h:dataTable value="#{testsBean.creativeTestList}" var="test" >
+                        <h:column>
+                            <p:commandLink value="#{test.name}" action="#{testsBean.moveToCreativeTest}" ajax="false">
                                 <f:param name="choosenCreativeTest" value="#{test.id}" />
                             </p:commandLink>
-                        </p:dataList>
-                    </h:panelGrid>
+                        </h:column>
+                    </h:dataTable><br />
                 </p:tab>
             </p:tabView>
         </h:form>

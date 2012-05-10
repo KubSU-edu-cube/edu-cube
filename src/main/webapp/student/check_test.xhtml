@@ -5,14 +5,14 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns="http://www.w3.org/1999/xhtml">
     <ui:define name="page_content">
-        тест с полем ввода
         <h:form>
             <h:outputText value="#{creationBaseTest.contentTask}" /><br /><br />
-            <h:outputLabel value="Ответ: " for="answer" />
-            <h:inputText value="#{creationBaseTest.studentAnswer}" id="answer" /><br />
+            <h:selectOneRadio value="#{creationBaseTest.studentVariant}">
+                <f:selectItems value="#{creationBaseTest.questionList}" />
+            </h:selectOneRadio><br />
 
             <h:panelGroup>
-                <p:commandButton value="Ответить" actionListener="#{creationBaseTest.checkAnswer}" />
+                <p:commandButton value="Ответить" actionListener="#{creationBaseTest.checkStudentVariant}" />
                 <p:commandButton value="Следующий вопрос" action="#{creationBaseTest.moveToNextQuestion}" ajax="false"/>
             </h:panelGroup>
         </h:form>

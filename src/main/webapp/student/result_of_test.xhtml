@@ -1,0 +1,14 @@
+<ui:composition template="/templates/student_task_template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="page_content">
+        <h:form>
+            <h:outputText value="Вы набрали #{creationBaseTest.countRightAnswers} баллов из #{creationBaseTest.totalCount}." /><br />
+            <p:commandLink value="К заданиям" action="tasks" />
+        </h:form>
+
+    </ui:define>
+</ui:composition>

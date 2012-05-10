@@ -1,4 +1,4 @@
-<ui:composition template="/templates/student_ps_template.xhtml"
+<ui:composition template="/templates/student_task_template.xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
@@ -6,7 +6,15 @@
                 xmlns="http://www.w3.org/1999/xhtml">
     <ui:define name="page_content">
         <h:form>
-            Здесь будет задание с развернутым ответом.
+            <h:outputLabel value="Внимательно ознакомтесь с предложенным заданием, и напишите совй ответ в расположеном
+            ниже текстовом поле." /><br /><br />
+            <h:outputText value="#{creationCreativeTest.contentTask}" /><br /><br />
+            <h:inputTextarea cols="100" rows="7" value="#{creationCreativeTest.studentAnswer}"/><br />
+
+            <h:panelGroup>
+                <p:commandButton value="Сохранить" actionListener="#{creationCreativeTest.saveAnswer}" />
+                <p:commandButton value="Назад" action="tasks" ajax="false"/><br /><br />
+            </h:panelGroup>
         </h:form>
 
     </ui:define>

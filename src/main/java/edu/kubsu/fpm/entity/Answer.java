@@ -39,7 +39,7 @@ public class Answer {
         this.answersList = answersList;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
