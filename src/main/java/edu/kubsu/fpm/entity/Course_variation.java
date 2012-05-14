@@ -1,7 +1,6 @@
 package edu.kubsu.fpm.entity;
 
 import edu.kubsu.fpm.model.Group;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;

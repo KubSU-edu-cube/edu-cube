@@ -1,7 +1,6 @@
 package edu.kubsu.fpm.DAO;
 
 import edu.kubsu.fpm.entity.Lection;
-import edu.kubsu.fpm.entity.Test;
 
 import javax.ejb.*;
 import javax.persistence.EntityManager;

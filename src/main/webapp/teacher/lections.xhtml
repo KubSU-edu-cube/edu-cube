@@ -6,15 +6,15 @@
                 xmlns="http://www.w3.org/1999/xhtml">
     <ui:define name="page_content">
         <h:form>
-            <h:outputLabel value="#{lectionsBean.course_variation.course.name}"/><br />
-            <h:commandLink value="Создать" ajax="false" action="lection_creation"/><br />
-            <p:commandLink value="Создать тест" action="check_tasks_type" ajax="false" />
+
+            <h:outputLabel value="#{lectionsBean.course_variation.course.name}"/>
+            <h:commandLink value="Создать" ajax="false" action="lection_creation"/>
             <p:dataGrid value="#{lectionsBean.lectionVariationList}" var="lection">
                 <p:column>
                     <p:commandLink value="#{lection.name}" ajax="false" action="#{lectionsBean.moveToLection}">
                         <f:param name="chosenLection" value="#{lection.id}"/>
                     </p:commandLink>
-
+                    <p:commandLink value="Создать тест" action="check_tasks_type" ajax="false" />
                 </p:column>
             </p:dataGrid>
         </h:form>

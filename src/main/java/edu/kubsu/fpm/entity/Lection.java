@@ -49,6 +49,7 @@ public class Lection implements Serializable {
             inverseJoinColumns=
             @JoinColumn(name="COURSE_VARIATION_ID", referencedColumnName="ID")
     )
+
     private List<Course_variation> variationList = new ArrayList<>();
     
     @OneToMany(mappedBy = "lection", cascade = CascadeType.ALL)

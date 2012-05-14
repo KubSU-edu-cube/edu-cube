@@ -4,7 +4,6 @@ import edu.kubsu.fpm.entity.Course;
 import edu.kubsu.fpm.entity.Course_variation;
 import edu.kubsu.fpm.entity.Lection;
 import edu.kubsu.fpm.entity.Person;
-
 import javax.ejb.*;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

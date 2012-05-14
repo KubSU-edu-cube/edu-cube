@@ -1,5 +1,6 @@
 package edu.kubsu.fpm.DAO;
 
+import edu.kubsu.fpm.entity.City;
 import edu.kubsu.fpm.entity.Course;
 
 import javax.ejb.*;

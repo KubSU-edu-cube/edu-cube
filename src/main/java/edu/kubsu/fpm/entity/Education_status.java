@@ -1,6 +1,8 @@
 package edu.kubsu.fpm.entity;
 
+import javax.ejb.EJB;
 import javax.persistence.*;
+import javax.xml.rpc.encoding.SerializationContext;
 import java.io.Serializable;
 import java.util.List;
 

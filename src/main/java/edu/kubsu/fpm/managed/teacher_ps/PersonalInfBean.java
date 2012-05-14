@@ -69,8 +69,6 @@ public class PersonalInfBean {
     private TestTypeDAO testTypeDAO;
     @EJB
     private TaskTypeDAO taskTypeDAO;
-
-
 //    **************************************************************************************************************
 //    ***************************************************************************************************************
     public PersonalInfBean() {
@@ -145,7 +143,9 @@ public class PersonalInfBean {
         faculty.setName("ФКТиПМ");
         faculty.setUniversity(university);
         
+
         List<Faculty> faculties = new ArrayList<>();
+
         faculties.add(faculty);
 
         university.setFaculties(faculties);

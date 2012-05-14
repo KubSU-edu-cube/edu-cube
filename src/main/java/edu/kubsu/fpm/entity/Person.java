@@ -1,7 +1,6 @@
 package edu.kubsu.fpm.entity;
 
 import edu.kubsu.fpm.model.Group;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -76,7 +75,6 @@ public class Person implements Serializable {
     public void setGroupList(List<Group> groupList) {
         this.groupList = groupList;
     }
-
     public int getId() {
         return id;
     }

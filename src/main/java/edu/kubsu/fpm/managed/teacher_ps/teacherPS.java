@@ -4,6 +4,7 @@ import edu.kubsu.fpm.DAO.Course_variationDAO;
 import edu.kubsu.fpm.DAO.PersonDAO;
 import edu.kubsu.fpm.entity.Course_variation;
 import edu.kubsu.fpm.entity.Person;
+import edu.kubsu.fpm.managed.teacher_ps.CoursesBean;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;

@@ -1,10 +1,12 @@
 package edu.kubsu.fpm.DAO;
 
 import edu.kubsu.fpm.entity.Department;
+import edu.kubsu.fpm.entity.Faculty;
 
 import javax.ejb.*;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -20,6 +22,9 @@ public class DepartmentDAO {
     @PersistenceContext(unitName = "sample")
     EntityManager em;
 
+    public List<Department> getDepartmentsByFaculty(Faculty faculty) {
+        return (List<Department>)em.createQuery("from Department d where d.faculty = faculty").getResultList();
+    }
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
     public void persist(Department department){
         em.persist(department);
