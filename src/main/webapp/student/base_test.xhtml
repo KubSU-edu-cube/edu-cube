@@ -5,11 +5,12 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns="http://www.w3.org/1999/xhtml">
     <ui:define name="page_content">
-        тест с полем ввода
+
         <h:form>
+            <h:outputText value="Внимательно и вдумчиво прочитайте текст вопроса и введите свой ответ." /><br /><br />
             <h:outputText value="#{creationBaseTest.contentTask}" /><br /><br />
             <h:outputLabel value="Ответ: " for="answer" />
-            <h:inputText value="#{creationBaseTest.studentAnswer}" id="answer" /><br />
+            <h:inputText value="#{creationBaseTest.studentAnswer}" id="answer" /><br /><br />
 
             <h:panelGroup>
                 <p:commandButton value="Ответить" actionListener="#{creationBaseTest.checkAnswer}" />

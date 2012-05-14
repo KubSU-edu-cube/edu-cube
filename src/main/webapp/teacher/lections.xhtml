@@ -14,9 +14,9 @@
                     <p:commandLink value="#{lection.name}" ajax="false" action="#{lectionsBean.moveToLection}">
                         <f:param name="chosenLection" value="#{lection.id}"/>
                     </p:commandLink>
-                    <p:commandLink value="Создать тест" action="check_tasks_type" ajax="false" />
                 </p:column>
             </p:dataGrid>
+            <p:commandLink value="Создать тест" action="check_tasks_type" ajax="false" />
         </h:form>
     </ui:define>
 </ui:composition>

@@ -7,7 +7,7 @@
     <ui:define name="page_content">
         <h:form>
             <h:outputText value="Вы набрали #{creationBaseTest.countRightAnswers} баллов из #{creationBaseTest.totalCount}." /><br />
-            <p:commandLink value="К заданиям" action="tasks" />
+            <p:commandLink value="К заданиям" action="tasks" ajax="false" />
         </h:form>
 
     </ui:define>

@@ -7,10 +7,14 @@
     <ui:define name="page_content">
         <h:form>
             <h:outputText value="Выберете ссылку, на которую вы хотите перейти." /><br />
+            <p:commandLink value="Расписание лекций"/><br />
             <p:commandLink value="Лекции" action="lections" ajax="false" /><br />
             <p:commandLink value="Задания" action="tasks" ajax="false" /><br />
+            <p:commandLink value="Комната видеоконференций"/><br />
             <p:commandLink value="Вернуться назад" action="courses" ajax="false" /><br />
         </h:form>
+
+
 
     </ui:define>
 </ui:composition>
