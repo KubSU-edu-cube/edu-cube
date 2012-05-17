@@ -22,9 +22,14 @@ public class MessagingBean {
     //@todo Заменить эту константу на данные из авторизации пользователя
     public static final int userId = 1;
     private Person person;
+    private boolean incoming = true;
 
     @EJB
     private PersonDAO personDAO;
+
+    public void renderSelected(){
+        System.out.println("Diplaying incoming - "+incoming);
+    }
 
     /**
      * Передача в метод идентификатора пользователя исключается, чтобы не позволить пользователям читать чужие сообщения
@@ -39,5 +44,19 @@ public class MessagingBean {
         return person.getMessages();
     }
 
+    public Person getPerson() {
+        return person;
+    }
 
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public boolean isIncoming() {
+        return incoming;
+    }
+
+    public void setIncoming(boolean incoming) {
+        this.incoming = incoming;
+    }
 }

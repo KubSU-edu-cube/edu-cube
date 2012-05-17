@@ -17,8 +17,6 @@ import java.util.List;
 public class MessageBean {
     private List<Message> messages = new ArrayList<Message>();
 
-
-
     public List<Message> getMessages() {
         return messages;
     }

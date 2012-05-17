@@ -28,10 +28,10 @@ public class Message {
     @JoinColumn(columnDefinition = "sender_id", referencedColumnName = "id")
     private Person sender;
 
-    @ManyToMany(targetEntity = edu.kubsu.fpm.entity.Person.class)
+    @ManyToMany(targetEntity = edu.kubsu.fpm.entity.Person.class, cascade = CascadeType.ALL)
     private List<Person> recipients;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(columnDefinition = "message_type", referencedColumnName = "id")
     private MessageType messageType;
 

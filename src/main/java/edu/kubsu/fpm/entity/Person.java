@@ -18,7 +18,7 @@ public class Person implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Integer id;
     private String name;
     private String surname;
     private String patronymic;
@@ -40,21 +40,21 @@ public class Person implements Serializable {
 
 
 
-    @OneToMany(mappedBy = "person")
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     private List<Education> educations;
 
-    @OneToMany(mappedBy = "person")
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     private List<Job> jobs;
 
-    @ManyToMany(mappedBy = "recipients")
+    @ManyToMany(mappedBy = "recipients", cascade = CascadeType.ALL)
     private List<Message> messages;
 
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

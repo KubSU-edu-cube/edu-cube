@@ -7,7 +7,11 @@ import edu.kubsu.fpm.entity.Person;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.inject.Named;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -37,10 +41,9 @@ public class MessageTest {
         Message message1 = createMessagesForPerson(person1, person2);
         Message message2 = createMessagesForPerson(person2, person1);
 
-        personDAO.persist(person1);
-        personDAO.persist(person2);
         messageDAO.persist(message1);
         messageDAO.persist(message2);
+
     }
 
     private Message createMessagesForPerson(Person personFrom, Person personTo) {

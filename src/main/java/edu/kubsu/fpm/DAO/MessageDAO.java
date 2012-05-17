@@ -21,11 +21,12 @@ public class MessageDAO {
     EntityManager em;
 
     public List<Message> getIncomingMessages(Person person) {
-        return (List<Message>) em.createQuery("select m from Message m where :person in (m.recipients)").setParameter("person", person).getResultList();
+        return (List<Message>) em.createQuery("select m from Message m where :person in (m.recipients) and m.messageDate between :dateFrom and :dateAfter").setParameter("person", person).getResultList();
+
     }
 
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
     public void persist(Message message) {
-        em.persist(message);
+        em.merge(message);
     }
 }
