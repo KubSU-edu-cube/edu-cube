@@ -2,6 +2,8 @@ package edu.kubsu.fpm.DAO;
 
 import edu.kubsu.fpm.entity.EstimationFuncGroupPK;
 import edu.kubsu.fpm.entity.EstimationFunc_Group;
+import edu.kubsu.fpm.entity.EstimationFunction;
+import edu.kubsu.fpm.model.Group;
 
 import javax.ejb.*;
 import javax.persistence.EntityManager;
@@ -26,6 +28,12 @@ public class EstimationFunc_GroupDAO {
 
     public List<EstimationFunc_Group> getFunc_Group(){
         return (List<EstimationFunc_Group>) em.createQuery("from EstimationFunc_Group efg").getResultList();
+    }
+
+    public EstimationFunction getFunctionByGroup(Group group){
+        return (EstimationFunction) em.createQuery("select efg.function from EstimationFunc_Group efg where efg.group = :group")
+                .setParameter("group", group)
+                .getSingleResult();
     }
 
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)

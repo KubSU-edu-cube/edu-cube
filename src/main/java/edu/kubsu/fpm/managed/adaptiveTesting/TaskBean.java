@@ -55,6 +55,7 @@ public class TaskBean {
     private List<Integer> obligFactList;
     private List<String> participleList;    // Слова-частцы, а так же предлоги, союзы и т.п. на основе кот. не нужно строить вопросы.
     private String targetURL;
+    private Integer studentId;
 
     @EJB
     private FactDAO factDAO;
@@ -106,6 +107,9 @@ public class TaskBean {
         participleList.add("при");
         participleList.add("n");
         participleList.add("это");
+        
+        String student = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("teacherId");
+        studentId = Integer.parseInt(student == null ? "0" : student);
     }
 
     //   Генерирует текущий тестовый вопрос
@@ -240,8 +244,11 @@ public class TaskBean {
 
 //    Формирует вывод результатов тестирования
     public String getTestResult() {    // Подумать над формированием результата. На что смотреть при выборе функции оценивания?
+        // TODO Округлять оценку до целого! Вычислять выражение от процента.
+        FunctionToGroupBean functionToGroupBean = new FunctionToGroupBean();
+        String function = functionToGroupBean.getFunctionForGroup(idGroup, studentId);
+//        Expression
         testResult = "Вы получили ".concat(this.getCountRightAnswer().toString()).concat(" балов из ").concat(this.getCountAnswer().toString());
-
         return testResult;
     }
 
