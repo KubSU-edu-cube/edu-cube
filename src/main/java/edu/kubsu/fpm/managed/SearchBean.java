@@ -84,8 +84,8 @@ public class SearchBean {
 //                this.selectedToAge,
 //                this.sex);
         this.shortPersonInfos = findPersons(this.simpleQuery,
-                this.city,
                 this.country,
+                this.city,
                 this.selectedFromAge,
                 this.selectedToAge,
                 this.sex);

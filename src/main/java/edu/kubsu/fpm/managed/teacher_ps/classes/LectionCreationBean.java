@@ -54,6 +54,7 @@ public class LectionCreationBean {
         lection.setAuthor(person);
         lection.setVariationList(variationList);
         lection.setContent(uploadedFile.getContents());
+        lection.setDescription(shortLectionContent);
         lection.setLection(null);
         lection.setName(this.lectionName);
 

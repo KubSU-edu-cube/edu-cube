@@ -34,7 +34,7 @@ public class teacherPS {
             variationList = variationDAO.findByPersonId(Integer.parseInt(this.teacherId));
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("courseVariationList",variationList);
         }
-        return variationList;
+        return (List<Course_variation>) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("courseVariationList");
     }
 
     public void setVariationList(List<Course_variation> variationList) {

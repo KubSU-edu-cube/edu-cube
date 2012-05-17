@@ -36,6 +36,7 @@ public class DBImageServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String personId = request.getParameter("personId");
+        String mainPersonid = request.getParameter("mainPersonid");
         if(personId!=null){
             for (PersonalPhoto personalPhoto:DBImage.getSmallImgs()){
                 if(personalPhoto.getPersonId()==Integer.parseInt(personId)){
@@ -43,6 +44,9 @@ public class DBImageServlet extends HttpServlet {
                     break;
                 }
             }
+        }
+        if(mainPersonid!=null){
+            img = DBImage.getMainPhoto().getContent();
         }
 
 //        String count = request.getParameter("imgcount");  // получаем параметр запроса - номер картинки в лекции
