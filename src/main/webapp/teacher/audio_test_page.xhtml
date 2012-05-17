@@ -9,11 +9,18 @@
             <!--<h:link href="http://localhost:8080/DBAudioServlet?audioId=0" title="Play sound" class="sm2_button">coins.mp3</h:link> Spare change-->
             <!--<p:media value="#{audioTestBean.streamMusic}" width="800" height="600" player="quicktime"/>-->
             <!--<p:media value="http://www.tulumba.com/mp3/mogollar/yurudukdurmadan/track%2002.mp3" width="200" height="20" player="quicktime"/>-->
-            <audio controls="controls">
-                <source src="song.ogg" type="audio/ogg" />
-                <source src="http://localhost:8080/DBAudioServlet?audioId=0" type="audio/mpeg" />
-                Your browser does not support the audio element.
-            </audio>
+            <!--<audio controls="controls">-->
+                <!--<source src="song.ogg" type="audio/ogg"/>-->
+                <!--<source src="http://localhost:8080/DBAudioServlet?audioId=0" type="audio/mpeg"/>-->
+                <!--Your browser does not support the audio element.-->
+            <!--</audio>-->
+
+            <object type="application/x-shockwave-flash" data="/dewplayer/dewplayer-classic.swf" width="160" height="20"
+                    id="dewplayer" name="dewplayer">
+                <param name="wmode" value="transparent"/>
+                <param name="movie" value="/dewplayer/dewplayer-classic.swf"/>
+                <param name="flashvars" value="mp3=http://localhost:8080/DBAudioServlet?audioId=0&amp;autostart=1"/>
+            </object>
         </h:form>
     </ui:define>
 </ui:composition>
