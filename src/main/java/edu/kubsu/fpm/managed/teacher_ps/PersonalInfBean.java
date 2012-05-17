@@ -5,7 +5,6 @@ import edu.kubsu.fpm.DAO.DepartmentDAO;
 import edu.kubsu.fpm.DAO.PersonDAO;
 import edu.kubsu.fpm.entity.*;
 import edu.kubsu.fpm.managed.classes.ImgConverter;
-import edu.kubsu.fpm.managed.teacher_ps.classes.DBFilling;
 import edu.kubsu.fpm.managed.teacher_ps.classes.Education;
 import edu.kubsu.fpm.managed.teacher_ps.classes.Job;
 
@@ -15,7 +14,10 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -32,7 +34,8 @@ import java.util.List;
 @RequestScoped
 public class PersonalInfBean {
     private int beanUniqueId = 0;
-    
+
+    private String teacherId;   // кому принадлежит страница
     private String name = "Анна";
     private String surname = "Жуланова";
     private String patronymic = "Павловна";
@@ -71,9 +74,10 @@ public class PersonalInfBean {
 //    ***************************************************************************************************************
     public PersonalInfBean() {
 
+       ///////// чей вообще кабинет?? //////////////////////
+        this.setTeacherId((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("teacherId"));
 
-
-       this.tmpJob = new Job();
+        this.tmpJob = new Job();
         tmpJob.setCountry(null);
         tmpJob.setCity(null);
 
@@ -86,7 +90,18 @@ public class PersonalInfBean {
         dateOfBirth = null;
         GregorianCalendar calendar = new GregorianCalendar();
         calendar.set(2012, 9, 1);
+
         dateOfBirth = calendar.getTime();
+
+        GregorianCalendar curDate = new GregorianCalendar();
+        calendar.setTime(new Date());
+
+        GregorianCalendar age = new GregorianCalendar();
+        calendar.set(18,0,0);
+
+
+
+
 
         
         educations = new ArrayList<Education>();
@@ -145,8 +160,8 @@ public class PersonalInfBean {
         Person person1 = new Person();
         person1.setAdditionalInformation("Доктор наук");
         person1.setAdress("ул. Рашпилевская 50, кв. 14");
-        person1.setCityOfBirth("Ижевск");
-        person1.setCurrentCity("Краснодар");
+        person1.setCityOfBirth("Москва");
+        person1.setCurrentCity("Москва");
         person1.setCurrentCountry("Россия");
         person1.setDateOfBirth(InsertDate(21, 05, 1951));
         person1.setHomeTel("254-93-77");
@@ -158,7 +173,7 @@ public class PersonalInfBean {
         person1.setSkype("orf_541");
         person1.setSurname("Семенова");
         person1.setWebSite("");
-        person1.setPhoto(getBytesFromFile("temp_img/gy.png"));
+        person1.setPhoto(getBytesFromFile("temp_img/gy.jpeg"));
 
 
 
@@ -326,13 +341,13 @@ public class PersonalInfBean {
             cityKi.setName("Киев");
             cityKi.setCountry(countryU);
 
-            List<City> citiesR = new ArrayList<>();
+            List<City> citiesR = new ArrayList<City>();
             citiesR.add(cityK);
             citiesR.add(cityM);
 
             countryR.setCities(citiesR);
 
-            List<City> citiesU= new ArrayList<>();
+            List<City> citiesU= new ArrayList<City>();
             citiesU.add(cityKi);
 
             countryU.setCities(citiesU);
@@ -522,5 +537,15 @@ public class PersonalInfBean {
 
     public void setTmpJob(Job tmpJob) {
         this.tmpJob = tmpJob;
+    }
+
+    public String getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(String teacherId) {
+        this.teacherId = teacherId;
+
+
     }
 }

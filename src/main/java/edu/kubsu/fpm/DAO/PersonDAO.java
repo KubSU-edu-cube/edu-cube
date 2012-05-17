@@ -1,10 +1,12 @@
 package edu.kubsu.fpm.DAO;
 
 import edu.kubsu.fpm.entity.Person;
+import edu.kubsu.fpm.managed.classes.DateConverter;
 
 import javax.ejb.*;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,9 +37,45 @@ public class PersonDAO {
                 setParameter("firstName",firstName).
                 getResultList();
     }
+    public List<Person> fullSearch(String firstName,
+                                   String secondName,
+                                   int fromAge,
+                                   int toAge,
+                                   String city,
+                                   String country,
+                                   String sex){
+
+        String cityParam = (city == null ? "%":city);
+        String countryParam = (country == null ? "%" :country);
+        String sexParam = (sex.toUpperCase().equals("любой".toUpperCase())? "%":sex);
+        Date dateFromParam = (fromAge == 0 ? DateConverter.getMinDate():DateConverter.getDate(DateConverter.getCurDate(),fromAge));
+        Date dateToParam = (toAge == 0 ? DateConverter.getMaxDate():DateConverter.getDate(DateConverter.getCurDate(),toAge));
+
+        return (List<Person>)em.createQuery("from Person p where " +
+                "((upper(p.name) like upper(:firstName)and(upper(p.surname) like upper(:secondName))) " +
+                "or" +
+                " (upper(p.surname) like upper(:firstName)and upper(p.name)like upper(:secondName)))" +
+                "and" +
+                " upper(p.currentCity) like upper(:cityParam)" +
+                "and " +
+                "upper(p.currentCountry) like upper(:countryParam)" +
+                "and " +
+                "upper(p.sex) like upper(:sexParam) " +
+                "and " +
+                " p.dateOfBirth between :dateToParam and :dateFromParam").
+                setParameter("firstName",firstName).
+                setParameter("secondName", secondName).
+                setParameter("cityParam", cityParam).
+                setParameter("countryParam", countryParam).
+                setParameter("sexParam", sexParam).
+                setParameter("dateFromParam", dateFromParam).
+                setParameter("dateToParam", dateToParam).
+                getResultList();
+
+}
 
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
     public void persist(Person person){
-        em.merge(person);
+        em.persist(person);
     }
 }
