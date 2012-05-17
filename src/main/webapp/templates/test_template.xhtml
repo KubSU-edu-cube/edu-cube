@@ -30,12 +30,11 @@
             </div>
         </div>
 
-        <div id="left_box" style="margin-left: 10px">
-            <h:form>
-                <p:commandButton value="Инициализация БД" actionListener="#{initFactBean.tmpFactsInit}" process="@this"/>
-            </h:form>
+        <div id="left_box" class="left_box">
+            <div id="left_box_text" class="left_box_text">
+                <ui:insert name="left_box_content"/>
+            </div>
         </div>
-
 
         <div id="content" class="login_content">
             <ui:insert name="page_content">Page Content</ui:insert>

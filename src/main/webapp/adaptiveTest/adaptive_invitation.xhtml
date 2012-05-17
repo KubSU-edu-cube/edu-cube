@@ -4,6 +4,11 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:p="http://primefaces.org/ui">
 
+    <ui:define name="left_box_content">
+        <h:form>
+            <p:commandButton value="Инициализация БД" actionListener="#{initFactBean.tmpFactsInit}" process="@this"/>
+        </h:form>
+    </ui:define>
 
     <ui:define name="page_content">
         <h:form>
