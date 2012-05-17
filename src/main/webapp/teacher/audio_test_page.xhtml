@@ -6,7 +6,14 @@
                 xmlns="http://www.w3.org/1999/xhtml">
     <ui:define name="page_content">
         <h:form>
-            <p:media value="#{audioTestBean.audioSrc}" width="200" height="20" player="flash"/>
+            <!--<h:link href="http://localhost:8080/DBAudioServlet?audioId=0" title="Play sound" class="sm2_button">coins.mp3</h:link> Spare change-->
+            <!--<p:media value="#{audioTestBean.streamMusic}" width="800" height="600" player="quicktime"/>-->
+            <!--<p:media value="http://www.tulumba.com/mp3/mogollar/yurudukdurmadan/track%2002.mp3" width="200" height="20" player="quicktime"/>-->
+            <audio controls="controls">
+                <source src="song.ogg" type="audio/ogg" />
+                <source src="http://localhost:8080/DBAudioServlet?audioId=0" type="audio/mpeg" />
+                Your browser does not support the audio element.
+            </audio>
         </h:form>
     </ui:define>
 </ui:composition>
