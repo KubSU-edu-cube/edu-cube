@@ -27,7 +27,7 @@ public class DBAudioServlet extends HttpServlet {
     List<byte[]> list;
 
     public DBAudioServlet() {
-        File file = new File("C:\\Users\\Andrey\\Downloads\\Lalo Project & Aelyn - Listen to me, looking at me.mp3");
+        File file = new File("/home/anna/coco_jambo.mp3");
         FileInputStream fis = null;
         try {
             fis = new FileInputStream(file);
@@ -46,6 +46,23 @@ public class DBAudioServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        File file = new File("/home/anna/coco_jambo.mp3");
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(file);
+
+            byte[] buffer = new byte[10485760];
+            fis.read(buffer);
+            String str = Base64.encode(buffer);
+            byte[] result = Base64.decode(str);
+            List<byte[]> list = new ArrayList<byte[]>();
+            list.add(result);
+            this.list = list;
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+
         String audioId = request.getParameter("audioId");
         if(audioId!=null){
             audio = list.get(Integer.parseInt(audioId));

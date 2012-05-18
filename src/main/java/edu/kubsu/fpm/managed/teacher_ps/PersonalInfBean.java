@@ -335,13 +335,13 @@ public class PersonalInfBean {
             cityKi.setName("Киев");
             cityKi.setCountry(countryU);
 
-            List<City> citiesR = new ArrayList<>();
+            List<City> citiesR = new ArrayList<City>();
             citiesR.add(cityK);
             citiesR.add(cityM);
 
             countryR.setCities(citiesR);
 
-            List<City> citiesU= new ArrayList<>();
+            List<City> citiesU= new ArrayList<City>();
             citiesU.add(cityKi);
 
             countryU.setCities(citiesU);
