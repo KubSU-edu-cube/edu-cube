@@ -1,10 +1,76 @@
 <ui:composition template="/templates/teacher_ps_template.xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:p="http://primefaces.org/ui"
                 xmlns="http://www.w3.org/1999/xhtml">
     <ui:define name="page_content">
-        Здесь личная информация учителя
 
+        <h:form>
+            <div style="width: 900px;height: 150px">
+                <div style="float: left">
+                    <p:graphicImage value="#{personalInfBean.src}"/>
+                </div>
+                <div style="float: left;margin-left: 33px;margin-top: 9px">
+
+            <h:panelGrid columns="1">
+            <h:outputLabel value="#{personalInfBean.surname} #{personalInfBean.name} #{personalInfBean.patronymic}" styleClass="user_name"/>
+            <h:outputText value="#{personalInfBean.additionalInformation}" styleClass="additional_info"/>
+            </h:panelGrid>
+                </div>
+            </div>
+
+            <h:panelGrid columns="2" columnClasses="seperator_col_caption, seperator_col_line">
+                <h:outputLabel value="День рождения" styleClass="labels"/>
+                <h:outputLabel value="21.05.1960" styleClass="info_text"/>
+                <h:outputLabel value="Пол" styleClass="labels"/>
+                <h:outputLabel value="#{personalInfBean.sex}" styleClass="info_text"/>
+                <h:outputLabel value="Родной город" styleClass="labels"/>
+                <h:outputLabel value="#{personalInfBean.cityOfBirth}" styleClass="info_text"/>
+            </h:panelGrid>
+
+            <!--*************************************************КОНТАКТЫ**************************************************************-->
+            <h:panelGrid columns="3" columnClasses="seperator_col_caption, seperator_col_line, seperator_col_link">
+                <h:outputLabel value="Контакты" styleClass="text_separator"/>
+                <p:separator styleClass="line_separator"/>
+                <p:commandLink value="Редактировать" ajax="false" action="edit_personal_information" styleClass="text_separator"/>
+            </h:panelGrid>
+            <h:panelGrid columns="2" columnClasses="seperator_col_caption, seperator_col_line">
+
+                <h:outputLabel value="Моб. телефон" styleClass="labels"/>
+                <h:outputLabel value="#{personalInfBean.mobTel}" styleClass="info_text"/>
+
+                <h:outputLabel value="Дом. телефон" styleClass="labels"/>
+                <h:outputLabel value="#{personalInfBean.homeTel}" styleClass="info_text"/>
+
+                <h:outputLabel value="Skype" styleClass="labels"/>
+                <h:outputLabel value="#{personalInfBean.skype}" styleClass="info_text"/>
+
+                <h:outputLabel value="ICQ" styleClass="labels"/>
+                <h:outputLabel value="#{personalInfBean.icq}" styleClass="info_text"/>
+
+                <h:outputLabel value="Адрес" styleClass="labels"/>
+                <h:outputLabel value="#{personalInfBean.currentCountry} (#{personalInfBean.currentCity}) #{personalInfBean.adress}" styleClass="info_text"/>
+
+                <h:outputLabel value="e-mail" styleClass="labels"/>
+                <h:outputLabel value="#{personalInfBean.email}" styleClass="info_text"/>
+
+                <h:outputLabel value="Web-site" styleClass="labels"/>
+                <h:outputLabel value="#{personalInfBean.webSite}" styleClass="info_text"/>
+
+            </h:panelGrid>
+
+            <!--*************************************************ОБРАЗОВАНИЕ**************************************************************-->
+
+            <h:panelGrid columns="3" columnClasses="seperator_col_caption, seperator_col_line, seperator_col_link">
+                <h:outputLabel value="Образование" styleClass="text_separator"/>
+                <p:separator styleClass="line_separator"/>
+                <p:commandLink value="Редактировать" ajax="false" action="edit_personal_information" styleClass="text_separator"/>
+            </h:panelGrid>
+            <h:panelGrid columns="3" columnClasses="seperator_col_caption, seperator_col_line, seperator_col_link">
+                <h:outputLabel value="Работа" styleClass="text_separator"/>
+                <p:separator styleClass="line_separator"/>
+                <p:commandLink value="Редактировать" ajax="false" action="edit_personal_information" styleClass="text_separator"/>
+            </h:panelGrid>
+        </h:form>
     </ui:define>
 </ui:composition>

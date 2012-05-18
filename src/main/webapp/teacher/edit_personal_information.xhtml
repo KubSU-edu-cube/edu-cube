@@ -1,0 +1,146 @@
+<ui:composition template="/templates/teacher_ps_template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="page_content">
+
+        <h:form id="form">
+            <p:panel header="Фотография" toggleable="false">
+                <p:fileUpload mode="advanced"/>
+            </p:panel>
+            <p:panel header="Основное" toggleable="false" id="personalInfPanel">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel value="Фамилия" for="surname"/>
+                    <p:inputText id="surname" value="#{personalInfBean.surname}"/>
+
+                    <h:outputLabel value="Имя" for="name"/>
+                    <p:inputText id="name" value="#{personalInfBean.name}"/>
+
+                    <h:outputLabel value="Отчество" for="patronymic"/>
+                    <p:inputText id="patronymic" value="#{personalInfBean.patronymic}"/>
+
+                    <h:outputLabel value="Пол" for="sex"/>
+                    <p:inputText id="sex" value="#{personalInfBean.sex}"/>
+
+                    <h:outputLabel value="Дата рождения" for="date_of_birth"/>
+                    <p:calendar value="#{personalInfBean.dateOfBirth}" id="date_of_birth"/>
+
+                    <h:outputLabel value="Родной город" for="city_of_birth"/>
+                    <p:inputText id="city_of_birth" value="#{personalInfBean.cityOfBirth}"/>
+
+                    <h:outputLabel value="О себе" for="additional_information"/>
+                    <p:inputText id="additional_information" value="#{personalInfBean.additionalInformation}"/>
+                </h:panelGrid>
+            </p:panel>
+            <p:panel header="Контакты" toggleable="true" id="contactsPanel">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel value="Страна" for="currentCountry"/>
+                    <p:inputText id="currentCountry" value="#{personalInfBean.currentCountry}"/>
+
+                    <h:outputLabel value="Город" for="currentCity"/>
+                    <p:inputText id="currentCity" value="#{personalInfBean.currentCity}"/>
+
+                    <h:outputLabel value="Адрес" for="adress"/>
+                    <p:inputText id="adress" value="#{personalInfBean.adress}"/>
+
+                    <h:outputLabel value="Моб. телефон" for="mobTel"/>
+                    <p:inputText id="mobTel" value="#{personalInfBean.mobTel}"/>
+
+                    <h:outputLabel value="Дом. телефон" for="homeTel"/>
+                    <p:inputText id="homeTel" value="#{personalInfBean.homeTel}"/>
+
+                    <h:outputLabel value="Skype" for="skype"/>
+                    <p:inputText id="skype" value="#{personalInfBean.skype}"/>
+
+                    <h:outputLabel value="ICQ" for="icq"/>
+                    <p:inputText id="icq" value="#{personalInfBean.icq}"/>
+
+                    <h:outputLabel value="Web сайт" for="webSite"/>
+                    <p:inputText id="webSite" value="#{personalInfBean.webSite}"/>
+                </h:panelGrid>
+            </p:panel>
+            <p:panel header="Образование" toggleable="true" id="educationPanel">
+                <p:dataList value="#{personalInfBean.educations}" var="education" id="educationList">
+                    <p:column>
+                        <h:panelGrid columns="2" cellpadding="5">
+
+                            <h:outputLabel value="Страна"/>
+                            <p:inputText value="#{education.country}"/>
+
+                            <h:outputLabel value="Город"/>
+                            <p:inputText value="#{education.city}"/>
+
+                            <h:outputLabel value="ВУЗ"/>
+                            <p:inputText value="#{education.university}"/>
+
+                            <h:outputLabel value="Факультет"/>
+                            <p:inputText value="#{education.faculty}"/>
+
+                            <h:outputLabel value="Кафедра"/>
+                            <p:inputText value="#{education.department}"/>
+
+                            <h:outputLabel value="Статус"/>
+                            <p:inputText value="#{education.status}"/>
+
+                            <h:outputLabel value="Дата поступления"/>
+                            <p:calendar value="#{education.enterDate}"/>
+
+                            <h:outputLabel value="Дата окончания"/>
+                            <p:calendar value="#{education.graduateDate}"/>
+
+                            <p:commandLink actionListener="#{personalInfBean.removeEducation}"
+                                           process="@parent"
+                                           update="@form">
+                                <f:param name="educationToRemove" value="#{education.id}"/>
+                                <h:outputText value="Удалить информацию"/>
+                            </p:commandLink>
+                        </h:panelGrid>
+                    </p:column>
+                </p:dataList>
+                <p:commandButton
+                        value="Добавить учебное заведение"
+                        icon="ui-icon-plus"
+                        actionListener="#{personalInfBean.addEducation}"
+                        process="@parent"
+                        update="educationList"/>
+
+            </p:panel>
+            <p:panel header="Работа" toggleable="true" id="jobPanel">
+                <p:dataGrid var="job" value="#{personalInfBean.jobs}" columns="1">
+                    <p:column>
+                        <h:panelGrid columns="3">
+                            <h:outputLabel value="Страна" styleClass="labels"/>
+                            <p:selectOneMenu value="#{job.country}">
+
+
+                                <f:selectItem itemLabel="Не выбрано" itemValue="---"/>
+                                <f:selectItems value="#{personalInfBean.countries}" itemLabel="#{country.name}"
+                                               var="country" itemValue="#{country}"/>
+                                <f:param name="selectedCountry" value="#{job.jobId}"/>
+                                <p:ajax event="change" update="@form" listener="#{personalInfBean.changeCityList}" process="@parent"/>
+                            </p:selectOneMenu>
+                            <p:commandLink actionListener="#{personalInfBean.removeJob}" update="@form">
+                                <f:param name="jobToRemove" value="#{job.jobId}"/>
+                                <h:outputText value="Удалить"/>
+                            </p:commandLink>
+                            <p:commandLink actionListener="#{personalInfBean.removeEducation}" update="@form">
+                                <f:param name="educationToRemove" value="#{job.jobId}"/>
+                                <h:outputText value="Удалить информацию"/>
+                            </p:commandLink>
+                            <h:outputLabel value="Город" styleClass="labels"/>
+                            <p:selectOneMenu value="#{job.city}">
+                                <f:selectItem itemLabel="Не выбрано" itemValue="---"/>
+                                <f:selectItems value="#{personalInfBean.cities}" itemLabel="#{city.name}"
+                                               var="city" itemValue="#{city}"/>
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+                    </p:column>
+                </p:dataGrid>
+
+            </p:panel>
+            <p:commandButton value="Сохранить изменения" process="@this" actionListener="#{personalInfBean.goToPersonalInfo}"/>
+        </h:form>
+    </ui:define>
+</ui:composition>

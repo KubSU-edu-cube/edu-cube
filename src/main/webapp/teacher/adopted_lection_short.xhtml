@@ -1,0 +1,130 @@
+<ui:composition template="/templates/teacher_ps_template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="page_content">
+        <h:form>
+            <h3>Графы и способы их представления</h3><a name="sect3"></a><h4></h4><a
+                name="keyword-context.1"></a>
+
+            <p id="id_7"><span class="keyword_def">Граф</span> задается множеством точек или вершин <span
+                    class="texample">х<sub>1</sub>, х<sub>2</sub>, ..., х<sub>n</sub></span> и множеством линий или ребер
+                <span class="texample">a<sub>1</sub>, a<sub>2</sub>, ... , a<sub>m</sub></span>, соединяющих между собой все или часть точек.
+            </p>
+
+            <div class="lecture_mark" id="mark_7"></div>
+            <p id="id_10"><span class="keyword_def">Графом</span> называется двойка вида</p>
+
+            <div class="lecture_mark" id="mark_10"></div>
+            <p id="id_11"><span class="texample">G = (X, A)</span>,</p>
+
+            <div class="lecture_mark" id="mark_11"></div>
+            <p id="id_13">где <span
+                    class="texample">X = {x<sub>i</sub>}, i = 1, 2, ..., n</span> – множество вершин графа, <span
+                    class="texample">A = {a<sub>i</sub>}, i = 1, 2,... , m</span> – множество ребер графа.</p>
+
+            <div class="lecture_mark" id="mark_13"></div>
+            <a name="keyword-context.2"></a>
+
+            <p id="id_16"><span
+                    class="keyword">Графы</span> могут быть ориентированными, неориентированными и смешанными . Если ребра у множества <span
+                    class="texample">A </span> ориентированы, что обычно показывается стрелкой, то они называются дугами, и
+                <span class="keyword">граф</span> с такими ребрами называется ориентированным <span
+                        class="keyword">графом</span> или <span class="keyword_def">орграфом</span> (а).</p>
+
+            <div class="lecture_mark" id="mark_16"></div>
+            <p align="left" id="id_18"><a name="image.1.2"></a>
+
+                <p:graphicImage value="/img/orgraf.jpg" alt="" width="442" height="293"/>
+                <br/>
+            </p>
+            <div class="lecture_mark" id="mark_18"></div>
+            <p id="id_20">Если ребра не имеют ориентации, то <span
+                    class="keyword">граф</span> называется неориентированным (б). Граф, в котором присутствуют и ребра, и дуги называется смешанным (в). В случае, когда <span class="texample">G = (X, A)</span> является
+                <span class="keyword">орграфом</span>, и мы хотим пренебречь направленностью дуг из множества <span
+                        class="texample">A</span>, то неориентированный граф, соответствующий <span
+                        class="texample">G</span>, будет обозначаться и называться неориентированным дубликатом или неориентированным двойником (г).</p>
+
+            <div class="lecture_mark" id="mark_20"></div>
+            <p id="id_24">Дуга <span
+                    class="texample">a<sub>i</sub></span> может быть представлена упорядоченной парой вершин <span
+                    class="texample">(х<sub>n</sub>, х<sub>k</sub>)</span>, состоящей из начальной <span
+                    class="texample">х<sub>n</sub></span> и конечной <span
+                    class="texample">х<sub>k</sub></span> вершин. Например, для <span class="keyword">графа</span> <span
+                    class="texample">G<sub>1</sub></span> (а) дуга <span
+                    class="texample">a<sub>1</sub></span> задается парой вершин <span class="texample">(x<sub>2</sub>, x<sub>1</sub>)</span>, а дуга
+                <span class="texample">а<sub>3</sub></span> парой <span class="texample">(x<sub>2</sub>, x<sub>3</sub>)</span>. Если
+                <span class="texample">х<sub>n</sub></span>, <span
+                        class="texample">х<sub>k</sub></span> – концевые вершины дуги <span
+                        class="texample">a<sub>i</sub></span>, то говорят, что вершины <span
+                        class="texample">х<sub>n</sub></span> и <span
+                        class="texample">х<sub>k</sub></span> инцидентны дуге <span
+                        class="texample">a<sub>i </sub></span> или дуга <span
+                        class="texample">a<sub>i</sub></span> инцидентна вершинам <span
+                        class="texample">х<sub>n</sub></span> и <span class="texample">х<sub>k</sub></span>.</p>
+
+            <div class="lecture_mark" id="mark_24"></div>
+            <p id="id_43">Дуга, у которой начальная и конечная вершины совпадают, называется петлей. В <span
+                    class="keyword">графе</span> <span class="texample">G<sub>3</sub></span> (в) дуга <span class="texample">a<sub>7</sub></span> является петлей.
+            </p>
+
+            <div class="lecture_mark" id="mark_43"></div>
+            <p id="id_46">Каждая вершина <span class="keyword">орграфа</span> <span
+                    class="texample">х<sub>i</sub></span> может характеризоваться <span
+                    class="keyword">полустепенью исхода</span> <span
+                    class="texample">d<sub>0</sub>(х<sub>i</sub>)</span> и <span
+                    class="keyword">полустепенью захода</span> <span
+                    class="texample">d<sub>t</sub>(х<sub>i</sub>)</span>.</p>
+
+            <div class="lecture_mark" id="mark_46"></div>
+            <p id="id_50"><a name="keyword-context.3"></a> <span class="keyword_def">Полустепенью исхода</span> вершины
+                <span class="texample">х<sub>i</sub></span> — <span
+                        class="texample">d<sub>0</sub>(х<sub>i</sub>)</span> называется количество дуг, исходящих из этой вершины. Например, для
+                <span class="keyword">орграфа</span> <span class="texample">G<sub>1</sub></span> (а) характеристики полустепеней исхода следующие: <span
+                        class="texample">d<sub>0</sub>(х<sub>1</sub>)=1</span>, <span
+                        class="texample">d<sub>0</sub>(х<sub>2</sub>)=2</span>, <span
+                        class="texample">d<sub>0</sub>(х<sub>3</sub>)=2</span>, <span
+                        class="texample">d<sub>0</sub>(х<sub>4</sub> )=1</span>.</p>
+
+            <div class="lecture_mark" id="mark_50"></div>
+            <p id="id_58"><a name="keyword-context.4"></a> <span class="keyword_def">Полустепенью захода</span> вершины
+                <span class="texample">х<sub>i</sub></span> — <span
+                        class="texample">d<sub>t</sub>(х<sub>i</sub>)</span> называется количество дуг, входящих в эту вершину. Например, для
+                <span class="keyword">орграфа</span> <span class="texample">G<sub>1</sub>: d<sub>t</sub>(х<sub>1</sub>)=2</span>,
+                <span class="texample">d<sub>t</sub>(х<sub>2</sub>)=1</span>, <span
+                        class="texample">d<sub>t</sub>(х<sub>3</sub>)=2</span>, <span
+                        class="texample">d<sub>t</sub>(х<sub>4</sub> )=1</span>.</p>
+
+            <div class="lecture_mark" id="mark_58"></div>
+            <p id="id_65">Очевидно, что сумма полустепеней исхода всех вершин <span
+                    class="keyword">графа</span>, а также сумма полустепеней захода всех вершин графа равна общему числу дуг графа, т. е.
+            </p>
+
+            <div class="lecture_mark" id="mark_65"></div>
+            <p id="id_66"><p:graphicImage value="/img/sum.png"
+
+                               style="display: inline; position: relative; top: 6;" width="211" height="50"/></p>
+
+            <div class="lecture_mark" id="mark_66"></div>
+            <p id="id_68">где <span class="texample">n</span> – число вершин <span class="keyword">графа</span>, <span
+                    class="texample">m</span> – число дуг.</p>
+
+            <div class="lecture_mark" id="mark_68"></div>
+            <p id="id_71">Каждая вершина неориентированного <span class="keyword">графа</span> <span
+                    class="texample">х<sub>i</sub></span> может характеризоваться степенью вершины <span
+                    class="texample">d(х<sub>i</sub>)</span>.</p>
+
+            <div class="lecture_mark" id="mark_71"></div>
+            <p id="id_74">Степенью вершины <span class="texample">х<sub>i</sub></span> – <span
+                    class="texample">d(х<sub>i</sub>)</span> называется количество ребер, инцидентных этой вершине. Например, для
+                <span class="keyword">орграфа</span> <span class="texample">G<sub>1</sub></span> (б) характеристики степеней следующие: <span
+                        class="texample">d(х<sub>1</sub>)=2</span>, <span class="texample">d(х<sub>2</sub>)=3</span>,
+                <span class="texample">d(х<sub>3</sub>)=3</span>, <span class="texample">d(х<sub>4</sub> )=2</span>.</p>
+
+            <div class="lecture_mark" id="mark_74"></div>
+
+        </h:form>
+    </ui:define>
+</ui:composition>

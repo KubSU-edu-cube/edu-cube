@@ -1,0 +1,25 @@
+<ui:composition template="/templates/teacher_ps_template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="page_content">
+        <h:form enctype="multipart/form-data">
+            <h:panelGrid columns="2">
+                <h:outputLabel value="Курс" styleClass="labels"/>
+                <h:outputLabel value="#{lectionCreationBean.courseName}" styleClass="user_name"/>
+                <h:outputLabel value="Название лекции" styleClass="labels"/>
+                <p:inputText value="#{lectionCreationBean.lectionName}"/>
+                <h:outputLabel value="Краткое содержание лекции" styleClass="labels"/>
+                <p:inputTextarea value="#{lectionCreationBean.shortLectionContent}"/>
+            </h:panelGrid>
+            <h:outputLabel value="Загрузить лекцию" styleClass="labels"/>
+            <p:fileUpload fileUploadListener="#{lectionCreationBean.handleFileUpload}"
+                          mode="advanced"
+                          allowTypes="/(\.|\/)(pdf)$/"/>
+            <p:commandLink value="Хотите просмотреть существующие лекции по выбранной теме?" styleClass="additional_info"/>
+            <p:commandButton value="Готово" actionListener="#{lectionCreationBean.saveLection}"/>
+        </h:form>
+    </ui:define>
+</ui:composition>

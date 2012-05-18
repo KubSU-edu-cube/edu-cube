@@ -1,0 +1,109 @@
+<ui:composition template="/templates/teacher_ps_template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="page_content">
+        <h:outputLabel value="Поиск преподавателя" styleClass="user_name" style="margin-left: 55px"/>
+        <h:form id="form">
+            <div class="div_search">
+                <h:panelGrid columns="2">
+                    <p:inputText value="#{searchBean.simpleQuery}" style="margin-left: 45px;width:300px"/>
+                    <p:commandButton value="Поиск" actionListener="#{searchBean.search}" update="@form"/>
+                </h:panelGrid>
+            </div>
+            <div class="div_found_param">
+                <div class="div_found">
+                    <p:dataGrid var="shortInfo" value="#{searchBean.shortPersonInfos}" columns ="1">
+                        <p:column>
+                            <div class="div_photo_info">
+                                <div class="div_photo">
+                                <p:graphicImage value="#{shortInfo.src}"/>
+                                </div>
+                                <div class="div_info">
+                                <h:panelGrid columns="1">
+                                    <h:outputLabel value="#{shortInfo.surmane} #{shortInfo.name}" styleClass="user_name"/>
+                                    <h:outputLabel value="Возраст: #{shortInfo.age}" styleClass="labels"/>
+                                    <h:outputLabel value="Город: #{shortInfo.city}" styleClass="labels"/>
+                                    <p:spacer width="20px"/>
+                                    <div>
+                                    <p:commandLink value="Просмотреть профиль" ajax="false"
+                                                   styleClass="labels">
+                                        <f:param name="chosenCourse" value="#{shortInfo.src}"/>
+                                    </p:commandLink>
+                                    <p:spacer width="10px"/>
+                                    <p:commandLink value="Написать сообщение" ajax="false"
+                                                   styleClass="labels">
+                                        <f:param name="chosenCourse" value="#{shortInfo.src}"/>
+                                    </p:commandLink>
+                                    </div>
+                                </h:panelGrid>
+                                </div>
+                            </div>
+                        </p:column>
+                    </p:dataGrid>
+
+                </div>
+                <div class="div_params">
+                        <div>
+                        <h:outputLabel value="Страна" styleClass="labels"/>
+                        <p:inputText value="#{searchBean.country}" style="width: 130px; margin-left: 13px"/>
+                        </div>
+                        <p:spacer width="10px"/>
+                        <div>
+                        <h:outputLabel value="Город" styleClass="labels" />
+                        <p:inputText value="#{searchBean.city}" style="width: 130px; margin-left: 22px"/>
+                        </div>
+                        <p:spacer width="10px"/>
+                        <div>
+                        <h:outputLabel value="Возраст" styleClass="labels" />
+                        <h:panelGrid columns="2">
+                            <p:selectOneMenu value="#{searchBean.selectedFromAge}">
+                                <f:selectItem itemValue="от" itemLabel="от"/>
+                                <f:selectItems value="#{searchBean.ageList}"
+                                               itemLabel="#{age}"
+                                               var="age"
+                                               itemValue="#{age}"/>
+                            </p:selectOneMenu>
+
+                            <p:selectOneMenu value="#{searchBean.selectedToAge}">
+                                <f:selectItem itemValue="до" itemLabel="до"/>
+                                <f:selectItems value="#{searchBean.ageList}"
+                                               itemLabel="#{age}"
+                                               var="age"
+                                               itemValue="#{age}"/>
+                            </p:selectOneMenu>
+                            </h:panelGrid>
+                        </div>
+                        <p:spacer width="10px"/>
+                        <div>
+                        <h:outputLabel value="Пол" styleClass="labels"/>
+
+                            <p:selectOneRadio id="customRadio" value="#{searchBean.sex}" layout="custom">
+                                <f:selectItem itemLabel="Мужской" itemValue="мужской" style="margin-left: 18px"/>
+                                <f:selectItem itemLabel="Женский" itemValue="женский" style="margin-left: 18px"/>
+                                <f:selectItem itemLabel="Любой" itemValue="любой" style="margin-left: 18px"/>
+                            </p:selectOneRadio>
+
+                            <h:panelGrid columns="2">
+                                <p:radioButton id="opt1" for="customRadio" itemIndex="0"/>
+                                <h:outputLabel for="opt1" value="Мужской" />
+
+
+                                <p:radioButton id="opt2" for="customRadio" itemIndex="1"/>
+                                <h:outputLabel for="opt2" value="Женский" />
+
+
+                                <p:radioButton id="opt3" for="customRadio" itemIndex="2"/>
+                                <h:outputLabel for="opt3" value="Любой" />
+
+                            </h:panelGrid>
+                        </div>
+
+                </div>
+            </div>
+
+        </h:form>
+    </ui:define>
+</ui:composition>
