@@ -45,8 +45,8 @@ public class PersonDAO {
                                    String country,
                                    String sex){
 
-        String cityParam = (city == null ? "%":city);
-        String countryParam = (country == null ? "%" :country);
+        String cityParam = (city == "" ? "%":city);
+        String countryParam = (country == "" ? "%" :country);
         String sexParam = (sex.toUpperCase().equals("любой".toUpperCase())? "%":sex);
         Date dateFromParam = (fromAge == 0 ? DateConverter.getMinDate():DateConverter.getDate(DateConverter.getCurDate(),fromAge));
         Date dateToParam = (toAge == 0 ? DateConverter.getMaxDate():DateConverter.getDate(DateConverter.getCurDate(),toAge));
@@ -76,6 +76,6 @@ public class PersonDAO {
 
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
     public void persist(Person person){
-        em.persist(person);
+        em.merge(person);
     }
 }

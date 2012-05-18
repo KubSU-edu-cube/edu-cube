@@ -2,6 +2,7 @@ package edu.kubsu.fpm.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,13 +17,18 @@ public class Course_variation implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person person;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "course_id", referencedColumnName = "id")
     private Course course;
 
+    @ManyToMany(mappedBy = "variationList", cascade = CascadeType.ALL)
+    private List<Lection> lectionList;
+
+
+    @Column(length = 2000)
     private String description;
     private String duration;
     private String level;
@@ -73,5 +79,13 @@ public class Course_variation implements Serializable {
 
     public void setLevel(String level) {
         this.level = level;
+    }
+
+    public List<Lection> getLectionList() {
+        return lectionList;
+    }
+
+    public void setLectionList(List<Lection> lectionList) {
+        this.lectionList = lectionList;
     }
 }

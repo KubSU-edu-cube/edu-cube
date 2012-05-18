@@ -19,7 +19,7 @@ import java.util.List;
 public class DBImageBean implements DBImageLocal {
     private List<byte[]> imgList = new ArrayList<byte[]>();
     private List<PersonalPhoto> smallImgs = new ArrayList<PersonalPhoto>();
-
+    private PersonalPhoto mainPhoto = new PersonalPhoto(null);
 
     public List<byte[]> getImgList() {
         return imgList;
@@ -35,5 +35,13 @@ public class DBImageBean implements DBImageLocal {
 
     public void setSmallImgs(List<PersonalPhoto> smallImgs) {
         this.smallImgs = smallImgs;
+    }
+
+    public PersonalPhoto getMainPhoto() {
+        return mainPhoto;
+    }
+
+    public void setMainPhoto(PersonalPhoto mainPhoto) {
+        this.mainPhoto = mainPhoto;
     }
 }

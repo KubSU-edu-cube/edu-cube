@@ -6,6 +6,7 @@ import edu.kubsu.fpm.entity.Course_variation;
 import javax.ejb.*;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -21,6 +22,9 @@ public class Course_variationDAO {
     EntityManager em;
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
     public void persist(Course_variation course_variation){
-        em.persist(course_variation);
+        em.merge(course_variation);
+    }
+    public List<Course_variation> findByPersonId(int id){
+        return (List<Course_variation>) em.createQuery("from Course_variation cv where cv.person.id = :id").setParameter("id",id).getResultList();
     }
 }

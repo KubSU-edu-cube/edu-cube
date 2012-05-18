@@ -18,7 +18,7 @@ public class Person implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private int id;
     private String name;
     private String surname;
     private String patronymic;
@@ -38,23 +38,26 @@ public class Person implements Serializable {
     @Lob
     private byte[] photo;
 
+    @OneToMany(mappedBy = "author")
+    private List<Lection> lections;
 
-
-    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "person")
     private List<Education> educations;
 
-    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "person")
     private List<Job> jobs;
 
-    @ManyToMany(mappedBy = "recipients", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "recipients")
     private List<Message> messages;
 
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
+    private List<Course_variation> variationList;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -208,6 +211,22 @@ public class Person implements Serializable {
 
     public void setPhoto(byte[] photo) {
         this.photo = photo;
+    }
+
+    public List<Course_variation> getVariationList() {
+        return variationList;
+    }
+
+    public void setVariationList(List<Course_variation> variationList) {
+        this.variationList = variationList;
+    }
+
+    public List<Lection> getLections() {
+        return lections;
+    }
+
+    public void setLections(List<Lection> lections) {
+        this.lections = lections;
     }
 }
 

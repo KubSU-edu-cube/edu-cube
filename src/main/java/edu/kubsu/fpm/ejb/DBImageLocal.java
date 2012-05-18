@@ -21,4 +21,6 @@ public interface DBImageLocal {
     public  void setImgList(List<byte[]> list);
     public List<PersonalPhoto> getSmallImgs();
     public  void setSmallImgs(List<PersonalPhoto> list);
+    public PersonalPhoto getMainPhoto();
+    public void setMainPhoto(PersonalPhoto personalPhoto);
 }

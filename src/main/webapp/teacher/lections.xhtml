@@ -1,0 +1,41 @@
+<ui:composition template="/templates/teacher_ps_template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="page_content">
+        <h:form>
+            <h:panelGrid columns="1">
+                <h:outputLabel value="#{lectionsBean.course_variation.course.name}" styleClass="user_name"/>
+                <h:commandLink value="Создать лекцию" ajax="false" action="lection_creation" styleClass="create_new_item"/>
+                <p:separator width="900px"/>
+                <p:dataGrid value="#{lectionsBean.lectionVariationList}" var="lection" columns="1">
+                    <p:column>
+                        <h:outputLabel value="#{lection.name}" styleClass="user_name"/>
+                        <h:outputLabel value="#{lection.description}" styleClass="additional_info"/>
+                        <div>
+                            <p:commandLink value="Редактировать" ajax="false" action="#{lectionsBean.moveToLection}" styleClass="labels">
+                                <f:param name="chosenLection" value="#{lection.id}"/>
+                            </p:commandLink>
+                            <p:spacer width="20px"/>
+                            <p:commandLink value="Удалить" ajax="false" action="#{lectionsBean.moveToLection}" styleClass="labels">
+                                <f:param name="chosenLection" value="#{lection.id}"/>
+                            </p:commandLink>
+                            <p:spacer width="20px"/>
+                            <p:commandLink value="Создать задание" ajax="false" action="#{lectionsBean.moveToLection}" styleClass="labels">
+                                <f:param name="chosenLection" value="#{lection.id}"/>
+                            </p:commandLink>
+                            <p:spacer width="20px"/>
+                            <p:commandLink value="Назначить дату публикации" ajax="false" action="#{lectionsBean.moveToLection}" styleClass="labels">
+                                <f:param name="chosenLection" value="#{lection.id}"/>
+                            </p:commandLink>
+                        </div>
+                        <p:separator/>
+
+                    </p:column>
+                </p:dataGrid>
+            </h:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>
