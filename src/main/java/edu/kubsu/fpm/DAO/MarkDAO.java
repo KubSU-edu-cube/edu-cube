@@ -1,6 +1,7 @@
 package edu.kubsu.fpm.DAO;
 
 import edu.kubsu.fpm.entity.Person;
+import edu.kubsu.fpm.entity.Test;
 import edu.kubsu.fpm.model.Mark;
 
 import javax.ejb.*;
@@ -30,5 +31,15 @@ public class MarkDAO {
         return (List<Mark>) em.createQuery("from Mark m where m.student = :student")
                 .setParameter("student", person)
                 .getResultList();
+    }
+
+    public Mark getMarkByTest(Test test) {
+        try{
+            return (Mark) em.createQuery("from Mark m where m.test = :test")
+                    .setParameter("test", test)
+                    .getSingleResult();
+        } catch (Exception e){
+            return new Mark();
+        }
     }
 }

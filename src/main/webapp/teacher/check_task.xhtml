@@ -1,0 +1,28 @@
+<ui:composition template="/templates/student_ps_template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="page_content">
+        <h:form>
+            <h:outputLabel value="Вы проверяете ответ студента #{checkTaskBean.answer.person.surname} #{checkTaskBean.answer.person.name} #{checkTaskBean.answer.person.patronymic}" />
+            <br /><br />
+
+            <h:outputLabel value="Текст задания: " /><br />
+            <h:outputText value="#{checkTaskBean.answer.task.content}" /><br /><br />
+
+            <h:outputLabel value="Ответ студента: " /><br />
+            <h:outputText value="#{checkTaskBean.answer.content}" /><br /><br />
+
+            <h:outputLabel value="Оценка: " />
+            <h:inputText value="#{checkTaskBean.studentMark}" /><br /><br />
+
+            <h:panelGroup>
+                <p:commandButton value="Поставить" action="#{checkTaskBean.saveMark}" ajax="false" />
+                <p:commandButton value="Назад" action="check_creative_tasks" ajax="false"/><br /><br />
+            </h:panelGroup>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

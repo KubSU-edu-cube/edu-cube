@@ -7,6 +7,7 @@ import edu.kubsu.fpm.entity.Task;
 import javax.ejb.*;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 /**
  * User: Marina
@@ -30,5 +31,13 @@ public class StudentAnswerDAO {
                 .setParameter("person", person)
                 .setParameter("task", task)
                 .getSingleResult();
+    }
+
+    public List<StudentAnswer> getAll(){
+        return (List<StudentAnswer>) em.createQuery("from StudentAnswer s").getResultList();
+    }
+
+    public StudentAnswer findById(Integer answerId) {
+        return em.find(StudentAnswer.class, answerId);
     }
 }

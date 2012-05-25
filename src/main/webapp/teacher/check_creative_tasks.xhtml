@@ -1,0 +1,21 @@
+<ui:composition template="/templates/teacher_ps_template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="page_content">
+        <h:form>
+            <h:outputLabel value="#{creativeTasksBean.taskMessage}" /><br /><br />
+            <p:dataGrid value="#{creativeTasksBean.unckeckedTestList}" var="answer">
+                <p:column>
+                    <p:commandLink value="Задание: #{answer.task.test.name}" ajax="false" action="#{creativeTasksBean.moveToTask}">
+                        <f:param name="choosenTask" value="#{answer.id}" />
+                    </p:commandLink>
+                    <h:outputLabel value="для лекции #{answer.task.test.lection.name}." />
+                    <h:outputLabel value="Выполнил студент #{answer.person.surname} #{answer.person.name} #{answer.person.patronymic}" />
+                </p:column>
+            </p:dataGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>
