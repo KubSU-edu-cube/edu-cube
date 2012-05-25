@@ -3,12 +3,14 @@ package edu.kubsu.fpm.managed.adaptiveTesting;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import edu.kubsu.fpm.DAO.*;
 import edu.kubsu.fpm.ejb.DBImageLocal;
-import edu.kubsu.fpm.model.AdditionalQuestion;
-import edu.kubsu.fpm.model.FactCollection;
-import edu.kubsu.fpm.model.SynAnt;
+import edu.kubsu.fpm.entity.*;
+import edu.kubsu.fpm.model.*;
 import net.sourceforge.jeuclid.context.LayoutContextImpl;
 import net.sourceforge.jeuclid.context.Parameter;
 import net.sourceforge.jeuclid.converter.Converter;
+import org.apache.commons.jexl2.Expression;
+import org.apache.commons.jexl2.JexlEngine;
+import org.apache.commons.jexl2.MapContext;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -55,9 +57,16 @@ public class TaskBean {
     private List<Integer> obligFactList;
     private List<String> participleList;    // Слова-частцы, а так же предлоги, союзы и т.п. на основе кот. не нужно строить вопросы.
     private String targetURL;
+    private Integer studentId;
 
     @EJB
     private FactDAO factDAO;
+
+    @EJB
+    private ClassifierDAO classifierDAO;
+
+    @EJB
+    private CollfactClassifvalueDAO collfactClassifvalueDAO;
 
     @EJB
     private WordsDAO wordsDAO;
@@ -70,6 +79,21 @@ public class TaskBean {
 
     @EJB
     private GroupDAO groupDAO;
+
+    @EJB
+    private EstimationFunc_GroupDAO func_groupDAO;
+
+    @EJB
+    private LectionDAO lectionDAO;
+
+    @EJB
+    private ClassifierValueDAO classifierValueDAO;
+
+    @EJB
+    private PersonDAO personDAO;
+
+    @EJB
+    private MarkDAO markDAO;
 
     @EJB
     private DBImageLocal dbImage; // сюда будут переданы все картинки
@@ -106,6 +130,8 @@ public class TaskBean {
         participleList.add("при");
         participleList.add("n");
         participleList.add("это");
+
+        studentId = Integer.parseInt((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("studentId"));
     }
 
     //   Генерирует текущий тестовый вопрос
@@ -240,9 +266,70 @@ public class TaskBean {
 
 //    Формирует вывод результатов тестирования
     public String getTestResult() {    // Подумать над формированием результата. На что смотреть при выборе функции оценивания?
-        testResult = "Вы получили ".concat(this.getCountRightAnswer().toString()).concat(" балов из ").concat(this.getCountAnswer().toString());
+        FactCollection factCollection = factDAO.getCollectionByFactId(idFactList.get(0));
+        ClassifierValue classifierValue = collfactClassifvalueDAO.getClassifValueByCollectionAndClassif(factCollection, classifierDAO.getClassifierById(1));
+
+        String function = getFunctionForGroup(classifierValue);
+        JexlEngine jexl = new JexlEngine();
+        Expression func = jexl.createExpression(function);
+        MapContext mapContext = new MapContext();
+        mapContext.set("x", (countRightAnswer * 100 / countAnswer)/100);
+
+        Double mark = (Double) func.evaluate(mapContext);
+        testResult = "Ваша оценка: " + (mark > 5 ? 5 : mark);
 
         return testResult;
+    }
+
+    private boolean theLectionForGroup(int groupId, Lection lection){
+        Course_variation course_variation = groupDAO.getCourseByGroupId(groupId);
+        List<Lection> lections = lectionDAO.findLectionsByCourseVarId(course_variation.getId());
+        return lections.contains(lection);
+    }
+
+    public String getFunctionForGroup(ClassifierValue classifierValue){
+        String function = "6 * x";
+        if ((studentId > 0)&&(idGroup > 0)){
+            EstimationFunction estFunction = null;
+            List<EstimationFunc_Group> func_groupList = func_groupDAO.getFunc_Group();
+            if (func_groupList.size() > 0){
+                for (EstimationFunc_Group func_group: func_groupList){
+                    if (func_group.getGroup().getId().equals(idGroup)){
+                        estFunction = func_group.getFunction();
+                        break;
+                    }
+                }
+            }
+//            Если у группы есть функция оценивания
+            if (estFunction != null)
+                function = estFunction.getFunction();
+//                Если нет, то проверяем проходит/проходил ли студент данный курс
+            else {
+//                Получим лекцию по значению предметного классификатора
+                Lection lection = classifierValueDAO.getLectionByClassifierValue(classifierValue.getId());
+
+//                Если студент проходит этот курс сейчас
+                if (theLectionForGroup(idGroup, lection)){
+                    function = "5*x*x+1.5";
+                }
+                else {
+                    boolean alreadyStudy = false;
+//                    Проверяем проходил ли он его когда-нибудь
+                    List<Group> groups = personDAO.getGroupListByPersonId(studentId);
+                    for (Group group: groups){
+                        if (theLectionForGroup(group.getId(), lection)){
+                            alreadyStudy = true;
+                            break;
+                        }
+                    }
+                    if (alreadyStudy)
+                        function = "5*x*x+1.5";
+                    else
+                        function = "log(15*x+5)*1.8";  // TODO Пока не получилось посчитать
+                }
+            }
+        }
+        return function;
     }
 
 //    Возвращает id факта из диапазона от 0..n, на основе которого еще не задавался вопрос

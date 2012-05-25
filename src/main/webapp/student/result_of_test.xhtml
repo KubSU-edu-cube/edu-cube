@@ -6,7 +6,7 @@
                 xmlns="http://www.w3.org/1999/xhtml">
     <ui:define name="page_content">
         <h:form>
-            <h:outputText value="Вы набрали #{creationBaseTest.countRightAnswers} баллов из #{creationBaseTest.totalCount}." /><br />
+            <h:outputText value="Ваша оценка: #{creationBaseTest.mark}" /><br />
             <p:commandLink value="К заданиям" action="tasks" ajax="false" />
         </h:form>
 

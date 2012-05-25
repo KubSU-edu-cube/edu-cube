@@ -316,7 +316,14 @@ body {
 }
 
 .login_content {
-    background: transparent url(../img/students_books.png) right bottom no-repeat;
+     background: transparent url(../img/students_books.png) right bottom no-repeat;
+     height: 550px;
+     width: 750px;
+     position: relative;
+     margin: 30px 0 0 490px;
+ }
+
+.student_content {
     height: 550px;
     width: 750px;
     position: relative;

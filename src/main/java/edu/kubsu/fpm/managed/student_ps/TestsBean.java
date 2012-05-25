@@ -1,12 +1,11 @@
 package edu.kubsu.fpm.managed.student_ps;
 
 import edu.kubsu.fpm.DAO.LectionDAO;
+import edu.kubsu.fpm.DAO.MarkDAO;
 import edu.kubsu.fpm.DAO.TaskDAO;
 import edu.kubsu.fpm.DAO.TestDAO;
-import edu.kubsu.fpm.entity.Course_variation;
-import edu.kubsu.fpm.entity.Lection;
-import edu.kubsu.fpm.entity.Task;
-import edu.kubsu.fpm.entity.Test;
+import edu.kubsu.fpm.entity.*;
+import edu.kubsu.fpm.model.Mark;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -28,6 +27,7 @@ public class TestsBean {
     private Course_variation course_variation;      // курс, для кот. и будут строится уже созданные тесты.
     private List<Test> testList;
     private List<Test> creativeTestList;
+    private Person student;
     
     @EJB
     private LectionDAO lectionDAO;
@@ -37,26 +37,29 @@ public class TestsBean {
     
     @EJB
     private TaskDAO taskDAO;
+    
+    @EJB
+    private MarkDAO markDAO;
 
     public TestsBean() {
         this.course_variation = (Course_variation) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("studentCourseVar");
+        this.student = (Person) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("student");
     }
 
     public List<Test> getTestList() {
-        if (testList == null){
-            testList = new ArrayList<>();
-            testList = getTestListByType("base", testList);
-        }
+        testList = new ArrayList<>();
+        testList = getTestListByType("base", testList);
         return testList;
     }
-
+    // TODO Выдавать только те задания, по кот. еще нет оценки
     private List<Test> getTestListByType(String type, List<Test> resultList) {  // TODO В результирующий список должны входить только те тестовые задания, на кот. студент еще не дал ответ.
         //        Получаем список всех лекций для данного курса.
         List<Lection> lectionList = lectionDAO.findLectionsByCourseVarId(course_variation.getId());
         for (Lection lection : lectionList){
             List<Test> tests = testDAO.getTestListByLectionId(lection);
+            List<Mark> markList = markDAO.getMarkListByPerson(student);
             for (Test test: tests){
-                if (test.getType().getType().equals(type)){
+                if ((testNotComplete(test, markList))&&(test.getType().getType().equals(type))){
                     resultList.add(test);
                 }
             }
@@ -64,11 +67,20 @@ public class TestsBean {
         return resultList;
     }
 
-    public List<Test> getCreativeTestList() {
-        if (creativeTestList == null){
-            creativeTestList = new ArrayList<>();
-            creativeTestList = getTestListByType("checked", creativeTestList);
+    private boolean testNotComplete(Test test, List<Mark> markList) {
+        boolean notComplete = true;
+        for (Mark mark: markList){
+            if (mark.getTest().getId() == test.getId()){
+                notComplete = false;
+                break;
+            }
         }
+        return notComplete;
+    }
+
+    public List<Test> getCreativeTestList() {
+        creativeTestList = new ArrayList<>();
+        creativeTestList = getTestListByType("checked", creativeTestList);
         return creativeTestList;
     }
 
@@ -107,5 +119,13 @@ public class TestsBean {
 
     public void setCourse_variation(Course_variation course_variation) {
         this.course_variation = course_variation;
+    }
+
+    public Person getStudent() {
+        return student;
+    }
+
+    public void setStudent(Person student) {
+        this.student = student;
     }
 }

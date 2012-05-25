@@ -1,6 +1,8 @@
 package edu.kubsu.fpm.entity;
 
 import edu.kubsu.fpm.model.Group;
+import edu.kubsu.fpm.model.Mark;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -59,6 +61,17 @@ public class Person implements Serializable {
 
     @ManyToMany(mappedBy = "students", cascade = CascadeType.ALL)
     private List<Group> groupList;
+    
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    private List<Mark> markList;
+
+    public List<Mark> getMarkList() {
+        return markList;
+    }
+
+    public void setMarkList(List<Mark> markList) {
+        this.markList = markList;
+    }
 
     public List<StudentAnswer> getStudent_answerList() {
         return student_answerList;

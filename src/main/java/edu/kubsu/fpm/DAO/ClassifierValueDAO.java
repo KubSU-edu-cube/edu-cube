@@ -1,5 +1,6 @@
 package edu.kubsu.fpm.DAO;
 
+import edu.kubsu.fpm.entity.Lection;
 import edu.kubsu.fpm.model.Classifier;
 import edu.kubsu.fpm.model.ClassifierValue;
 
@@ -27,12 +28,16 @@ public class ClassifierValueDAO {
 
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
     public void persist(ClassifierValue classifierValue){
-        em.persist(classifierValue);
+        em.merge(classifierValue);
     }
 
     public ClassifierValue getClassifierValueById(Integer classifValueId) {
-        return (ClassifierValue) em.createNamedQuery("ClassifierValue.findById")
-                .setParameter("id", classifValueId)
+        return em.find(ClassifierValue.class, classifValueId);
+    }
+
+    public Lection getLectionByClassifierValue(Integer id) {
+        return (Lection) em.createQuery("select clv.lection from ClassifierValue clv where clv.id = :id")
+                .setParameter("id", id)
                 .getSingleResult();
     }
 }

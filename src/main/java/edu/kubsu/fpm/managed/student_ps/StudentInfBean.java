@@ -3,17 +3,14 @@ package edu.kubsu.fpm.managed.student_ps;
 import edu.kubsu.fpm.DAO.DepartmentDAO;
 import edu.kubsu.fpm.DAO.EducationDAO;
 import edu.kubsu.fpm.DAO.PersonDAO;
-import edu.kubsu.fpm.entity.Department;
-import edu.kubsu.fpm.entity.Faculty;
-import edu.kubsu.fpm.entity.Person;
-import edu.kubsu.fpm.entity.University;
+import edu.kubsu.fpm.ejb.DBImageLocal;
+import edu.kubsu.fpm.entity.*;
 import edu.kubsu.fpm.managed.classes.ImgConverter;
-import edu.kubsu.fpm.entity.Education;
-import edu.kubsu.fpm.entity.Education_status;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
@@ -53,6 +50,8 @@ public class StudentInfBean {
     private String additionalInformation = "Хорошая ученица.";
     private List<Education> educations;
 
+    private String imageContext;
+
     @EJB
     private PersonDAO personDAO;
 
@@ -61,11 +60,14 @@ public class StudentInfBean {
 
     @EJB
     private EducationDAO educationDAO;
+
+    @EJB
+    private DBImageLocal dbImage; // сюда будут переданы все картинки
     
     public void initPerson(){
         // Профиль
         Person person = savePerson(additionalInformation, adress, cityOfBirth, currentCity, currentCountry, InsertDate(15, 03, 1990),
-                homeTel, icq, mobTel, name, patronymic, sex, skype, surname, webSite, "temp_facts/student_photo.hpg");
+                homeTel, icq, mobTel, name, patronymic, sex, skype, surname, webSite, "temp_facts/student_photo.jpg");
         
         //  ВУЗ
         University university = new University();
@@ -101,7 +103,7 @@ public class StudentInfBean {
         e.setEnterDate(sDate);
         e.setEducationStatus(education_status);
         e.setGraduateDate(eDate);
-        educationDAO.persist(e);
+        educationDAO.persist(e);      // TODO сначала сохранить person
         educations.add(e);
     }
 
@@ -136,11 +138,22 @@ public class StudentInfBean {
             File imgFile = new File(fName);
             Image image = ImageIO.read(new FileInputStream(fName));
             byte[] resisedImg = ImgConverter.changeProportion(imgFile, null, image.getWidth(null), image.getHeight(null), 100, 150);
+
+            List<byte[]> byteImgList = new ArrayList<>();
+            byteImgList.add(resisedImg);
+            dbImage.setImgList(byteImgList);
+
             return resisedImg;
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public String getImageContext() {
+        String contextPath = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
+        return "<img src=\"http://localhost:8080" + contextPath +"/DBImageServlet?imgcount="+ 0
+                + "\" alt=\"Фото студента\" />";
     }
 
     private Date InsertDate(int day, int month, int year) {
@@ -295,4 +308,7 @@ public class StudentInfBean {
         this.educations = educations;
     }
 
+    public void setImageContext(String imageContext) {
+        this.imageContext = imageContext;
+    }
 }

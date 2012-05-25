@@ -1,12 +1,12 @@
 package edu.kubsu.fpm.managed.student_ps;
 
-import edu.kubsu.fpm.DAO.AllAnswersDAO;
-import edu.kubsu.fpm.DAO.StudentAnswerDAO;
-import edu.kubsu.fpm.DAO.TaskDAO;
-import edu.kubsu.fpm.entity.Answer;
-import edu.kubsu.fpm.entity.Person;
-import edu.kubsu.fpm.entity.Task;
-import edu.kubsu.fpm.entity.Test;
+import edu.kubsu.fpm.DAO.*;
+import edu.kubsu.fpm.entity.*;
+import edu.kubsu.fpm.model.Group;
+import edu.kubsu.fpm.model.Mark;
+import org.apache.commons.jexl2.Expression;
+import org.apache.commons.jexl2.JexlEngine;
+import org.apache.commons.jexl2.MapContext;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -38,6 +38,7 @@ public class CreationBaseTest {
     private Map<String, Integer> questionList;   // Варианты ответов
     private int idRightAnswer = 0;
     private Integer studentVariant = null;
+    private Double mark;
 
     @EJB
     private TaskDAO taskDAO;
@@ -47,6 +48,15 @@ public class CreationBaseTest {
 
     @EJB
     private AllAnswersDAO allAnswersDAO;
+
+    @EJB
+    private GroupDAO groupDAO;
+
+    @EJB
+    private EstimationFunc_GroupDAO func_groupDAO;
+
+    @EJB
+    private MarkDAO markDAO;
 
     public CreationBaseTest() {
         test = (Test) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("test");
@@ -124,6 +134,57 @@ public class CreationBaseTest {
         }
     }
 
+    public Double getMark() {
+        String function = getFunctionForGroup();
+        JexlEngine jexl = new JexlEngine();
+        Expression func = jexl.createExpression(function);
+        MapContext mapContext = new MapContext();
+        mapContext.set("x", (countRightAnswers * 100 / totalCount)/100);
+        Double mark = (Double) func.evaluate(mapContext);
+        mark = mark > 5 ? 5 : mark;
+
+//        Сохраняем оценку
+        Mark savedMark = new Mark();
+        savedMark.setMark(mark);
+        savedMark.setStudent(student);
+        savedMark.setTest(currentTask.getTest());
+        savedMark.setLection(currentTask.getTest().getLection());
+        markDAO.persist(savedMark);
+
+        return mark;
+    }
+
+    public String getFunctionForGroup(){
+
+//        Получаем группу, для кот. выполняется задание
+        Course_variation course_variation = (Course_variation) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("studentCourseVar");
+        Group group = groupDAO.getGroupByCourseVar(course_variation);
+
+        String function;
+
+//        Проверяем и получаем функцию оценивания для группы
+        EstimationFunction estFunction = null;
+        List<EstimationFunc_Group> func_groupList = func_groupDAO.getFunc_Group();
+        if (func_groupList.size() > 0){
+            for (EstimationFunc_Group func_group: func_groupList){
+                if (func_group.getGroup().equals(group)){
+                    estFunction = func_group.getFunction();
+                    break;
+                }
+            }
+        }
+
+//            Если у группы есть функция оценивания
+        if (estFunction != null)
+            function = estFunction.getFunction();
+//                Если нет, то ставим в соответствие следующую функцию
+        else {
+            function = "5*x*x+1.5"; // По скольку студент в любом случае проходит этот курс сейчас. Иначе
+//            он не имел бы доступ к данному тесту
+        }
+        return function;
+    }
+
     public String getContentTask() {
         if (taskList == null)
             taskList = getTaskList();
@@ -189,5 +250,9 @@ public class CreationBaseTest {
 
     public void setTotalCount(int totalCount) {
         this.totalCount = totalCount;
+    }
+
+    public void setMark(Double mark) {
+        this.mark = mark;
     }
 }

@@ -1,5 +1,8 @@
 package edu.kubsu.fpm.entity;
 
+import edu.kubsu.fpm.model.ClassifierValue;
+import edu.kubsu.fpm.model.Mark;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,7 +18,7 @@ import java.util.List;
 @Entity
 public class Lection implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String name;
@@ -51,9 +54,15 @@ public class Lection implements Serializable {
     )
 
     private List<Course_variation> variationList = new ArrayList<>();
+
+    @OneToOne(mappedBy = "lection", cascade = CascadeType.ALL)
+    private ClassifierValue classifierValue;
     
     @OneToMany(mappedBy = "lection", cascade = CascadeType.ALL)
     private List<Test> testList;
+    
+    @OneToMany(mappedBy = "lection", cascade = CascadeType.ALL)
+    private List<Mark> markList;
 
     public List<Test> getTestList() {
         return testList;
@@ -61,6 +70,22 @@ public class Lection implements Serializable {
 
     public void setTestList(List<Test> testList) {
         this.testList = testList;
+    }
+
+    public List<Mark> getMarkList() {
+        return markList;
+    }
+
+    public void setMarkList(List<Mark> markList) {
+        this.markList = markList;
+    }
+
+    public ClassifierValue getClassifierValue() {
+        return classifierValue;
+    }
+
+    public void setClassifierValue(ClassifierValue classifierValue) {
+        this.classifierValue = classifierValue;
     }
 
     public int getId() {

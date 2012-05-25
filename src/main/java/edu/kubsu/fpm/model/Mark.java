@@ -5,6 +5,10 @@
 
 package edu.kubsu.fpm.model;
 
+import edu.kubsu.fpm.entity.Lection;
+import edu.kubsu.fpm.entity.Person;
+import edu.kubsu.fpm.entity.Test;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -13,19 +17,25 @@ import java.io.Serializable;
  * @author Марина
  */
 @Entity
-@Table(name = "MARK")
-@NamedQueries({
-    @NamedQuery(name = "Mark.findAll", query = "SELECT m FROM Mark m"),
-    @NamedQuery(name = "Mark.findById", query = "SELECT m FROM Mark m WHERE m.id = :id"),
-    @NamedQuery(name = "Mark.findByMark", query = "SELECT m FROM Mark m WHERE m.mark = :mark")})
 public class Mark implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false)
     private Integer id;
-    @Column(name = "MARK", nullable = false)
-    private int mark;
+
+    private Double mark;
+
+    @JoinColumn(name = "STUDENT_ID", referencedColumnName = "ID", nullable = false)
+    @ManyToOne(optional = false)
+    private Person student;
+
+    @JoinColumn(name = "TEST_ID", referencedColumnName = "ID", nullable = false)
+    @ManyToOne
+    private Test test;
+
+    @JoinColumn(name = "LECTION_ID", referencedColumnName = "ID", nullable = false)
+    @ManyToOne(optional = false)
+    private Lection lection;
 
     public Mark() {
     }
@@ -34,9 +44,33 @@ public class Mark implements Serializable {
         this.id = id;
     }
 
-    public Mark(Integer id, int mark) {
+    public Mark(Integer id, Double mark) {
         this.id = id;
         this.mark = mark;
+    }
+
+    public Lection getLection() {
+        return lection;
+    }
+
+    public void setLection(Lection lection) {
+        this.lection = lection;
+    }
+
+    public Person getStudent() {
+        return student;
+    }
+
+    public void setStudent(Person student) {
+        this.student = student;
+    }
+
+    public Test getTest() {
+        return test;
+    }
+
+    public void setTest(Test test) {
+        this.test = test;
     }
 
     public Integer getId() {
@@ -47,17 +81,12 @@ public class Mark implements Serializable {
         this.id = id;
     }
 
-    public int getMark() {
+    public Double getMark() {
         return mark;
     }
 
-    public void setMark(int mark) {
+    public void setMark(Double mark) {
         this.mark = mark;
-    }
-
-    @Override
-    public String toString() {
-        return "edu.kubsu.fpm.model.Mark[id=" + id + "]";
     }
 
 }

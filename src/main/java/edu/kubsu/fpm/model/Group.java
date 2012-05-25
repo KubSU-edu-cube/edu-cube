@@ -24,11 +24,12 @@ public class Group implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false)
     private Integer id;
+
     @JoinColumn(name = "COURSE_ID", referencedColumnName = "ID", nullable = false)
     @ManyToOne(optional = false)
     private Course_variation courseVariation;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "group")
     private Collection<AdditionalQuestion> aditionalQuestionCollection;
 

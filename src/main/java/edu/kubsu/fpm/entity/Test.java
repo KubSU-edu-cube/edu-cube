@@ -1,5 +1,7 @@
 package edu.kubsu.fpm.entity;
 
+import edu.kubsu.fpm.model.Mark;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -29,12 +31,23 @@ public class Test {
     @OneToMany(mappedBy = "test", cascade = CascadeType.ALL)
     private List<Task> taskList;
 
+    @OneToMany(mappedBy = "test")
+    private List<Mark> markList;
+
     public Test() {
     }
 
     public Test(Lection lection, TestType type) {
         this.lection = lection;
         this.type = type;
+    }
+
+    public List<Mark> getMarkList() {
+        return markList;
+    }
+
+    public void setMarkList(List<Mark> markList) {
+        this.markList = markList;
     }
 
     public String getName() {

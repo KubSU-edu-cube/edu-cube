@@ -62,6 +62,9 @@ public class InitFactBean {
     @EJB
     private Course_variationDAO course_variationDAO;
 
+    @EJB
+    private LectionDAO lectionDAO;
+
     public InitFactBean(){
 
     }
@@ -298,7 +301,6 @@ public class InitFactBean {
     private void persistCollfactClassifvalue() {
         persistValueCollfactClassifvalue(1,1,22);
         persistValueCollfactClassifvalue(1,2,26);
-        persistValueCollfactClassifvalue(1,1,25);
         persistValueCollfactClassifvalue(2,1,18);
         persistValueCollfactClassifvalue(2,2,26);
         persistValueCollfactClassifvalue(3,1,22);
@@ -351,7 +353,7 @@ public class InitFactBean {
         persistValueClassifierValue(1, 17, "4.2. Единственность предела числовой последовательности");
         persistValueClassifierValue(1, 17, "4.3. Переход к пределу в неравенствах");
         persistValueClassifierValue(1, 17, "4.4. Ограниченность сходящихся последовательностей");
-        persistValueClassifierValue(1, 17, "4.5. Монотонные последовательности");
+        persistValueClassifierValue(1, 17, "4.5. Монотонные последовательности", 1);
         persistValueClassifierValue(1, 17, "4.6. Теорема Больцано—Вейерштрасса");
         persistValueClassifierValue(1, 17, "4.7. Критерий Коши сходимости последовательности");
         persistValueClassifierValue(1, 17, "4.8. Бесконечно малые последовательности");
@@ -381,6 +383,15 @@ public class InitFactBean {
         classifierValue.setClassifier(classifierDAO.getClassifierById(classifid));
         classifierValue.setParentid(parentId);
         classifierValue.setValue(value);
+        classifierValueDAO.persist(classifierValue);
+    }
+
+    private void persistValueClassifierValue(Integer classifid, Integer parentId, String value, Integer lectionId) {
+        ClassifierValue classifierValue = new ClassifierValue();
+        classifierValue.setClassifier(classifierDAO.getClassifierById(classifid));
+        classifierValue.setParentid(parentId);
+        classifierValue.setValue(value);
+        classifierValue.setLection(lectionDAO.findById(lectionId));
         classifierValueDAO.persist(classifierValue);
     }
 

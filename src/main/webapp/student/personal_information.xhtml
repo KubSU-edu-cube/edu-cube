@@ -1,13 +1,14 @@
-<ui:composition template="/templates/student_ps_template.xhtml"
+<ui:composition template="/templates/student_personal_template.xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns="http://www.w3.org/1999/xhtml">
     <ui:define name="page_content">
         <h:form>
-            <h:outputLabel value="Это страница студента с идентификатором #{studentPS.studentId}"/><br />
+            <p:commandButton value="Инициализация БД" actionListener="#{studentInfBean.initPerson}" ajax="false" /><br />
+            <h:outputText value="#{studentInfBean.imageContext}" escape="false" /><br />
             <p:commandLink value="Редактировать основную информацию" action="edit_personal_information" ajax="false"/>
-            <p:commandButton value="Инициализация БД" actionListener="#{studentInfBean.initPerson}" ajax="false" />
+
             <h:panelGrid columns="1">
                 <h:outputLabel value="#{studentInfBean.surname} #{studentInfBean.name} #{studentInfBean.patronymic}" styleClass="user_name"/>
                 <h:outputText value="#{studentInfBean.additionalInformation}" styleClass="additional_info"/>
