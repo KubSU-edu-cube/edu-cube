@@ -23,49 +23,15 @@ import java.util.List;
  */
 @WebServlet(name = "DBAudioServlet", urlPatterns = "/DBAudioServlet")
 public class DBAudioServlet extends HttpServlet {
+    @EJB
+    private DBAudioLocal audioLocal;
     private byte[] audio;
-    List<byte[]> list;
-
-    public DBAudioServlet() {
-        File file = new File("/home/anna/coco_jambo.mp3");
-        FileInputStream fis = null;
-        try {
-            fis = new FileInputStream(file);
-
-            byte[] buffer = new byte[10485760];
-            fis.read(buffer);
-            String str = Base64.encode(buffer);
-            byte[] result = Base64.decode(str);
-            List<byte[]> list = new ArrayList<byte[]>();
-            list.add(result);
-            this.list = list;
-        } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-    }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        File file = new File("/home/anna/coco_jambo.mp3");
-        FileInputStream fis = null;
-        try {
-            fis = new FileInputStream(file);
-
-            byte[] buffer = new byte[10485760];
-            fis.read(buffer);
-            String str = Base64.encode(buffer);
-            byte[] result = Base64.decode(str);
-            List<byte[]> list = new ArrayList<byte[]>();
-            list.add(result);
-            this.list = list;
-        } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-
-
         String audioId = request.getParameter("audioId");
         if(audioId!=null){
-            audio = list.get(Integer.parseInt(audioId));
+            audio = audioLocal.getAudioList().get(Integer.parseInt(audioId));
         }
         response.setContentType("audio/mpeg");
         OutputStream os = response.getOutputStream();
