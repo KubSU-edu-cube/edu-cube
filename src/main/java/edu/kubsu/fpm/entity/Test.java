@@ -20,8 +20,8 @@ public class Test {
 
     private String name;
 
-    @JoinColumn(name = "lection_id", referencedColumnName = "ID", nullable = false)
-    @ManyToOne(optional = false)
+    @JoinColumn(name = "lection_id", referencedColumnName = "ID")
+    @ManyToOne
     private Lection lection;
 
     @JoinColumn(name = "test_type_id", referencedColumnName = "ID", nullable = false)

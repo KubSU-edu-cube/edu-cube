@@ -160,7 +160,7 @@ public class PersonalInfBean {
         for (String testType: testTypes)
             persistTestType(testType);
 
-        List<String> taskTypes = Arrays.asList("input", "check", "creative");
+        List<String> taskTypes = Arrays.asList("input", "check", "creative", "text", "image");
         for (String taskType: taskTypes)
             persistTaskType(taskType);
     }

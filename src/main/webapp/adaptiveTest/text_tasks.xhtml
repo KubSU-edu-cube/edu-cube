@@ -1,0 +1,21 @@
+<ui:composition template="/templates/test_template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="page_content">
+        <h:form>
+            <h:outputText value="Внимательно и вдумчиво прочитайте текст вопроса и выберите тот вариант, который Вы
+            считаете правильным." /><br /><br />
+
+            <h:outputText value="#{psyhologyTestBean.contentTask}" /><br /><br />
+            <h:selectOneRadio value="#{psyhologyTestBean.studentVariant}">
+                <f:selectItems value="#{psyhologyTestBean.questionList}" />
+            </h:selectOneRadio><br />
+
+            <p:commandButton value="Ответить" actionListener="#{psyhologyTestBean.checkStudentVariant}" ajax="false"/>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

@@ -2,8 +2,10 @@ package edu.kubsu.fpm.managed.adaptiveTesting;
 
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import edu.kubsu.fpm.DAO.*;
-import edu.kubsu.fpm.model.Group;
-import edu.kubsu.fpm.model.AdditionalQuestion;
+import edu.kubsu.fpm.entity.AllAnswers;
+import edu.kubsu.fpm.entity.Answer;
+import edu.kubsu.fpm.entity.Task;
+import edu.kubsu.fpm.entity.Test;
 import edu.kubsu.fpm.managed.classes.ImgConverter;
 import edu.kubsu.fpm.model.*;
 
@@ -65,8 +67,102 @@ public class InitFactBean {
     @EJB
     private LectionDAO lectionDAO;
 
+    @EJB
+    private TestDAO testDAO;
+
+    @EJB
+    private TaskDAO taskDAO;
+
+    @EJB
+    private TestTypeDAO testTypeDAO;
+
+    @EJB
+    private TaskTypeDAO taskTypeDAO;
+
+    @EJB
+    private AllAnswersDAO allAnswersDAO;
+
+    @EJB
+    private AnswerDAO answerDAO;
+
     public InitFactBean(){
 
+    }
+
+    public void tmpTestInit(){
+//        Создаем сам тест
+        Test test = new Test();
+        test.setName("Психологическое тестирование");
+        test.setType(testTypeDAO.findByName("psylogical"));
+        testDAO.persist(test);
+
+//        Создаем текстовые задачи
+        persistTextTasks(test);
+//        И задачи в картинках
+        persistImageTasks(test);
+    }
+
+    private void persistTextTasks(Test test) {
+        List<String> falseAnswers = Arrays.asList("девять", "шестьдесят девять", "двадцать", "пятьдесят");
+        persisTask(test, "Какое слово (сочетание слов) пропущено?\nТри:шесть = тринадцать:...", "двадцать шесть", falseAnswers);
+
+        falseAnswers = Arrays.asList("шкала", "сила", "рысак");
+        persisTask(test, "Решите анаграмы и найдите слово, которое не обозначает животное.", "мялка", falseAnswers);
+
+        falseAnswers = Arrays.asList("листья", "плоды", "почки", "тень");
+        persisTask(test, "Закончите предложение таким образом, чтобы оно приобрело законченный смысл.\n" +
+                "У дерева всегда есть...", "корни", falseAnswers);
+
+        falseAnswers = Arrays.asList("контрабас", "гитара", "скрипка", "арфа");
+        persisTask(test, "Выберите слово, которое является лишним в следующей смысловой группе", "кларнет", falseAnswers);
+
+        falseAnswers = Arrays.asList("лодка", "мост", "паром", "берег");
+        persisTask(test, "Поняв смысл взаимосвязи первой пары слов, дополните вторую пару.\n" +
+                "Горы - перевал; река - ?", "брод", falseAnswers);
+
+        falseAnswers = Arrays.asList("15", "30", "75");
+        persisTask(test, "Решите задачу и выберите правильный ответ.\n" +
+                "Человек пробегает 1,5 м за четверть секунды. Какое растояние этот человек пробежит за 10 секунд?",
+                "60", falseAnswers);
+
+        falseAnswers = Arrays.asList("15", "18", "36", "40", "100");
+        persisTask(test, "Определите какое число из перечисленных является лишним?\n" +
+                "15 18 17 36 40 100", "17", falseAnswers);
+    }
+
+    private void persistImageTasks(Test test) {
+
+    }
+
+    private void persisTask(Test test, String content, String rightAnswer, List<String> falseAnswers) {
+        Task task = new Task();
+        task.setTest(test);
+        task.setContent(content);
+        task.setTaskType(taskTypeDAO.findByType("text"));
+        taskDAO.persist(task);
+        
+//        Сохраняем правильный ответ
+        persistAllAnswer(task, rightAnswer, true);
+
+//        Сохраняем неправильные ответы
+        for (String falseAnswer: falseAnswers){
+            persistAllAnswer(task, falseAnswer, false);
+        }
+    }
+
+    private void persistAllAnswer(Task task, String content, boolean isRight) {
+        AllAnswers allAnswers = new AllAnswers();
+        allAnswers.setTask(task);
+        persistAnswer(allAnswers, content, isRight);
+    }
+
+    private void persistAnswer(AllAnswers allAnswers, String content, boolean isRight) {
+        Answer answer = new Answer();
+        answer.setContent(content);
+        answer.setRight(isRight);
+        answerDAO.persist(answer);
+        allAnswers.setAnswer(answer);
+        allAnswersDAO.persist(allAnswers);
     }
 
     public void tmpFactsInit(){

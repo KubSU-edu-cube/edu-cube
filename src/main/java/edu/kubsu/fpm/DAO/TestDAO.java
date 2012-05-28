@@ -2,6 +2,7 @@ package edu.kubsu.fpm.DAO;
 
 import edu.kubsu.fpm.entity.Lection;
 import edu.kubsu.fpm.entity.Test;
+import edu.kubsu.fpm.entity.TestType;
 
 import javax.ejb.*;
 import javax.persistence.EntityManager;
@@ -32,10 +33,6 @@ public class TestDAO {
         em.remove(test);
     }
 
-    public List<Test> getAll(){
-        return (List<Test>) em.createQuery("from Test").getResultList();
-    }
-
     public Test findById(Integer id) {
         return em.find(Test.class, id);
     }
@@ -43,6 +40,12 @@ public class TestDAO {
     public List<Test> getTestListByLectionId(Lection lection) {
         return (List<Test>) em.createQuery("from Test t where t.lection = :lection")
                 .setParameter("lection", lection)
+                .getResultList();
+    }
+    
+    public List<Test> getTestByType(TestType testType){
+        return em.createQuery("from Test t where t.type = :type")
+                .setParameter("type", testType)
                 .getResultList();
     }
 }

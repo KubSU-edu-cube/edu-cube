@@ -6,6 +6,9 @@
                 xmlns="http://www.w3.org/1999/xhtml">
     <ui:define name="page_content">
         <h:form>
+            <h:outputText value="Внимательно и вдумчиво прочитайте текст вопроса и выберите тот вариант, который Вы
+            считаете правильным." /><br /><br />
+
             <h:outputText value="#{creationBaseTest.contentTask}" /><br /><br />
             <h:selectOneRadio value="#{creationBaseTest.studentVariant}">
                 <f:selectItems value="#{creationBaseTest.questionList}" />

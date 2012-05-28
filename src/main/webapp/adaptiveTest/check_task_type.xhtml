@@ -1,0 +1,33 @@
+<ui:composition template="/templates/test_template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="left_box_content">
+        <h:form>
+            <p:commandButton value="Инициализация БД" actionListener="#{initFactBean.tmpTestInit}" process="@this"/>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="page_content">
+        <h:form>
+            <h:outputText value="Выберите тот тип задач, с которых вы хотите начать тестирование." /><br /><br />
+
+            <h:panelGrid columns="2">
+                <h:outputLabel value="Текстовые задачи" />
+                <h:outputLabel value="Задачи в картинках" />
+                <p:commandLink action="text_tasks" ajax="false">
+                    <img src="../img/text_task.gif" alt="Текстовые задачи" height="150" width="180"/>
+                    <f:param name="textChosen" value="1" />
+                </p:commandLink>
+                <p:commandLink action="image_tasks" ajax="false">
+                    <img src="../img/image_task.jpg" alt="Задачи в картинках" height="150" width="180"/>
+                    <f:param name="imageChosen" value="1" />
+                </p:commandLink>
+            </h:panelGrid>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
