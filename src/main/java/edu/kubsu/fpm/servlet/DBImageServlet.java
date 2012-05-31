@@ -1,6 +1,7 @@
 package edu.kubsu.fpm.servlet;
 
 import edu.kubsu.fpm.ejb.DBImageLocal;
+import edu.kubsu.fpm.managed.classes.media_classes.Image;
 import edu.kubsu.fpm.managed.teacher_ps.classes.PersonalPhoto;
 
 import javax.ejb.EJB;
@@ -24,6 +25,7 @@ public class DBImageServlet extends HttpServlet {
     @EJB
     private DBImageLocal DBImage;
     private byte[] img;
+    private Image image;
 
     /**
      * в результате выполнения DBImageServlet в окне браузера отобразится одна из картинок,
@@ -35,6 +37,7 @@ public class DBImageServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String imageId = request.getParameter("imageId");
         String personId = request.getParameter("personId");
         String mainPersonid = request.getParameter("mainPersonid");
         if(personId!=null){
@@ -48,13 +51,24 @@ public class DBImageServlet extends HttpServlet {
         if(mainPersonid!=null){
             img = DBImage.getMainPhoto().getContent();
         }
+        if(imageId!=null){
+            image = extractImageFromLst(Integer.parseInt(imageId));
+            img = image.getContent();
+        }
 
-//        String count = request.getParameter("imgcount");  // получаем параметр запроса - номер картинки в лекции
         response.setContentType("image/png");
         OutputStream os = response.getOutputStream();
-//        byte[] img = DBImage.getImgList().get(Integer.parseInt(count));
         os.write(img);
         os.flush();
+    }
+
+    private Image extractImageFromLst(int id) {
+        for(Image i:DBImage.getImgList()){
+            if(i.getId()==id){
+                return i;
+            }
+        }
+        return null;
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

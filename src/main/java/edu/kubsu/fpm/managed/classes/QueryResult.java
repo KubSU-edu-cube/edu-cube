@@ -1,12 +1,6 @@
-package edu.kubsu.fpm.obj;
+package edu.kubsu.fpm.managed.classes;
 
-/**
- * Created by IntelliJ IDEA.
- * User: Анна
- * Date: 23.04.11
- * Time: 22:38
- * To change this template use File | Settings | File Templates.
- */
+
 
 public class QueryResult {
     private String lection;
@@ -43,3 +37,4 @@ public class QueryResult {
         this.lectionId = lectionId;
     }
 }
+

@@ -2,7 +2,8 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.kubsu.fpm.obj;
+
+package edu.kubsu.fpm.db_obj;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,14 +15,14 @@ import java.util.logging.Logger;
  *
  * @author Admin
  */
-public class FactClassifValues {
+public class ColFactClassifValues {
 
-    protected int factId;
+     protected int collId;
     protected int classifId;
     protected int classifValueId;
 
-    public FactClassifValues(int factId, int classifId, int classifValueId) {
-        this.factId = factId;
+    public ColFactClassifValues(int collId, int classifId, int classifValueId) {
+        this.collId = collId;
         this.classifId = classifId;
         this.classifValueId = classifValueId;
     }
@@ -34,21 +35,23 @@ public class FactClassifValues {
         return classifValueId;
     }
 
-    public int getFactId() {
-        return factId;
+    public int getcollId() {
+        return collId;
     }
 
-    public static void insertFactClassifValuesToDB(FactClassifValues classifValues, Connection conn) {
+    public static void insertColFactClassifValuesToDB(ColFactClassifValues classifValues, Connection conn) {
         try {
             PreparedStatement statement = conn.prepareStatement(
-                    "insert into app.FACT_CLASSIFVALUE (FACTID,CLASSIFID,CLASSIF_VALUEID) " +
+                    "insert into app.COLLFACT_CLASSIFVALUE (COLLID,CLASSIFID,CLASSIF_VALUEID) " +
                     "VALUES (?,?,?) ");
-            statement.setInt(1, classifValues.getFactId());
+            statement.setInt(1, classifValues.getcollId());
             statement.setInt(2, classifValues.getClassifId());
             statement.setInt(3, classifValues.getClassifValueId());
             statement.executeUpdate();
+            //System.out.println(statement.executeUpdate());
         } catch (SQLException ex) {
-            Logger.getLogger(FactClassifValues.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ColFactClassifValues.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
 }

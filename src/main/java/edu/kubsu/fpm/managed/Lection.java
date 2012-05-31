@@ -1,30 +1,35 @@
 package edu.kubsu.fpm.managed;
 
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
-
+import edu.kubsu.fpm.db_obj.ColDependFrom;
+import edu.kubsu.fpm.db_obj.Fact;
+import edu.kubsu.fpm.db_obj.FactCollection;
+import edu.kubsu.fpm.db_obj.MediaContent;
 import edu.kubsu.fpm.ejb.DBAudioLocal;
 import edu.kubsu.fpm.ejb.DBImageLocal;
-import edu.kubsu.fpm.obj.ColDependFrom;
-import edu.kubsu.fpm.obj.Fact;
-import edu.kubsu.fpm.obj.FactCollection;
+import edu.kubsu.fpm.ejb.DBVideoLocal;
+import edu.kubsu.fpm.managed.classes.DOMDocumentConverter;
+import edu.kubsu.fpm.managed.classes.media_classes.Audio;
+import edu.kubsu.fpm.managed.classes.media_classes.Image;
+import edu.kubsu.fpm.managed.classes.media_classes.Video;
+import org.apache.commons.io.IOUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Created by IntelliJ IDEA.
@@ -37,64 +42,64 @@ import java.util.logging.Logger;
 @SessionScoped
 public class Lection {
     @EJB
-    private DBImageLocal DBImage; // сюда будут переданы все картинки, относящиеся к лекции lectionId
+    private DBImageLocal DBImage;
     @EJB
     private DBAudioLocal DBAudio;
+    @EJB
+    private DBVideoLocal DBVideo;
 
-    private List<byte[]> byteImgList = new ArrayList<byte[]>();
-    private List<byte[]> byteAudioList = new ArrayList<byte[]>();
-
-    private int curImg;
-    private int curAudio;
+    private List<Image> byteImgList = new ArrayList<Image>();
+    private List<Audio> byteAudioList = new ArrayList<Audio>();
+    private List<Video> byteVideoList = new ArrayList<Video>();
 
     public String content;
-    public boolean  picturePrefered;  //с каким компонентом связать?
+    public boolean picturePrefered;  //с каким компонентом связать?
     public int difficultie;
     public boolean pictureUnnecessary;
 
     public int lectionId;
     private List<FactCollection> list;
 
-    public String getContent() {
-        return content;
-    }
+    private Connection conn;
 
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public int getLectionId() {
-        return lectionId;
-    }
-
-    public void setLectionId(int lectionId) {
-        this.lectionId = lectionId;
-    }
-    public String buildLection(){
+    public String buildLection() {
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            this.conn = DriverManager.getConnection("jdbc:derby://localhost:1527/educubeDB", "APP", "APP");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (SQLException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
         this.lectionId = Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("lectionId"));
 
-        //очищаем лист картинок, обнуляем счетчик, очищаем наращиваемую строку content
-        this.byteImgList.clear();
-        this.byteAudioList.clear();
-        this.DBImage.setImgList(byteImgList);
-        this.DBAudio.setAudioList(byteAudioList);
-        this.content="";
-        this.curImg = 0;
-        this.curAudio = 0;
+        InitLection();
         // получили все коллекции, у которых lectionId = this.lectionId
-        list = FactCollection.getColFactByItsClassifValue(lectionId,ConnectionManager.getConnection());
+        list = FactCollection.getColFactByItsClassifValue(lectionId, conn);
         for (FactCollection factCollection : list) {
             if (factCollection.isIsTyped() == false) {
-                Insert(factCollection,ConnectionManager.getConnection(),curImg, curAudio);
+                Insert(factCollection, conn);
             }
         }
         //передаем в ejbean лист с картинками
         this.DBImage.setImgList(byteImgList);
+        this.DBAudio.setAudioList(byteAudioList);
+        this.DBVideo.setVideoList(byteVideoList);
         String temp = this.content;
         return "lection";
     }
 
-    private void Insert(FactCollection factCollection,Connection conn,int curImg, int curAudio) {
+    private void InitLection() {
+        this.byteImgList.clear();
+        this.byteAudioList.clear();
+        this.byteAudioList.clear();
+        this.DBImage.setImgList(byteImgList);
+        this.DBAudio.setAudioList(byteAudioList);
+        this.DBVideo.setVideoList(byteVideoList);
+        this.content = "";
+    }
+
+    private void Insert(FactCollection factCollection, Connection conn) {
         List<FactCollection> depFromColl = ColDependFrom.getNecessaryCollections(factCollection, list, conn);
         List<FactCollection> untypedColl = FactCollection.getNotTypedColl(depFromColl, conn);
         if (untypedColl.isEmpty()) {
@@ -107,92 +112,256 @@ public class Lection {
                     || collType.equals("свойство")) {
                 //ищем доказательство к теореме//
                 FactCollection collection = FactCollection.getFactCollByNameType
-                                         (factCollection.getName(), "доказательство", conn);
+                        (factCollection.getName(), "доказательство", conn);
                 //выводим саму теорему//
-                printFact(factCollection,curImg, curAudio);
+                printFact(factCollection);
                 //если к теореме нашлось доказательство, то выводим его вне очереди//
-                if (collection != null){
-                printFact(factCollection,curImg, curAudio);
+                if (collection != null) {
+                    printFact(factCollection);
                 }
 
             } else {
                 //если коллекция оказалась не теоремой, то просто выводим//
-                printFact(factCollection,curImg, curAudio);
+                printFact(factCollection);
                 System.out.println(factCollection.isIsTyped());
             }
             //если список необходимых невставленных еще не пуст//
         } else {
             for (FactCollection factCollection1 : untypedColl) {
-                Insert(factCollection1, conn,curImg,curAudio);
+                Insert(factCollection1, conn);
             }
         }
     }
-    public void printFact(FactCollection collection,int curImg, int curAudio){
-//        Создаем DOM документ
-        List<Fact> fact = Fact.getFactByCollectionID(collection, ConnectionManager.getConnection());
+
+    public void printFact(FactCollection collection) {
+
+        List<Fact> fact = Fact.getFactByCollectionID(collection, conn);
+        // Здесь должен быть выбор подходящего факта из коллекции
         Fact f = fact.get(0);
-        System.out.println(f.getId());
-        // правильно ли получаем?!
-        Document byteDocument = DOMDocumentConverter.getDocumentFromStream(f.getContent());
-        this.openFact(byteDocument, curImg, curAudio);
+        Document document = DOMDocumentConverter.getDocumentFromStream(f.getContent());
+        Connection c = null;
+        try {
+
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            c = DriverManager.getConnection("jdbc:derby://localhost:1527/educubeDB", "APP", "APP");
+        } catch (SQLException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+
+        List<MediaContent> factMedias = MediaContent.getMediaContentList(f.getId(), c);
+        this.openFact(document, factMedias);
 
         collection.setIsTyped(true);
     }
-    public void openFact(Document byteDocument, int curImg, int curAudio) {
 
-        Element rootEl = byteDocument.getDocumentElement();
-        NodeList children = rootEl.getChildNodes();
-        for (int i = 0; i < children.getLength(); i++) {
-            Element currentElement = (Element) children.item(i);
-            if (currentElement.getTagName().equals("fact_image")) {
+    public void openFact(Document doc, List<MediaContent> factMedias) {
 
-                    /* Выводим картинку */
-                    String simage = currentElement.getTextContent();
-                    byteImgList.add(curImg, Base64.decode(simage));//складываем картинки в лист
-                    this.content = this.content+addImgContent(curImg);//наращиваем строку content
-                    curImg = curImg + 1;
-            } else if (currentElement.getTagName().equals("fact_text")) {
-//                выводим текст//
-                String stext = currentElement.getTextContent();  // или эта
-                String text = getStringFromByteText(stext.getBytes());// Вот эта строка уже содержимое - текст!!!
-                content = content+text;
-            }
-            if (currentElement.getTagName().equals("fact_audio")){
-                byte[] result = Base64.decode(currentElement.getTextContent());
-                byteAudioList.add(curAudio,result);
-                this.content = this.content+addAudioContent(curAudio);
-                curAudio = curAudio + 1;
+        Element rootElement = doc.getDocumentElement();
+        NodeList node = rootElement.getChildNodes();
+        for (int i = 0; i < node.getLength(); i++) {
+            Node childNode = node.item(i);
+            if (childNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element childElmnt = (Element) childNode;
+                if (childElmnt.getTagName().equals("fact_text")) {
+                    String textContent = childElmnt.getTextContent();
+                    content = content + textContent;
+                }
+                if (childElmnt.getTagName().equals("fact_image")) {
+                    try {
+                        // Узнали, какой идентификатор у записи в таблице MediaContent где хранится картинка
+                        int mediaId = Integer.parseInt(childElmnt.getTextContent());
+                        // Выбрали необходимый медиаконтент из списка всех медиа выбранного факта
+                        MediaContent mc = getMCById(factMedias, mediaId);
+                        Image image = new Image(mediaId, IOUtils.toByteArray(mc.getContent()));
+                        // Наращиваем содержимое content
+                        content = content + addImgContent(mediaId);
+                        // Добавляем картинку в лист всех картинок лекции
+                        byteImgList.add(image);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (childElmnt.getTagName().equals("fact_audio")) {
+
+                        // Узнали, какой идентификатор у записи в таблице MediaContent где хранится аудио
+                        int mediaId = Integer.parseInt(childElmnt.getTextContent());
+                        // Выбрали необходимый медиаконтент из списка всех медиа выбранного факта
+                        MediaContent mc = getMCById(factMedias, mediaId);
+                    Audio audio = null;
+                    try {
+                        audio = new Audio(mediaId, IOUtils.toByteArray(mc.getContent()));
+                    } catch (IOException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
+
+                    // Наращиваем содержимое content
+                        content = content + addAudioContent(mediaId);
+                        // Добавляем картинку в лист всех картинок лекции
+                        byteAudioList.add(audio);
+
+                }
+                if (childElmnt.getTagName().equals("fact_math")) {
+                    String mathContent = childElmnt.getTextContent();
+                    content = content + mathContent;
+                }
+                if (childElmnt.getTagName().equals("fact_video")) {
+                    try {
+                        // Узнали, какой идентификатор у записи в таблице MediaContent где хранится видео
+                        int mediaId = Integer.parseInt(childElmnt.getTextContent());
+                        // Выбрали необходимый медиаконтент из списка всех медиа выбранного факта
+                        MediaContent mc = getMCById(factMedias, mediaId);
+                        Video video = new Video(mediaId, IOUtils.toByteArray(mc.getContent()));
+                        // Наращиваем содержимое content
+                        content = content + addVideoContent(mediaId);
+                        // Добавляем картинку в лист всех картинок лекции
+                        byteVideoList.add(video);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
+    }
 
+    private byte[] getBytes(InputStream is)
+throws IOException {
+
+// Get the size of the file
+            long length = is.available();
+
+            if (length > Integer.MAX_VALUE) {
+// File is too large
+            }
+
+// Create the byte array to hold the data
+            byte[] bytes = new byte[(int) length];
+
+// Read in the bytes
+            int offset = 0;
+            int numRead = 0;
+            while (offset < bytes.length
+                    && (numRead = is.read(bytes, offset, bytes.length - offset)) >= 0) {
+                offset += numRead;
+            }
+
+// Ensure all the bytes have been read in
+            if (offset < bytes.length) {
+                throw new IOException("Could not completely read file ");
+            }
+
+// Close the input stream and return bytes
+            is.close();
+            return bytes;
+        }
+
+
+
+
+    private MediaContent getMCById(List<MediaContent> factMedias, int mediaId) {
+        for (MediaContent mediaContent : factMedias) {
+            if (mediaContent.getId() == mediaId) {
+                return mediaContent;
+            }
+        }
+        return null;
     }
 
     private String addAudioContent(int curAudio) {
         return
-        "<object type=\"application/x-shockwave-flash\" data=\"/dewplayer/dewplayer-mini.swf\" width=\"160\" height=\"20\"  "+
-        "id=\"dewplayer\" name=\"dewplayer\"> "+
-        "<param name=\"wmode\" value=\"transparent\"/> "+
-        "<param name=\"movie\" value=\"../dewplayer/dewplayer-mini.swf\"/> "+
-        "<param name=\"flashvars\" value=\"mp3=http://localhost:8080/educube-1.0/DBAudioServlet?audioId="+curAudio+"&amp;autostart=1\"/> "+
-        "</object> ";
+                "<object type=\"application/x-shockwave-flash\" data=\"/dewplayer/dewplayer-mini.swf\" width=\"160\" height=\"20\"  " +
+                        "id=\"dewplayer\" name=\"dewplayer\"> " +
+                        "<param name=\"wmode\" value=\"transparent\"/> " +
+                        "<param name=\"movie\" value=\"../dewplayer/dewplayer-mini.swf\"/> " +
+                        "<param name=\"flashvars\" value=\"mp3=http://localhost:8080/educube-1.0/DBAudioServlet?audioId=" + curAudio + "&amp;autostart=1\"/> " +
+                        "</object> ";
     }
 
-    public String addImgContent(int curImg){
-      return "<img src=\"http://localhost:8080/edukub-1.0-SNAPSHOT/DBImageServlet?curImg="+curImg+"\" alt=\"картинка\"/>";
+    private String addVideoContent(int videoId) {
+        return
+                "<object type=\"application/x-shockwave-flash\" data=\"/dewplayer/dewplayer-mini.swf\" width=\"160\" height=\"20\"  " +
+                        "id=\"dewplayer\" name=\"dewplayer\"> " +
+                        "<param name=\"wmode\" value=\"transparent\"/> " +
+                        "<param name=\"movie\" value=\"../dewplayer/dewplayer-mini.swf\"/> " +
+                        "<param name=\"flashvars\" value=\"mp3=http://localhost:8080/educube-1.0/DBVideoServlet?videoId=" + videoId + "&amp;autostart=1\"/> " +
+                        "</object> ";
     }
-    private String getStringFromByteText(byte[] bytes) {
-            try {
-                InputStreamReader isr = new InputStreamReader(new ByteArrayInputStream(bytes));
-                BufferedReader br = new BufferedReader(isr);
-                StringBuffer buf = new StringBuffer();
-                String line = null;
-                while ((line = br.readLine()) != null) {
-                    buf.append(line + "\n");
-                }
-                return buf.toString();
-            } catch (IOException ex) {
-//                Logger.getLogger(Test_class.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            return null;
-        }
+
+    public String addImgContent(int curImg) {
+        return "<img src=\"http://localhost:8080/edukub-1.0-SNAPSHOT/DBImageServlet?imageId=" + curImg + "\" alt=\"картинка\"/>";
+    }
+
+    public List<Image> getByteImgList() {
+        return byteImgList;
+    }
+
+    public void setByteImgList(List<Image> byteImgList) {
+        this.byteImgList = byteImgList;
+    }
+
+    public List<Audio> getByteAudioList() {
+        return byteAudioList;
+    }
+
+    public void setByteAudioList(List<Audio> byteAudioList) {
+        this.byteAudioList = byteAudioList;
+    }
+
+    public List<Video> getByteVideoList() {
+        return byteVideoList;
+    }
+
+    public void setByteVideoList(List<Video> byteVideoList) {
+        this.byteVideoList = byteVideoList;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public boolean isPicturePrefered() {
+        return picturePrefered;
+    }
+
+    public void setPicturePrefered(boolean picturePrefered) {
+        this.picturePrefered = picturePrefered;
+    }
+
+    public int getDifficultie() {
+        return difficultie;
+    }
+
+    public void setDifficultie(int difficultie) {
+        this.difficultie = difficultie;
+    }
+
+    public boolean isPictureUnnecessary() {
+        return pictureUnnecessary;
+    }
+
+    public void setPictureUnnecessary(boolean pictureUnnecessary) {
+        this.pictureUnnecessary = pictureUnnecessary;
+    }
+
+    public int getLectionId() {
+        return lectionId;
+    }
+
+    public void setLectionId(int lectionId) {
+        this.lectionId = lectionId;
+    }
+
+    public List<FactCollection> getList() {
+        return list;
+    }
+
+    public void setList(List<FactCollection> list) {
+        this.list = list;
+    }
 }

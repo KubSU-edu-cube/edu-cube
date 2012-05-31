@@ -1,20 +1,17 @@
-package edu.kubsu.fpm.obj;
-
-
-import edu.kubsu.fpm.managed.ConnectionManager;
+package edu.kubsu.fpm.managed;
+import edu.kubsu.fpm.managed.classes.QueryResult;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Анна
- * Date: 21.04.11
- * Time: 19:41
+ * Created with IntelliJ IDEA.
+ * User: anna
+ * Date: 31.05.12
+ * Time: 17:16
  * To change this template use File | Settings | File Templates.
  */
 @ManagedBean
@@ -84,6 +81,7 @@ public class Search {
     public void setQueryResultList(List<QueryResult> queryResultList) {
         this.queryResultList = queryResultList;
     }
+
     public String getQueryText() {
         return queryText;
     }
@@ -94,15 +92,17 @@ public class Search {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public String searchButtonClick() {
+
+
         queryResultList.clear();
-        query1 = "% "+this.getQueryText()+"%";
-        query2 = this.getQueryText()+"%";
-        ResultSet resultSet = ConnectionManager.executeQuery(sql, query1, query2, query1, query2, query1, query2, query1, query2);
+        query1 = "% " + this.getQueryText() + "%";
+        query2 = this.getQueryText() + "%";
+        ResultSet resultSet = executeQuery(sql, query1, query2, query1, query2, query1, query2, query1, query2);
         try {
             while (resultSet.next()) {
-                queryResultList.add(new QueryResult(resultSet.getString("lection"),resultSet.getString("collection"),resultSet.getInt("lectionid")));
+                queryResultList.add(new QueryResult(resultSet.getString("lection"), resultSet.getString("collection"), resultSet.getInt("lectionid")));
             }
-        resultSet.close();
+            resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
@@ -110,7 +110,29 @@ public class Search {
         return "search";
     }
 
+    public static ResultSet executeQuery(String sql, Object... params) {
 
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/educubeDB", "APP", "APP");
+            PreparedStatement statement = conn.prepareStatement(sql);
+            for (int i = 0; i < params.length; i++) {
+                if (params[i] instanceof String) {
+                    statement.setString(i + 1, (String) params[i]);
+                } else if (params[i] instanceof Integer) {
+                    statement.setInt(i + 1, (Integer) params[i]);
+                } else if (params[i] instanceof Date) {
+                    statement.setDate(i + 1, (Date) params[i]);
+                }
+            }
+            return statement.executeQuery();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (SQLException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        return null;
+    }
 
 
 }

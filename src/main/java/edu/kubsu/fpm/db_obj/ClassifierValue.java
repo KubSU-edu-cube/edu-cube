@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.kubsu.fpm.obj;
+package edu.kubsu.fpm.db_obj;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

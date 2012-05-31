@@ -1,5 +1,7 @@
 package edu.kubsu.fpm.ejb;
 
+import edu.kubsu.fpm.managed.classes.media_classes.Audio;
+
 import javax.ejb.Local;
 import java.util.List;
 
@@ -12,7 +14,7 @@ import java.util.List;
  */
 @Local
 public interface DBAudioLocal {
-    public List<byte[]> getAudioList();
+    public List<Audio> getAudioList();
 
-    public void setAudioList(List<byte[]> audioList);
+    public void setAudioList(List<Audio> audioList);
 }

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.kubsu.fpm.obj;
+package edu.kubsu.fpm.db_obj;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -255,33 +255,6 @@ public class FactCollection {
         }
         return null;
     }
-    public static List<FactCollection> getColFactByItsClassifValue(int lectionId, Connection conn) {
-
-
-        try {
-            List<FactCollection> list = new ArrayList<FactCollection>();
-            PreparedStatement statement = conn.prepareStatement(
-                    "select  fc.ID, "
-                    + "fc.\"NAME\" "
-                    + "from app.FACT_COLLECTION fc, "
-                    + "(select cfcv.COLLID "
-                    + "from app.COLLFACT_CLASSIFVALUE cfcv "
-                    + "where cfcv.CLASSIF_VALUEID = ?)s1 "
-                    + "where s1.collid = fc.ID ");
-
-            statement.setInt(1,lectionId);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                FactCollection factCollection = new FactCollection(resultSet.getInt("ID"), resultSet.getString("NAME"));
-                list.add(factCollection);
-            }
-
-            return list;
-        } catch (SQLException ex) {
-            Logger.getLogger(FactCollection.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
 
     public static FactCollection getFactColByName(String name, Connection conn) {
         try {
@@ -375,4 +348,29 @@ public class FactCollection {
         return true;
     }
 
+    public static List<FactCollection> getColFactByItsClassifValue(int lectionId, Connection conn) {
+        try {
+            List<FactCollection> list = new ArrayList<FactCollection>();
+            PreparedStatement statement = conn.prepareStatement(
+                    "select  fc.ID, "
+                            + "fc.\"NAME\" "
+                            + "from app.FACT_COLLECTION fc, "
+                            + "(select cfcv.COLLID "
+                            + "from app.COLLFACT_CLASSIFVALUE cfcv "
+                            + "where cfcv.CLASSIF_VALUEID = ?)s1 "
+                            + "where s1.collid = fc.ID ");
+
+            statement.setInt(1, lectionId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                FactCollection factCollection = new FactCollection(resultSet.getInt("ID"), resultSet.getString("NAME"));
+                list.add(factCollection);
+            }
+
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(FactCollection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }

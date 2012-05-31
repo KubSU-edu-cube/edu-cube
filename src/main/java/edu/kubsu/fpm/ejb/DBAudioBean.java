@@ -1,5 +1,7 @@
 package edu.kubsu.fpm.ejb;
 
+import edu.kubsu.fpm.managed.classes.media_classes.Audio;
+
 import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -16,13 +18,13 @@ import java.util.List;
 @Stateless
 @Local(DBAudioLocal.class)
 public class DBAudioBean implements DBAudioLocal{
-    private List<byte[]> audioList = new ArrayList<byte[]>();
+    private List<Audio> audioList = new ArrayList<Audio>();
 
-    public List<byte[]> getAudioList() {
+    public List<Audio> getAudioList() {
         return audioList;
     }
 
-    public void setAudioList(List<byte[]> audioList) {
+    public void setAudioList(List<Audio> audioList) {
         this.audioList = audioList;
     }
 }
