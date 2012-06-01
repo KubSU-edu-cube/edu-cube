@@ -20,7 +20,7 @@
 
             <h:panelGroup>
                 <p:commandButton value="Сохранить" actionListener="#{tasksCreateBean.saveCheckedTask}" />
-                <p:commandButton value="Назад" action="check_tasks_type" ajax="false"/><br /><br />
+                <p:commandButton value="Назад" action="#{tasksCreateBean.goBack}" ajax="false"/><br /><br />
             </h:panelGroup>
         </h:form>
     </ui:define>

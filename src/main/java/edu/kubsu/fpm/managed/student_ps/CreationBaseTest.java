@@ -59,7 +59,6 @@ public class CreationBaseTest {
     private MarkDAO markDAO;
 
     public CreationBaseTest() {
-        test = (Test) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("test");
         student = (Person) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("student");
     }
 
@@ -104,6 +103,9 @@ public class CreationBaseTest {
     }
 
     public List<Task> getTaskList() {
+        if (test == null){
+            test = (Test) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("test");
+        }
         return taskDAO.getTaskListByTest(test);
     }
 
@@ -147,11 +149,23 @@ public class CreationBaseTest {
         Mark savedMark = new Mark();
         savedMark.setMark(mark);
         savedMark.setStudent(student);
-        savedMark.setTest(currentTask.getTest());
-        savedMark.setLection(currentTask.getTest().getLection());
+        savedMark.setTest(test);
+        savedMark.setLection(test.getLection());
         markDAO.persist(savedMark);
 
+        initParam();
         return mark;
+    }
+
+    private void initParam() {
+        contentTask = null;
+        studentAnswer = null;
+        countRightAnswers = 0;
+        totalCount = 0;
+        idRightAnswer = 0;
+        studentVariant = null;
+        test = null;
+        taskList = null;
     }
 
     public String getFunctionForGroup(){

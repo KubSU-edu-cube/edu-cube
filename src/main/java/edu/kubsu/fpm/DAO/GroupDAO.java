@@ -37,12 +37,5 @@ public class GroupDAO {
         return (Course_variation) em.createQuery("select g.courseVariation from Group g where g.id = :id")
                 .setParameter("id", id)
                 .getSingleResult();
-
-    }
-
-    public Course_variation getCourseByGroupId(Integer groupId) {
-        return (Course_variation) em.createQuery("select g.courseVariation from Group g where g.id = :id")
-                .setParameter("id", groupId)
-                .getSingleResult();
     }
 }

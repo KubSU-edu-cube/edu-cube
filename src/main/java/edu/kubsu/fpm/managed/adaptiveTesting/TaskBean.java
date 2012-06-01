@@ -43,21 +43,21 @@ public class TaskBean {
 
     private String testResult = "";     //  Возвращает строчку с результатом тестирования
     private Double countRightAnswer = 0.0;    //  Содержит колличество парвильных ответов студента
-    private Integer countAnswer;    //  Содержит колличество заданных вопросов
+    private Integer countAnswer = null;    //  Содержит колличество заданных вопросов
     private String studentAnswer = "";  //  Содержит текущий ответ студента
-    private String rightAnswer;         //  Содержит текущий правильный ответ на заданный вопрос
+    private String rightAnswer = "";         //  Содержит текущий правильный ответ на заданный вопрос
     private String currentQuestion = "abc";     //  Содержит текст текущего вопроса
     private List<Integer> idFactList;   //  Лист id-ов фактов, кот. входят в прочитанную лекцию
     private List<Boolean> wasAsked;     //  Лист, показывающий, спрашивали мы по этому факту уже или нет
-    private List<Integer> idObligitaryFactList;    //   Список id-ов обязательных фактов
-    private Integer countQuestion;      //  Колличество вопросов, кот. еще нужно задать
+    private List<Integer> idObligitaryFactList = null;    //   Список id-ов обязательных фактов
+    private Integer countQuestion = null;      //  Колличество вопросов, кот. еще нужно задать
     private boolean isOblig = true;   //  Сейчас будут задаваться обязательные вопросы или нет
     private int typeQuestion = 0;       //  Тип генерируемого вопроса
     private int idGroup;                //  id текущей группы
-    private List<Integer> obligFactList;
+    private List<Integer> obligFactList = null;
     private List<String> participleList;    // Слова-частцы, а так же предлоги, союзы и т.п. на основе кот. не нужно строить вопросы.
     private String targetURL;
-    private Integer studentId;
+    private int studentId;
 
     @EJB
     private FactDAO factDAO;
@@ -131,7 +131,9 @@ public class TaskBean {
         participleList.add("n");
         participleList.add("это");
 
-        studentId = Integer.parseInt((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("studentId"));
+        String studId = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("studentId");
+
+        studentId = studId != null ? Integer.parseInt(studId) : 0;
     }
 
     //   Генерирует текущий тестовый вопрос
@@ -278,11 +280,37 @@ public class TaskBean {
         Double mark = (Double) func.evaluate(mapContext);
         testResult = "Ваша оценка: " + (mark > 5 ? 5 : mark);
 
+        initTestParam();
+
         return testResult;
     }
 
+    private void initTestParam() {
+        countAnswer = null;
+        countQuestion = null;
+        countRightAnswer = 0.0;
+
+        idFactList = new ArrayList<>();  //  По-идее их нужно получать из класса генерции лекции
+        wasAsked = new ArrayList<>();
+        participleList = new ArrayList<>();
+        idFactList.add(2);  //  Но мы пока что будем извращаться
+        idFactList.add(5);
+        idFactList.add(7);
+        idFactList.add(8);
+        idFactList.add(9);
+        idFactList.add(10);
+        idGroup = 1;
+        isOblig = true;
+
+//        Инициализируем список посещенных фактов
+        for (Integer anIdFactList : idFactList) wasAsked.add(false);
+
+        String studId = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("studentId");
+        studentId = studId != null ? Integer.parseInt(studId) : 0;
+    }
+
     private boolean theLectionForGroup(int groupId, Lection lection){
-        Course_variation course_variation = groupDAO.getCourseByGroupId(groupId);
+        Course_variation course_variation = groupDAO.getCourseVarByGroupId(groupId);
         List<Lection> lections = lectionDAO.findLectionsByCourseVarId(course_variation.getId());
         return lections.contains(lection);
     }

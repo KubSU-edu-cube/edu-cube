@@ -2,6 +2,7 @@ package edu.kubsu.fpm.managed.student_ps;
 
 import edu.kubsu.fpm.DAO.Course_variationDAO;
 import edu.kubsu.fpm.DAO.GroupDAO;
+import edu.kubsu.fpm.DAO.PersonDAO;
 import edu.kubsu.fpm.entity.Course_variation;
 import edu.kubsu.fpm.entity.Person;
 import edu.kubsu.fpm.model.Group;
@@ -29,12 +30,16 @@ public class CoursesStudentBean {
     private String teacherName;
     private List<Course_variation> course_variationList;
     private Map<Integer, Boolean> selectedIDs = new HashMap<>(); // Выбранные записи
+    private String saveMessage;
 
     @EJB
     private Course_variationDAO course_variationDAO;
 
     @EJB
     private GroupDAO groupDAO;
+    
+    @EJB
+    private PersonDAO personDAO;
 
     public CoursesStudentBean() {
         this.setStudent((Person) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("student"));
@@ -54,6 +59,31 @@ public class CoursesStudentBean {
         else {
             getCoursesByTeacher(teacherName);
         }
+        if (course_variationList.size() > 0)
+            exceptStudentCourses();
+        saveMessage = null;
+    }
+
+    private void exceptStudentCourses() {
+        List<Course_variation> variationList = new ArrayList<>();
+        List<Group> groupList = personDAO.getGroupListByPersonId(student.getId());
+        for (Course_variation variation: course_variationList){
+            Group group = groupDAO.getGroupByCourseVar(variation);
+            if (!containGroup(groupList, group))
+                variationList.add(variation);
+        }
+        course_variationList = variationList;
+    }
+    
+    private boolean containGroup(List<Group> groupList, Group group){
+        boolean contain = false;
+        for (Group group1: groupList){
+            if (group1.getId() == group.getId()){
+                contain = true;
+                break;
+            }
+        }
+        return contain;
     }
 
     private void getCoursesByTeacher(String teacherName) {
@@ -108,6 +138,7 @@ public class CoursesStudentBean {
     public String showCourses(){
         requiredCourseName = null;
         teacherName = null;
+        saveMessage = null;
         return "search_course";
     }
 
@@ -127,6 +158,12 @@ public class CoursesStudentBean {
             group.setStudents(personList);
             groupDAO.persist(group);
         }
+        saveMessage = "Вы были успешно записаны на выбранные вами курс(ы).";
+    }
+
+    public String goBack(){
+        saveMessage = null;
+        return "courses";
     }
 
     private List<Course_variation> getSelectedItems() {
@@ -137,6 +174,14 @@ public class CoursesStudentBean {
             }
         }
         return course_variations;
+    }
+
+    public String getSaveMessage() {
+        return saveMessage;
+    }
+
+    public void setSaveMessage(String saveMessage) {
+        this.saveMessage = saveMessage;
     }
 
     public List<Course_variation> getCourse_variationList() {

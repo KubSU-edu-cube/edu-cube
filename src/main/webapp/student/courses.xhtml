@@ -9,7 +9,6 @@
             <h:outputLabel value="Это страница студента с идентификатором #{studentPS.studentId}"/><br />
             <p:commandLink value="Поиск курсов" ajax="false" action="search_course"/><br />
 
-            <h:outputText value="Список ваших курсов: " /><br />
             <p:dataGrid value="#{studentPS.variationList}" var="list">
                 <p:column>
                     <p:commandLink value="#{list.course.name}" ajax="false" action="#{studentPS.moveToCourse}">

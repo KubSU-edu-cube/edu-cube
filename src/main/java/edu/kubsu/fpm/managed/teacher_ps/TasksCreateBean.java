@@ -126,8 +126,6 @@ public class TasksCreateBean {
         task.setTaskType(taskTypeDAO.findByType("creative"));
         task.setTest(test);
         taskDAO.persist(task);
-        taskText = null;
-        testName = null;
     }
 
     public void saveTest(){
@@ -209,6 +207,16 @@ public class TasksCreateBean {
             return "test_creation";
         else
             return "task_creation";
+    }
+
+    public String goBack(){
+        taskText = null;
+        testName = null;
+        rightAnswer = null;
+        addAnswer1 = null;
+        addAnswer2 = null;
+        addAnswer3 = null;
+        return "check_tasks_type";
     }
 
     public int getTestType() {

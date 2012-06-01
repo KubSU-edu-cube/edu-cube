@@ -52,6 +52,11 @@ public class CreationCreativeTest {
         }
     }
 
+    public String goBack(){
+        studentAnswer = null;
+        return "tasks";
+    }
+
     public String getContentTask(){
         List<Task> taskList = taskDAO.getTaskListByTest(test);
         currentTask = taskList.get(0);
