@@ -16,6 +16,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import sun.font.TrueTypeFont;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -41,6 +42,11 @@ import java.util.List;
 @ManagedBean
 @SessionScoped
 public class Lection {
+    private String type="подробно";
+    private String mediaStr = "максимально";
+
+
+
     @EJB
     private DBImageLocal DBImage;
     @EJB
@@ -54,8 +60,10 @@ public class Lection {
 
     public String content;
     public boolean picturePrefered;  //с каким компонентом связать?
-    public int difficultie;
+    public String difficultie;
     public boolean pictureUnnecessary;
+    private int shortly;
+    private int mediaOn;
 
     public int lectionId;
     private List<FactCollection> list;
@@ -63,6 +71,12 @@ public class Lection {
     private Connection conn;
 
     public String buildLection() {
+        fillParameters(
+        (String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("type"),
+        (String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("difficultie"),
+        (String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("mediaStr"));
+
+
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
             this.conn = DriverManager.getConnection("jdbc:derby://localhost:1527/educubeDB", "APP", "APP");
@@ -89,6 +103,20 @@ public class Lection {
         String temp = this.content;
         this.content = temp;
         return "lection";
+    }
+
+    private void fillParameters(String type, String difficultie, String mediaStr) {
+        if(type.equals("сжато")){
+            this.shortly=1;
+        }else{
+            this.shortly=0;
+        }
+        this.difficultie=difficultie;
+        if(mediaStr.equals("максимально")){
+            this.mediaOn=1;
+        }else{
+            this.mediaOn=0;
+        }
     }
 
     private void InitLection() {
@@ -140,14 +168,37 @@ public class Lection {
         List<Fact> fact = Fact.getFactByCollectionID(collection, conn);
         // Здесь должен быть выбор подходящего факта из коллекции
         Fact f = fact.get(0);
-        Document document = DOMDocumentConverter.getDocumentFromStream(f.getContent());
-
-
-
-        List<MediaContent> factMedias = MediaContent.getMediaContentList(f.getId(), conn);
-        this.openFact(document, factMedias);
-
+        if (factCorrresponds(f)){
+            Document document = DOMDocumentConverter.getDocumentFromStream(f.getContent());
+            List<MediaContent> factMedias = MediaContent.getMediaContentList(f.getId(), conn);
+            this.openFact(document, factMedias);
+        }
         collection.setIsTyped(true);
+    }
+
+    private boolean factCorrresponds(Fact f) {
+        if (this.shortly==0){
+            if(f.getContentType().equals("audio")||f.getContentType().equals("video")||f.getContentType().equals("image")){
+                if(f.getObligatory()==1){
+                    return true;
+                }
+                if(this.mediaOn==0){
+                    return false;
+                }
+            }
+            return true;
+        }
+        if(this.difficultie.equals("сложная")&&f.getDifficultie().equals("легкая") && f.getObligatory()==0){
+            return false;
+        }
+        if(this.shortly==1){
+            if(f.getObligatory()==0){
+                return false;
+            }
+        }
+        return true;
+
+
     }
 
     public void openFact(Document doc, List<MediaContent> factMedias) {
@@ -242,16 +293,19 @@ public class Lection {
 
     private String addVideoContent(int videoId) {
         return
-                "<object type=\"application/x-shockwave-flash\" data=\"dewplayer/dewplayer-mini.swf\" width=\"160\" height=\"20\"  " +
-                        "id=\"dewplayer\" name=\"dewplayer\"> " +
-                        "<param name=\"wmode\" value=\"transparent\"/> " +
-                        "<param name=\"movie\" value=\"dewplayer/dewplayer-mini.swf\"/> " +
-                        "<param name=\"flashvars\" value=\"mp3=http://localhost:8080/educube-1.0/DBVideoServlet?videoId=" + videoId + "&amp;autostart=1\"/> " +
-                        "</object> ";
+
+        "<script src=\"flowplayer/flowplayer-3.2.10.min.js\" type=\"text/javascript\"></script>\n" +
+                "            <a href=\"http://localhost:8080/educube-1.0/DBVideoServlet?videoId=" + videoId +"\"" +
+                "               style=\"display:block;width:425px;height:300px;margin-left:200px\"\n" +
+                "               id=\"player\">\n" +
+                "            </a>\n" +
+                "            <script language=\"JavaScript\" type=\"text/javascript\">\n" +
+                "                flowplayer(\"player\", \"flowplayer/flowplayer-3.2.11.swf\");\n" +
+                "            </script>";
     }
 
     public String addImgContent(int curImg) {
-        return "<img src=\"http://localhost:8080/edukub-1.0-SNAPSHOT/DBImageServlet?imageId=" + curImg + "\" alt=\"картинка\"/>";
+        return "<img src=\"http://localhost:8080/educube-1.0/DBImageServlet?imageId=" + curImg + "\" alt=\"картинка\"/>";
     }
 
     public List<Image> getByteImgList() {
@@ -294,11 +348,19 @@ public class Lection {
         this.picturePrefered = picturePrefered;
     }
 
-    public int getDifficultie() {
+    public int getShortly() {
+        return shortly;
+    }
+
+    public void setShortly(int shortly) {
+        this.shortly = shortly;
+    }
+
+    public String getDifficultie() {
         return difficultie;
     }
 
-    public void setDifficultie(int difficultie) {
+    public void setDifficultie(String difficultie) {
         this.difficultie = difficultie;
     }
 
@@ -324,5 +386,21 @@ public class Lection {
 
     public void setList(List<FactCollection> list) {
         this.list = list;
+    }
+
+    public int getMediaOn() {
+        return mediaOn;
+    }
+
+    public void setMediaOn(int mediaOn) {
+        this.mediaOn = mediaOn;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

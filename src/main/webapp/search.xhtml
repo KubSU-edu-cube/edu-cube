@@ -10,6 +10,27 @@
 
         <p:inputText value="#{search.queryText}"/>
         <p:commandButton value="поиск" actionListener="#{search.searchButtonClick}" update="lst"/>
+
+        <br/>
+        <h:panelGrid columns="2" cellpadding="5">
+        <h:outputLabel value="Тип изложения" styleClass="labels"/>
+        <p:inputText value="#{search.type}"/>
+
+        <h:outputLabel value="Сложность лекции" styleClass="labels"/>
+        <p:inputText value="#{search.difficultie}"/>
+
+        <h:outputLabel value="Использование мультимедиа" styleClass="labels"/>
+        <p:inputText value="#{search.mediaStr}"/>
+        </h:panelGrid>
+        <p:commandLink value="сохранить параметры" actionListener="#{search.persistParameters}"/>
+        <br/>
+
+
+
+
+
+
+
         <p:dataGrid value="#{search.queryResultList}" var="qRes" columns="1" id="lst">
         <p:column>
             <p:commandLink value="#{qRes.lection}" ajax="false" action="#{lection.buildLection}" styleClass="labels">

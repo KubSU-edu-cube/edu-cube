@@ -3,6 +3,7 @@ import edu.kubsu.fpm.managed.classes.QueryResult;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,16 @@ import java.util.List;
 @ManagedBean
 @SessionScoped
 public class Search {
+    private String type;
+    private String difficultie;
+    private String mediaStr;
+
+    public void persistParameters(){
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("type",this.getType());
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("difficultie",this.getDifficultie());
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("mediaStr",this.getMediaStr());
+
+    }
 
     public String queryText = "";   // запрос, который введет пользователь в поле ввода на страничке
     public List<QueryResult> queryResultList;
@@ -134,5 +145,27 @@ public class Search {
         return null;
     }
 
+    public String getType() {
+        return type;
+    }
 
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getDifficultie() {
+        return difficultie;
+    }
+
+    public void setDifficultie(String difficultie) {
+        this.difficultie = difficultie;
+    }
+
+    public String getMediaStr() {
+        return mediaStr;
+    }
+
+    public void setMediaStr(String mediaStr) {
+        this.mediaStr = mediaStr;
+    }
 }
