@@ -1,19 +1,24 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE html
-        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j" >
-<h:head>
-    <title></title>
-</h:head>
-<body>
-<h:form>
+<ui:composition template="/templates/teacher_ps_template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
 
-    <!--<h1>Жирный пингвин!</h1>-->
-    <h:outputText escape="false" value="#{lection.content}"></h:outputText>
-    <!--<h:outputText escape="false" value="#{test_class.content}"></h:outputText>-->
-</h:form>
-    <!--<h:outputLabel  value="#{lection.lectionId}"/>-->
-</body>
-</html>
+                xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="page_content">
+        <h:form>
+
+            <!--<h:outputText escape="false" value="#{lection.content}"></h:outputText>-->
+            <script src="flowplayer/flowplayer-3.2.10.min.js" type="text/javascript"></script>
+            <a href="http://pseudo01.hddn.com/vod/demo.flowplayervod/flowplayer-700.flv"
+               style="display:block;width:425px;height:300px;margin-left:500px"
+               id="player">
+            </a>
+            <script language="JavaScript" type="text/javascript">
+                flowplayer("player", "flowplayer/flowplayer-3.2.11.swf");
+            </script>
+
+        </h:form>
+    </ui:define>
+</ui:composition>
+

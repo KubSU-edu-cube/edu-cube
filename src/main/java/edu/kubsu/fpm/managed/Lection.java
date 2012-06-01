@@ -66,6 +66,7 @@ public class Lection {
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
             this.conn = DriverManager.getConnection("jdbc:derby://localhost:1527/educubeDB", "APP", "APP");
+            this.conn.setAutoCommit(false);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         } catch (SQLException e) {
@@ -86,6 +87,7 @@ public class Lection {
         this.DBAudio.setAudioList(byteAudioList);
         this.DBVideo.setVideoList(byteVideoList);
         String temp = this.content;
+        this.content = temp;
         return "lection";
     }
 
@@ -139,19 +141,10 @@ public class Lection {
         // Здесь должен быть выбор подходящего факта из коллекции
         Fact f = fact.get(0);
         Document document = DOMDocumentConverter.getDocumentFromStream(f.getContent());
-        Connection c = null;
-        try {
-
-            Class.forName("org.apache.derby.jdbc.ClientDriver");
-            c = DriverManager.getConnection("jdbc:derby://localhost:1527/educubeDB", "APP", "APP");
-        } catch (SQLException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
 
 
-        List<MediaContent> factMedias = MediaContent.getMediaContentList(f.getId(), c);
+
+        List<MediaContent> factMedias = MediaContent.getMediaContentList(f.getId(), conn);
         this.openFact(document, factMedias);
 
         collection.setIsTyped(true);
@@ -226,38 +219,6 @@ public class Lection {
         }
     }
 
-    private byte[] getBytes(InputStream is)
-throws IOException {
-
-// Get the size of the file
-            long length = is.available();
-
-            if (length > Integer.MAX_VALUE) {
-// File is too large
-            }
-
-// Create the byte array to hold the data
-            byte[] bytes = new byte[(int) length];
-
-// Read in the bytes
-            int offset = 0;
-            int numRead = 0;
-            while (offset < bytes.length
-                    && (numRead = is.read(bytes, offset, bytes.length - offset)) >= 0) {
-                offset += numRead;
-            }
-
-// Ensure all the bytes have been read in
-            if (offset < bytes.length) {
-                throw new IOException("Could not completely read file ");
-            }
-
-// Close the input stream and return bytes
-            is.close();
-            return bytes;
-        }
-
-
 
 
     private MediaContent getMCById(List<MediaContent> factMedias, int mediaId) {
@@ -271,20 +232,20 @@ throws IOException {
 
     private String addAudioContent(int curAudio) {
         return
-                "<object type=\"application/x-shockwave-flash\" data=\"/dewplayer/dewplayer-mini.swf\" width=\"160\" height=\"20\"  " +
+                "<object type=\"application/x-shockwave-flash\" data=\"dewplayer/dewplayer-mini.swf\" width=\"160\" height=\"20\"  " +
                         "id=\"dewplayer\" name=\"dewplayer\"> " +
                         "<param name=\"wmode\" value=\"transparent\"/> " +
-                        "<param name=\"movie\" value=\"../dewplayer/dewplayer-mini.swf\"/> " +
+                        "<param name=\"movie\" value=\"dewplayer/dewplayer-mini.swf\"/> " +
                         "<param name=\"flashvars\" value=\"mp3=http://localhost:8080/educube-1.0/DBAudioServlet?audioId=" + curAudio + "&amp;autostart=1\"/> " +
                         "</object> ";
     }
 
     private String addVideoContent(int videoId) {
         return
-                "<object type=\"application/x-shockwave-flash\" data=\"/dewplayer/dewplayer-mini.swf\" width=\"160\" height=\"20\"  " +
+                "<object type=\"application/x-shockwave-flash\" data=\"dewplayer/dewplayer-mini.swf\" width=\"160\" height=\"20\"  " +
                         "id=\"dewplayer\" name=\"dewplayer\"> " +
                         "<param name=\"wmode\" value=\"transparent\"/> " +
-                        "<param name=\"movie\" value=\"../dewplayer/dewplayer-mini.swf\"/> " +
+                        "<param name=\"movie\" value=\"dewplayer/dewplayer-mini.swf\"/> " +
                         "<param name=\"flashvars\" value=\"mp3=http://localhost:8080/educube-1.0/DBVideoServlet?videoId=" + videoId + "&amp;autostart=1\"/> " +
                         "</object> ";
     }
