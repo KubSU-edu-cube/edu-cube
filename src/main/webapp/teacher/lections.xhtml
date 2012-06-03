@@ -10,25 +10,27 @@
                 <h:outputLabel value="#{lectionsBean.course_variation.course.name}" styleClass="user_name"/>
                 <h:commandLink value="Создать лекцию" ajax="false" action="lection_creation" styleClass="create_new_item"/>
                 <p:separator width="900px"/>
-                <p:dataGrid value="#{lectionsBean.lectionVariationList}" var="lection" columns="1">
+                <p:dataGrid value="#{lectionsBean.lectionVariationList}" var="l" columns="1">
                     <p:column>
-                        <h:outputLabel value="#{lection.name}" styleClass="user_name"/>
-                        <h:outputLabel value="#{lection.description}" styleClass="additional_info"/>
+                        <p:commandLink value="#{l.name}" ajax="false" action="#{lectionsBean.showLection}" styleClass="user_name">
+                        <f:param name="chosenLection" value="#{l.id}"/>
+                    </p:commandLink>
+                        <h:outputLabel value="#{l.description}" styleClass="additional_info"/>
                         <div>
                             <p:commandLink value="Редактировать" ajax="false" action="#{lectionsBean.moveToLection}" styleClass="labels">
-                                <f:param name="chosenLection" value="#{lection.id}"/>
+                                <f:param name="chosenLection" value="#{l.id}"/>
                             </p:commandLink>
                             <p:spacer width="20px"/>
                             <p:commandLink value="Удалить" ajax="false" action="#{lectionsBean.moveToLection}" styleClass="labels">
-                                <f:param name="chosenLection" value="#{lection.id}"/>
+                                <f:param name="chosenLection" value="#{l.id}"/>
                             </p:commandLink>
                             <p:spacer width="20px"/>
                             <p:commandLink value="Создать задание" ajax="false" action="#{lectionsBean.moveToLection}" styleClass="labels">
-                                <f:param name="chosenLection" value="#{lection.id}"/>
+                                <f:param name="chosenLection" value="#{l.id}"/>
                             </p:commandLink>
                             <p:spacer width="20px"/>
                             <p:commandLink value="Назначить дату публикации" ajax="false" action="#{lectionsBean.moveToLection}" styleClass="labels">
-                                <f:param name="chosenLection" value="#{lection.id}"/>
+                                <f:param name="chosenLection" value="#{l.id}"/>
                             </p:commandLink>
                         </div>
                         <p:separator/>

@@ -3,7 +3,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                >
+                xmlns:p="http://java.sun.com/jsf/html">
 
     <ui:define name="title">RichFaces Sample</ui:define>
 
@@ -37,8 +37,15 @@
 
     <ui:define name="login_box_form">
         <h:form>
-            <h:outputText value="Добро пожаловать, #{request.remoteUser}!"/>
-            <h:commandButton action="#{loginBean.logout}" value="Выйти"/>
+
+            <h:panelGrid columns="2">
+                <h:outputLabel value="Логин"/>
+                <p:inputText value="#{loginBean.login}"/>
+                <h:outputLabel value="Пароль"/>
+                <p:inputText value="#{loginBean.pass}"/>
+                <p:commandButton value="Войти" action="teacher/courses" ajax="false" />
+                <p:commandButton value="Регистрация" action="index" ajax="false" />
+            </h:panelGrid>
         </h:form>
     </ui:define>
 

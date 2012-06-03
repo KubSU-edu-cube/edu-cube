@@ -191,6 +191,9 @@ public class Lection {
         if(this.difficultie.equals("сложная")&&f.getDifficultie().equals("легкая") && f.getObligatory()==0){
             return false;
         }
+        if(this.difficultie.equals("сложная")&&f.getDifficultie().equals("сложная")){
+            return true;
+        }
         if(this.shortly==1){
             if(f.getObligatory()==0){
                 return false;

@@ -7,6 +7,7 @@ import edu.kubsu.fpm.managed.teacher_ps.classes.PersonalPhoto;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -39,11 +40,14 @@ public class DBLectionServlet extends HttpServlet {
             }
         }
 
+        ServletOutputStream stream = response.getOutputStream();
         response.setContentType("application/pdf");
-        response.setHeader("Content-Disposition", "attachment;filename=file.pdf");
-        OutputStream os = response.getOutputStream();
-        os.write(lectionContent);
-        os.flush();
+        response.setContentLength(lectionContent.length);
+        response.setHeader("Content-Disposition","file");
+        stream.write(lectionContent);
+        stream.flush();
+        stream.close();
+
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

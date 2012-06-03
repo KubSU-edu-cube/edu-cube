@@ -13,6 +13,8 @@ public class LoginBean implements Serializable {
 
     private static final long serialVersionUID = -2403138958014741653L;
     private String name;
+    private String login;
+    private String pass;
 
     public LoginBean() {
         System.out.println("post construct: initialize");
@@ -39,5 +41,21 @@ public class LoginBean implements Serializable {
         }
 
         return null;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 }

@@ -1,8 +1,11 @@
 package edu.kubsu.fpm.managed.teacher_ps;
 
+import edu.kubsu.fpm.ejb.DBLectionLocal;
 import edu.kubsu.fpm.entity.Course_variation;
 import edu.kubsu.fpm.entity.Lection;
+import edu.kubsu.fpm.managed.teacher_ps.classes.CourseLection;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -19,9 +22,30 @@ import java.util.List;
 @ManagedBean
 @SessionScoped
 public class LectionsBean {
+    @EJB
+    private DBLectionLocal lectionLocal;
 
     private List<Lection> lectionVariationList;
     private Course_variation course_variation;
+
+    public String showLection(){
+        String chosenLection =
+                FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("chosenLection");
+        List<Lection> lections =
+                (List<Lection>) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("lectionVariationList");
+        for (Lection lection : lections) {
+            if (lection.getId() == Integer.parseInt(chosenLection)) {
+                CourseLection courseLection = new CourseLection();
+                courseLection.setId(lection.getId());
+                courseLection.setContent(lection.getContent());
+                lectionLocal.getLections().add(courseLection);
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lectionToShowId",lection.getId());
+                break;
+            }
+
+        }
+        return "lectionPDF";
+    }
 
     public String moveToLection() {
         String chosenLection =
@@ -35,7 +59,7 @@ public class LectionsBean {
             }
 
         }
-        return "lection";
+        return "lectionPDF";
     }
 
     public List<Lection> getLectionVariationList() {
