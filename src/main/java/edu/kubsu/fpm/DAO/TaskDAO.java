@@ -1,6 +1,7 @@
 package edu.kubsu.fpm.DAO;
 
 import edu.kubsu.fpm.entity.Task;
+import edu.kubsu.fpm.entity.TaskType;
 import edu.kubsu.fpm.entity.Test;
 
 import javax.ejb.*;
@@ -32,6 +33,13 @@ public class TaskDAO {
     public void remove(int id) {
         Task task = findById(id);
         em.remove(task);
+    }
+
+    public List<Task> getTaskListByTestAndTaskType(Test test, TaskType taskType) {
+        return em.createQuery("from Task t where t.test = :test and t.taskType = :taskType")
+                .setParameter("test", test)
+                .setParameter("taskType", taskType)
+                .getResultList();
     }
 
     public List<Task> getTaskListByTest(Test test) {

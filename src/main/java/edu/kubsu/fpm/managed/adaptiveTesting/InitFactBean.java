@@ -104,41 +104,76 @@ public class InitFactBean {
 
     private void persistTextTasks(Test test) {
         List<String> falseAnswers = Arrays.asList("девять", "шестьдесят девять", "двадцать", "пятьдесят");
-        persisTask(test, "Какое слово (сочетание слов) пропущено?\nТри:шесть = тринадцать:...", "двадцать шесть", falseAnswers);
+        persisTask(test, "text", "Какое слово (сочетание слов) пропущено?\nТри:шесть = тринадцать:...", "двадцать шесть", falseAnswers);
 
         falseAnswers = Arrays.asList("шкала", "сила", "рысак");
-        persisTask(test, "Решите анаграмы и найдите слово, которое не обозначает животное.", "мялка", falseAnswers);
+        persisTask(test, "text", "Решите анаграмы и найдите слово, которое не обозначает животное.", "мялка", falseAnswers);
 
         falseAnswers = Arrays.asList("листья", "плоды", "почки", "тень");
-        persisTask(test, "Закончите предложение таким образом, чтобы оно приобрело законченный смысл.\n" +
+        persisTask(test, "text", "Закончите предложение таким образом, чтобы оно приобрело законченный смысл.\n" +
                 "У дерева всегда есть...", "корни", falseAnswers);
 
         falseAnswers = Arrays.asList("контрабас", "гитара", "скрипка", "арфа");
-        persisTask(test, "Выберите слово, которое является лишним в следующей смысловой группе", "кларнет", falseAnswers);
+        persisTask(test, "text", "Выберите слово, которое является лишним в следующей смысловой группе", "кларнет", falseAnswers);
 
         falseAnswers = Arrays.asList("лодка", "мост", "паром", "берег");
-        persisTask(test, "Поняв смысл взаимосвязи первой пары слов, дополните вторую пару.\n" +
+        persisTask(test, "text", "Поняв смысл взаимосвязи первой пары слов, дополните вторую пару.\n" +
                 "Горы - перевал; река - ?", "брод", falseAnswers);
 
         falseAnswers = Arrays.asList("15", "30", "75");
-        persisTask(test, "Решите задачу и выберите правильный ответ.\n" +
+        persisTask(test, "text", "Решите задачу и выберите правильный ответ.\n" +
                 "Человек пробегает 1,5 м за четверть секунды. Какое растояние этот человек пробежит за 10 секунд?",
                 "60", falseAnswers);
 
         falseAnswers = Arrays.asList("15", "18", "36", "40", "100");
-        persisTask(test, "Определите какое число из перечисленных является лишним?\n" +
+        persisTask(test, "text", "Определите какое число из перечисленных является лишним?\n" +
                 "15 18 17 36 40 100", "17", falseAnswers);
     }
 
     private void persistImageTasks(Test test) {
+//        TODO Загружать изображение в виде текста (Base64). Все вопросы с полем ввода.
+        String imageText = Base64.encode(getBytesFromFile("tasks_for_test/image/task_1.png"));
+        persisTask(test, "image", "<?xml version=\"1.0\" encoding=\"UTF-8\"?><root>" +
+                "<text>Найдите недостающее число.</text>" +
+                "<image>" + imageText + "</image></root>", "24", null);    // Выбрасывается исключение. Нужно разобраться. Возможно слишком длинная строка.
 
+        imageText = Base64.encode(getBytesFromFile("tasks_for_test/image/task_2.png"));
+        persisTask(test, "image", "<?xml version=\"1.0\" encoding=\"UTF-8\"?><root>" +
+                "<text>Найдите недостающее число.</text>" +
+                "<image>" + imageText + "</image></root>", "10", null);
+
+        imageText = Base64.encode(getBytesFromFile("tasks_for_test/image/task_3.png"));
+        persisTask(test, "image", "<?xml version=\"1.0\" encoding=\"UTF-8\"?><root>" +
+                "<text>Найдите лишнюю фигуру.</text>" +
+                "<image>" + imageText + "</image></root>", "В", null);
+
+        imageText = Base64.encode(getBytesFromFile("tasks_for_test/image/task_4.png"));
+        persisTask(test, "image", "<?xml version=\"1.0\" encoding=\"UTF-8\"?><root>" +
+                "<text>Какая фигура следующая? Продолжите фигурный ряд.</text>" +
+                "<image>" + imageText + "</image></root>", "А", null);
+
+        imageText = Base64.encode(getBytesFromFile("tasks_for_test/image/task_5.png"));
+        persisTask(test, "image", "<?xml version=\"1.0\" encoding=\"UTF-8\"?><root>" +
+                "<text>Укажите пропущенную фигуру.</text>" +
+                "<image>" + imageText + "</image></root>", "Г", null);
+
+        imageText = Base64.encode(getBytesFromFile("tasks_for_test/image/task_6.png"));
+        persisTask(test, "image", "<?xml version=\"1.0\" encoding=\"UTF-8\"?><root>" +
+                "<text>Кубы расположены так, что у каждого куба вы видите только три грани из шести. " +
+                "Определите какой куб соответсвует кубу \"в\".</text>" +
+                "<image>" + imageText + "</image></root>", "04", null);
+
+        imageText = Base64.encode(getBytesFromFile("tasks_for_test/image/task_7.png"));
+        persisTask(test, "image", "<?xml version=\"1.0\" encoding=\"UTF-8\"?><root>" +
+                "<text>Выберите нужную фигуру из шести пронумерованных.</text>" +
+                "<image>" + imageText + "</image></root>", "1", null);
     }
 
-    private void persisTask(Test test, String content, String rightAnswer, List<String> falseAnswers) {
+    private void persisTask(Test test, String taskType, String content, String rightAnswer, List<String> falseAnswers) {
         Task task = new Task();
         task.setTest(test);
         task.setContent(content);
-        task.setTaskType(taskTypeDAO.findByType("text"));
+        task.setTaskType(taskTypeDAO.findByType(taskType));
         taskDAO.persist(task);
         
 //        Сохраняем правильный ответ
@@ -355,7 +390,7 @@ public class InitFactBean {
             fact.setContent(getBytesFromTextFile(fNname));
         else if (contentType.equals("image")){
             String imageText = Base64.encode(getBytesFromFile(fNname));
-            String factImage = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><root><fact_image>" + imageText + "</fact_image></root>";    // + imageText +
+            String factImage = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><root><fact_image>" + imageText + "</fact_image></root>";
             fact.setContent(factImage.getBytes());
         }
         fact.setDifficultie(difficulty);

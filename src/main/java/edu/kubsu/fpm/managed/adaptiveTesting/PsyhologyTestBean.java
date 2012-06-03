@@ -1,22 +1,13 @@
 package edu.kubsu.fpm.managed.adaptiveTesting;
 
-import edu.kubsu.fpm.DAO.AllAnswersDAO;
-import edu.kubsu.fpm.DAO.TaskDAO;
-import edu.kubsu.fpm.DAO.TestDAO;
-import edu.kubsu.fpm.DAO.TestTypeDAO;
-import edu.kubsu.fpm.entity.Answer;
-import edu.kubsu.fpm.entity.Person;
-import edu.kubsu.fpm.entity.Task;
-import edu.kubsu.fpm.entity.Test;
+import edu.kubsu.fpm.DAO.*;
+import edu.kubsu.fpm.entity.*;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 /**
  * User: Marina
@@ -33,14 +24,19 @@ public class PsyhologyTestBean {
     private List<Task> taskList;
     private Task currentTask;
     private int countRightAnswers = 0;      // Колличество правильных ответов
-    private int totalCount = 0;             // Количество заданных вопросов
+    private int countQuestion = 0;             // Количество заданных вопросов
     private Map<String, Integer> questionList;   // Варианты ответов
     private Integer studentVariant = null;
     private int idRightAnswer = 0;
+    private Long beginTime;
+    private String currentPage;
+
+    private int TIME_OUT = 300000; // 5 минут в милисекундах
 
 //        Здесь будем собирать информацию о студенте
     private Person student;
     private String representType;
+    private int totalCount = 0;
 
     @EJB
     private TestDAO testDAO;
@@ -53,28 +49,37 @@ public class PsyhologyTestBean {
 
     @EJB
     private AllAnswersDAO allAnswersDAO;
+    
+    @EJB
+    private TaskTypeDAO taskTypeDAO;
 
     public PsyhologyTestBean() {
+        beginTime = System.currentTimeMillis();
+
         student = (Person) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("student");
         String textChosen = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("textChosen");
         String imageChosen = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("imageChosen");
-        if (textChosen.equals("1"))
+        if (textChosen.equals("1")){
             representType = "text";
-        else if (imageChosen.equals("1"))
+            currentPage = "text_tasks";
+        }
+        else if (imageChosen.equals("2")){
             representType = "image";
+            currentPage = "image_tasks";
+        }
     }
 
     public String getContentTask() {
         test = getCurrentTest();
-        taskList = getTaskList();
+        taskList = getTaskList(taskTypeDAO.findByType("text"));
 
-        currentTask = taskList.get(totalCount);
+        currentTask = taskList.get(countQuestion);
         return currentTask.getContent();
     }
 
-    public List<Task> getTaskList() {
+    public List<Task> getTaskList(TaskType taskType) {
         if (taskList == null)
-            taskList = taskDAO.getTaskListByTest(test);
+            taskList = taskDAO.getTaskListByTestAndTaskType(test, taskType);
         return taskList;
     }
 
@@ -91,16 +96,20 @@ public class PsyhologyTestBean {
         }
         studentVariant = null;
 
-        if (taskList.size() != totalCount + 1){
-            totalCount++;
-            String url = null;
-            // TODO Подумать, как организовать переход между тектстовыми и графическими задачами.
-            return url;
+//        Если кончились вопросы или кончилось время
+        if ((countQuestion + 1 == taskList.size())||(System.currentTimeMillis() - beginTime > TIME_OUT)){
+            totalCount += countQuestion;    // Накапливаем общее число вопросов
+            countQuestion = 0;
+            if (representType.equals("text"))
+                currentPage = "image_tasks";
+            else
+                currentPage = "text_tasks";
         }
-        else{
-            totalCount++;
-            return "";
+        else {
+//            Иначе остаемся на этой же странице.
+            countQuestion++;
         }
+        return currentPage;
     }
 
     public Map<String, Integer> getQuestionList() {
