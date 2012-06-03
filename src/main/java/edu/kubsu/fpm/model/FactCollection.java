@@ -1,7 +1,7 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this template, choose Tools | Templates
+* and open the template in the editor.
+*/
 
 package edu.kubsu.fpm.model;
 
@@ -11,9 +11,9 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- *
- * @author Марина
- */
+*
+* @author Марина
+*/
 @Entity
 @Table(name = "FACT_COLLECTION")
 @NamedQueries({
@@ -26,7 +26,7 @@ public class FactCollection implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Integer id;
-    @Column(name = "FACTCOLL_NAME", length = 300)
+    @Column(name = "NAME", length = 300)
     private String factcollName;
     @JoinTable(name = "COLL_DEPEND_FROM", joinColumns = {
         @JoinColumn(name = "DEPENDENT_COLLID", referencedColumnName = "ID", nullable = false)}, inverseJoinColumns = {

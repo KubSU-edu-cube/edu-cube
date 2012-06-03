@@ -1,5 +1,6 @@
 package edu.kubsu.fpm.managed;
 
+
 import edu.kubsu.fpm.DAO.CityDAO;
 import edu.kubsu.fpm.DAO.CountryDAO;
 import edu.kubsu.fpm.DAO.PersonDAO;
@@ -84,8 +85,8 @@ public class SearchBean {
 //                this.selectedToAge,
 //                this.sex);
         this.shortPersonInfos = findPersons(this.simpleQuery,
-                this.city,
                 this.country,
+                this.city,
                 this.selectedFromAge,
                 this.selectedToAge,
                 this.sex);

@@ -139,9 +139,10 @@ public class StudentInfBean {
             Image image = ImageIO.read(new FileInputStream(fName));
             byte[] resisedImg = ImgConverter.changeProportion(imgFile, null, image.getWidth(null), image.getHeight(null), 100, 150);
 
-            List<byte[]> byteImgList = new ArrayList<>();
-            byteImgList.add(resisedImg);
-            dbImage.setImgList(byteImgList);
+            edu.kubsu.fpm.managed.classes.media_classes.Image bImage = new edu.kubsu.fpm.managed.classes.media_classes.Image(1, resisedImg);
+            List<edu.kubsu.fpm.managed.classes.media_classes.Image> imageList = new ArrayList<>();
+            imageList.add(bImage);
+            dbImage.setImgList(imageList);
 
             return resisedImg;
         } catch (IOException e) {

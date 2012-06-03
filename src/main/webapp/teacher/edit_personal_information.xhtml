@@ -5,9 +5,11 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns="http://www.w3.org/1999/xhtml">
     <ui:define name="page_content">
-        Здесь редактируется личная информация учителя
-        <h:form id="form">
 
+        <h:form id="form">
+            <p:panel header="Фотография" toggleable="false">
+                <p:fileUpload mode="advanced"/>
+            </p:panel>
             <p:panel header="Основное" toggleable="false" id="personalInfPanel">
                 <h:panelGrid columns="2" cellpadding="5">
                     <h:outputLabel value="Фамилия" for="surname"/>

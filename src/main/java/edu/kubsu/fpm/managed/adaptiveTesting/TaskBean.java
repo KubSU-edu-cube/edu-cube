@@ -5,6 +5,7 @@ import edu.kubsu.fpm.DAO.*;
 import edu.kubsu.fpm.ejb.DBImageLocal;
 import edu.kubsu.fpm.entity.*;
 import edu.kubsu.fpm.model.*;
+import edu.kubsu.fpm.managed.classes.media_classes.Image;
 import net.sourceforge.jeuclid.context.LayoutContextImpl;
 import net.sourceforge.jeuclid.context.Parameter;
 import net.sourceforge.jeuclid.converter.Converter;
@@ -410,7 +411,7 @@ public class TaskBean {
         int curImg = 0;
         String quest = "";
         String contentFact = factDAO.getContentTypeFactById(id);
-        List<byte[]> byteImgList = new ArrayList<>();
+        List<Image> byteImgList = new ArrayList<>();
         Element root = getRootElementByFactId(id);
         NodeList children = root.getChildNodes();
         switch (contentFact){
@@ -430,7 +431,8 @@ public class TaskBean {
                             factMap.put(factList.size() - 1, text);
                         }
                         else if (currentElement.getTagName().equals("fact_image")) {
-                            byteImgList.add(curImg, Base64.decode(content));    //складываем картинки в лист
+                            Image image = new Image(curImg, Base64.decode(content));
+                            byteImgList.add(image);    //складываем картинки в лист
                             factList.add(addImgContent(curImg));
                             curImg += 1;
                         }
@@ -444,8 +446,8 @@ public class TaskBean {
                             } catch (IOException e) {
                                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                             }
-
-                            byteImgList.add(curImg, buffImgToBytes(formulaImage));
+                            Image image = new Image(curImg, buffImgToBytes(formulaImage));
+                            byteImgList.add(image);
                             factList.add(addImgContent(curImg, 30, 30));
                             curImg += 1;
                         }
@@ -470,7 +472,8 @@ public class TaskBean {
                         // Если факт содержит картинку, то на ее основе и созадем вопрос.
                         // TODO Добавить сюда отображение SVG - jeuclid.Для этого нужно знать тег для svg.
                         if (currentElement.getTagName().equals("fact_image")) {
-                            byteImgList.add(curImg, Base64.decode(content));    //складываем картинки в лист
+                            Image image = new Image(curImg, Base64.decode(content));
+                            byteImgList.add(image);    //складываем картинки в лист
                             quest = "Что изображено на рисунке?<br /><br />" + addImgContent(curImg);  //наращиваем строку вопроса
                             curImg += 1;
                             FactCollection factCollection = factDAO.getCollectionByFactId(id);
@@ -499,7 +502,8 @@ public class TaskBean {
                                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                             }
 
-                            byteImgList.add(curImg, buffImgToBytes(formulaImage));
+                            Image image = new Image(curImg, buffImgToBytes(formulaImage));
+                            byteImgList.add(image);
                             quest = "Что определяет данная формула?<br /><br />" + addImgContent(curImg, 30, 30);
                             curImg += 1;
                             FactCollection factCollection = factDAO.getCollectionByFactId(id);

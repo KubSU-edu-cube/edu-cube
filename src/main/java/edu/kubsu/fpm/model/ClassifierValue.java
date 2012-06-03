@@ -17,15 +17,14 @@ import java.util.Collection;
  */
 @Entity
 @Table(name = "CLASSIFIER_VALUE")
-
 public class ClassifierValue implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Integer id;
-
-    @Column(name = "VALUE_", length = 1000)
+    
+    @Column(name = "VALUE", length = 1000)
     private String value;
 
     @Column(name = "PARENTID")
@@ -47,7 +46,7 @@ public class ClassifierValue implements Serializable {
     @JoinColumn(name = "CLASSIFID", referencedColumnName = "ID", nullable = false)
     @ManyToOne(optional = false)
     private Classifier classifier;
-
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "classifierValue")
     private Collection<CollfactClassifvalue> collfactClassifvalueCollection;
 
@@ -102,8 +101,8 @@ public class ClassifierValue implements Serializable {
         return classifier;
     }
 
-    public void setClassifier(Classifier classifier) {
-        this.classifier = classifier;
+    public void setClassifier(Classifier classifid) {
+        this.classifier = classifid;
     }
 
     public Collection<CollfactClassifvalue> getCollfactClassifvalueCollection() {

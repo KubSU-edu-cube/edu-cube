@@ -1,0 +1,63 @@
+<ui:composition template="/templates/teacher_ps_template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+
+                xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="page_content">
+        <h:form>
+            <h:outputLabel value="Задание процентов для адаптивного тестирования" styleClass="user_name"/>
+            <br/>
+            <br/>
+            <h:outputLabel value="Процент обязательных вопросов" styleClass="labels"/>
+            <br/>
+            <br/>
+            <h:panelGrid columns="1" style="margin-bottom:10px">
+                <h:panelGroup>
+                    <h:outputText value="Обязательных %"/>
+                    <h:outputText id="output" value="#{sliderBean.number2}"/>
+                </h:panelGroup>
+
+                <h:inputHidden id="txt2" value="#{sliderBean.number2}" />
+                <p:slider for="txt2" display="output" style="width:200px" />
+            </h:panelGrid>
+            <br/>
+            <br/>
+            <h:outputLabel value="Процент дополнительных вопросов" styleClass="labels"/>
+            <br/>
+            <br/>
+            <h:panelGrid columns="1" style="margin-bottom:10px">
+                <h:panelGroup>
+                    <h:outputText value="Дополнительных %"/>
+                    <h:outputText id="output3" value="#{sliderBean.number3}"/>
+                </h:panelGroup>
+
+                <h:inputHidden id="txt3" value="#{sliderBean.number3}" />
+                <p:slider for="txt3" display="output3" style="width:200px" />
+            </h:panelGrid><br/>
+            <br/>
+            <h:outputLabel value="Процент правильных ответов" styleClass="labels"/>
+            <br/>
+            <br/>
+            <h:panelGrid columns="1" style="margin-bottom:10px">
+                <h:panelGroup>
+                    <h:outputText value="Правильных %"/>
+                    <h:outputText id="output1" value="#{sliderBean.number1}"/>
+                </h:panelGroup>
+
+                <h:inputHidden id="txt1" value="#{sliderBean.number1}" />
+                <p:slider for="txt1" display="output1" style="width:200px" />
+            </h:panelGrid>
+            <br/>
+            <br/>
+            <h:outputLabel value="Количество дополнительных вопросов при текущем проценте правильных ответов = 4"/>
+            <br/>
+            <br/>
+            <p:commandButton value="Назад"/>
+            <p:commandButton value="Сохраниь"/>
+
+
+        </h:form>
+    </ui:define>
+</ui:composition>

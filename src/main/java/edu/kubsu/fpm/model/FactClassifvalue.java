@@ -1,7 +1,7 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this template, choose Tools | Templates
+* and open the template in the editor.
+*/
 
 package edu.kubsu.fpm.model;
 
@@ -15,9 +15,9 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
- *
- * @author Марина
- */
+*
+* @author Марина
+*/
 @Entity
 @Table(name = "FACT_CLASSIFVALUE")
 @NamedQueries({

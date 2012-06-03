@@ -6,12 +6,17 @@
                 xmlns="http://www.w3.org/1999/xhtml">
     <ui:define name="page_content">
         <h:form>
-            <h:outputLabel value="Информация по выбранному курсу"/><br />
-            <h:outputLabel value="Курс #{courseBean.course_variation.course.name}"/><br />
-            <p:commandLink value="Лекции" ajax="false" action="#{courseBean.moveToLections}"/><br />
-            <p:commandLink value="Заявки"/><br />
-            <p:commandLink value="Работы для проверки" action="check_creative_tasks" ajax="false"/><br />
-            <p:commandLink value="Комната видеоконференций"/><br />
+
+            <h:panelGrid columns="1" styleClass="td_class">
+
+                    <h:outputLabel value="Курс:  #{courseBean.course_variation.course.name}" styleClass="user_name"/>
+                    <p:commandLink value="Лекции" ajax="false" action="#{courseBean.moveToLections}" styleClass="labels" />
+                    <p:commandLink value="Заявки" ajax="false" styleClass="labels"/>
+                    <p:commandLink value="Работы для проверки" ajax="false" styleClass="labels"/>
+                    <p:commandLink value="Комната видеоконференций" ajax="false" styleClass="labels"/>
+
+            </h:panelGrid>
+
         </h:form>
     </ui:define>
 </ui:composition>

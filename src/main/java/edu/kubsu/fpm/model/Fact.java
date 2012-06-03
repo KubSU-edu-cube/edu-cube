@@ -6,20 +6,15 @@
 package edu.kubsu.fpm.model;
 
 import javax.persistence.*;
+import javax.persistence.*;
 import java.io.Serializable;
-
+import java.util.List;
 /**
  *
  * @author Марина
  */
 @Entity
 @Table(name = "FACT")
-@NamedQueries({
-    @NamedQuery(name = "Fact.findAll", query = "SELECT f FROM Fact f"),
-    @NamedQuery(name = "Fact.findById", query = "SELECT f FROM Fact f WHERE f.id = :id"),
-    @NamedQuery(name = "Fact.findByContentType", query = "SELECT f FROM Fact f WHERE f.contentType = :contentType"),
-    @NamedQuery(name = "Fact.findByDifficultie", query = "SELECT f FROM Fact f WHERE f.difficultie = :difficultie"),
-    @NamedQuery(name = "Fact.findByObligatory", query = "SELECT f FROM Fact f WHERE f.obligatory = :obligatory")})
 public class Fact implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -38,6 +33,9 @@ public class Fact implements Serializable {
     @JoinColumn(name = "COLLID", referencedColumnName = "ID", nullable = false)
     @ManyToOne(optional = false)
     private FactCollection collection;
+
+    @OneToMany(mappedBy = "fact", cascade = CascadeType.ALL)
+    private List<MediaContent> mediaContentList;
 
     public Fact() {
     }
@@ -123,4 +121,11 @@ public class Fact implements Serializable {
         return "edu.kubsu.fpm.model.Fact[id=" + id + "]";
     }
 
+    public List<MediaContent> getMediaContentList() {
+        return mediaContentList;
+    }
+
+    public void setMediaContentList(List<MediaContent> mediaContentList) {
+        this.mediaContentList = mediaContentList;
+    }
 }

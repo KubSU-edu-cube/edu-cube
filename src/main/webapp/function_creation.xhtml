@@ -1,0 +1,27 @@
+<ui:composition template="/templates/teacher_ps_template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+
+                xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="page_content">
+        <h:form>
+            <h:outputLabel value="Назначение группе функции оценивания" styleClass="user_name"/>
+            <br/>
+            <br/>
+            <p:selectOneMenu id="city">
+                <f:selectItem itemLabel="Выбор группы" itemValue="" />
+            </p:selectOneMenu>
+            <br/>
+            <br/>
+            <p:selectOneMenu id="suburbs" >
+                <f:selectItem itemLabel="Выбор функции оценивания" itemValue="" />
+            </p:selectOneMenu>
+            <br/>
+            <br/>
+            <p:commandButton value="Назад"/>
+            <p:commandButton value="Сохраниь"/>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -49,12 +49,9 @@ public class CourseCreation {
         course_variation.setCourse(course);
 
         course_variationDAO.persist(course_variation);
-        // достаем список курсов
-        List<Course_variation> course_variations = (List<Course_variation>) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("courseVariationList");
-        // добавляем туда новый
-        course_variations.add(course_variation);
+        List<Course_variation> c_v = course_variationDAO.findByPersonId(person.getId());
         // и кладем обратно
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("courseVariationList",course_variations);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("courseVariationList",c_v);
 
 
     }

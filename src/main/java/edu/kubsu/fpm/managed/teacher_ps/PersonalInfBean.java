@@ -1,23 +1,18 @@
 package edu.kubsu.fpm.managed.teacher_ps;
 
 import edu.kubsu.fpm.DAO.*;
+import edu.kubsu.fpm.ejb.DBImageLocal;
 import edu.kubsu.fpm.entity.*;
-import edu.kubsu.fpm.managed.classes.ImgConverter;
 import edu.kubsu.fpm.managed.teacher_ps.classes.Education;
 import edu.kubsu.fpm.managed.teacher_ps.classes.Job;
+import edu.kubsu.fpm.managed.teacher_ps.classes.PersonalPhoto;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
-import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -50,6 +45,8 @@ public class PersonalInfBean {
     private String additionalInformation = "дурочка с переулочка";
     private List<Education> educations;
     private List<Job> jobs;
+    private String src;
+    private Person person;
 
     private Job tmpJob;
     
@@ -64,6 +61,8 @@ public class PersonalInfBean {
     private CountryDAO countryDAO;
     @EJB 
     private PersonDAO personDAO;
+    @EJB
+    private DBImageLocal imageLocal;
 
     @EJB
     private TestTypeDAO testTypeDAO;
@@ -75,16 +74,29 @@ public class PersonalInfBean {
 
        ///////// чей вообще кабинет?? //////////////////////
         this.setTeacherId((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("teacherId"));
+        this.person = (Person) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("person");
+
+        this.setSrc(String.valueOf(person.getId()));
+         name = person.getName();
+         surname = person.getSurname();
+         patronymic = person.getPatronymic();
+         dateOfBirth = person.getDateOfBirth();
+         sex = person.getSex();
+         cityOfBirth = person.getCityOfBirth();
+         currentCountry = person.getCurrentCountry();
+         currentCity = person.getCurrentCity();
+         Adress = person.getAdress();
+         mobTel = person.getMobTel();
+         homeTel = person.getHomeTel();
+         skype = person.getSkype();
+         icq = person.getIcq();
+         webSite = person.getWebSite();
+         email = "elena_mm@mail.ru";
+         additionalInformation = person.getAdditionalInformation();
 
         this.tmpJob = new Job();
         tmpJob.setCountry(null);
         tmpJob.setCity(null);
-
-
-
-
-
-
 
         dateOfBirth = null;
         GregorianCalendar calendar = new GregorianCalendar();
@@ -98,11 +110,6 @@ public class PersonalInfBean {
         GregorianCalendar age = new GregorianCalendar();
         calendar.set(18,0,0);
 
-
-
-
-
-        
         educations = new ArrayList<Education>();
         Education e = new Education();
         Date sDate = new Date();
@@ -124,37 +131,6 @@ public class PersonalInfBean {
         job.setPost("Грузчик");
 
         jobs.add(job);
-        
-    }
-
-    public void tempBaseInit() {
-        try {
-            persistPerson();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-
-        University university = new University();
-        university.setCountry("Россия");
-        university.setCity("Краснодар");
-        university.setName("КубГУ");
-
-        Faculty faculty = new Faculty();
-        faculty.setName("ФКТиПМ");
-        faculty.setUniversity(university);
-        
-
-        List<Faculty> faculties = new ArrayList<>();
-
-        faculties.add(faculty);
-
-        university.setFaculties(faculties);
-
-        Department department = new Department();
-        department.setFaculty(faculty);
-        department.setName("Информационных Технологий");
-
-        departmentDAO.persist(department);
 
         List<String> testTypes = Arrays.asList("base", "checked", "psylogical");
         for (String testType: testTypes)
@@ -175,75 +151,103 @@ public class PersonalInfBean {
         testTypeDAO.persist(tType);
     }
 
-    private void persistPerson() throws FileNotFoundException {
-
-//        savePerson("Доктор наук","ул. Рашпилевская 50, кв. 14","Москва","Москва"
-//        ,"Россия",InsertDate(21, 05, 1951),"254-93-77","1957203","+7(951)2304978",
-//                "Ирина","Викторовна","женский" ,"orf_541","Семенова","","temp_img/gy.jpeg");
-
-//        edu.kubsu.fpm.entity.Job job1 = new edu.kubsu.fpm.entity.Job();
-//        job1.setBeginDate(InsertDate(1,7,2000));
-//        job1.setEndDate(InsertDate(1,7,2008));
+//    public void tempBaseInit() {
+//        try {
+//            persistPerson();
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+//        }
 //
-//        Post post1 = new Post();
-//        post1.setName("Архитектор");
+//        University university = new University();
+//        university.setCountry("Россия");
+//        university.setCity("Краснодар");
+//        university.setName("КубГУ");
 //
-//        Organization organization1 = new Organization();
-//        organization1.setName("ОАО Тандер");
-//        organization1.setAdress("Солнечная и Московская");
-        savePerson("Доктор наук","ул. Восточная 340, кв. 54","Иваново","Иваново"
-                ,"Россия",InsertDate(21, 05, 1960),"254-93-77","1957203","+7(951)2304978",
-                "Елена","Ивановна","женский" ,"orf_541","Молчалина","","temp_img/molchalina_e_i.jpg");
+//        Faculty faculty = new Faculty();
+//        faculty.setName("ФКТиПМ");
+//        faculty.setUniversity(university);
+//
+//        List<Faculty> faculties = new ArrayList<Faculty>();
+//        faculties.add(faculty);
+//
+//        university.setFaculties(faculties);
+//
+//        Department department = new Department();
+//        department.setFaculty(faculty);
+//        department.setName("Информационных Технологий");
+//
+//        departmentDAO.persist(department);
+//    }
 
-        savePerson("Кандидат наук","ул. Гоголя 30, кв. 7","Москва","Москва"
-                ,"Россия",InsertDate(2, 06, 1987),"254-93-77","1957203","+7(951)2304978",
-                "Елена","Викторовна","женский" ,"orf_541","Молчалина","","temp_img/molchalina_e_v.jpg");
-
-
-    }
-
-    private void savePerson(String additionalInfo, String addr, String cityOfBirth, String currentCity, String currentCountry, Date dateOfBirth, String homeTel, String icq, String mobtel, String name, String patronymic, String sex, String skype, String surname, String site, String photo) {
-        Person person1 = new Person();
-        person1.setAdditionalInformation(additionalInfo);
-        person1.setAdress(addr);
-        person1.setCityOfBirth(cityOfBirth);
-        person1.setCurrentCity(currentCity);
-        person1.setCurrentCountry(currentCountry);
-        person1.setDateOfBirth(dateOfBirth);
-        person1.setHomeTel(homeTel);
-        person1.setIcq(icq);
-        person1.setMobTel(mobtel);
-        person1.setName(name);
-        person1.setPatronymic(patronymic);
-        person1.setSex(sex);
-        person1.setSkype(skype);
-        person1.setSurname(surname);
-        person1.setWebSite(site);
-        person1.setPhoto(getBytesFromFile(photo));
-
-        personDAO.persist(person1);
-    }
-
-    private byte[] getBytesFromFile(String fName) {
-
-        try {
-            File imgFile = new File(fName);
-            Image image = ImageIO.read(new FileInputStream(fName));
-            byte[] resisedImg = ImgConverter.changeProportion(imgFile,null, image.getWidth(null), image.getHeight(null), 100, 150);
-            return resisedImg;
-        } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            return null;
-        }
-    }
-
-    private Date InsertDate(int day, int month, int year) {
-        Date d = new Date();
-        GregorianCalendar calendar = new GregorianCalendar();
-        calendar.set(year, month, day);
-        d = calendar.getTime();
-        return d;
-    }
+//    private void persistPerson() throws FileNotFoundException {
+//
+////        savePerson("Доктор наук","ул. Рашпилевская 50, кв. 14","Москва","Москва"
+////        ,"Россия",InsertDate(21, 05, 1951),"254-93-77","1957203","+7(951)2304978",
+////                "Ирина","Викторовна","женский" ,"orf_541","Семенова","","temp_img/gy.jpeg");
+//
+////        edu.kubsu.fpm.entity.Job job1 = new edu.kubsu.fpm.entity.Job();
+////        job1.setBeginDate(InsertDate(1,7,2000));
+////        job1.setEndDate(InsertDate(1,7,2008));
+////
+////        Post post1 = new Post();
+////        post1.setName("Архитектор");
+////
+////        Organization organization1 = new Organization();
+////        organization1.setName("ОАО Тандер");
+////        organization1.setAdress("Солнечная и Московская");
+//        savePerson("Доктор наук","ул. Восточная 340, кв. 54","Иваново","Иваново"
+//                ,"Россия",InsertDate(21, 05, 1960),"254-93-77","1957203","+7(951)2304978",
+//                "Елена","Ивановна","женский" ,"orf_541","Молчалина","","temp_img/molchalina_e_i.jpg");
+//
+//        savePerson("Кандидат наук","ул. Гоголя 30, кв. 7","Москва","Москва"
+//                ,"Россия",InsertDate(2, 06, 1987),"254-93-77","1957203","+7(951)2304978",
+//                "Елена","Викторовна","женский" ,"orf_541","Молчалина","","temp_img/molchalina_e_v.jpg");
+//
+//
+//    }
+//
+//    private void savePerson(String additionalInfo, String addr, String cityOfBirth, String currentCity, String currentCountry, Date dateOfBirth, String homeTel, String icq, String mobtel, String name, String patronymic, String sex, String skype, String surname, String site, String photo) {
+//        Person person1 = new Person();
+//        person1.setAdditionalInformation(additionalInfo);
+//        person1.setAdress(addr);
+//        person1.setCityOfBirth(cityOfBirth);
+//        person1.setCurrentCity(currentCity);
+//        person1.setCurrentCountry(currentCountry);
+//        person1.setDateOfBirth(dateOfBirth);
+//        person1.setHomeTel(homeTel);
+//        person1.setIcq(icq);
+//        person1.setMobTel(mobtel);
+//        person1.setName(name);
+//        person1.setPatronymic(patronymic);
+//        person1.setSex(sex);
+//        person1.setSkype(skype);
+//        person1.setSurname(surname);
+//        person1.setWebSite(site);
+//        person1.setPhoto(getBytesFromFile(photo));
+//
+//        personDAO.persist(person1);
+//    }
+//
+//    private byte[] getBytesFromFile(String fName) {
+//
+//        try {
+//            File imgFile = new File(fName);
+//            Image image = ImageIO.read(new FileInputStream(fName));
+//            byte[] resisedImg = ImgConverter.changeProportion(imgFile,null, image.getWidth(null), image.getHeight(null), 100, 150);
+//            return resisedImg;
+//        } catch (IOException e) {
+//            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+//            return null;
+//        }
+//    }
+//
+//    private Date InsertDate(int day, int month, int year) {
+//        Date d = new Date();
+//        GregorianCalendar calendar = new GregorianCalendar();
+//        calendar.set(year, month, day);
+//        d = calendar.getTime();
+//        return d;
+//    }
     public void goToPersonalInfo() throws IOException {
         FacesContext.getCurrentInstance().getExternalContext().redirect("personal_information.jsf");
     }
@@ -537,5 +541,22 @@ public class PersonalInfBean {
         this.teacherId = teacherId;
 
 
+    }
+
+    public String getSrc() {
+        imageLocal.setMainPhoto(new PersonalPhoto(person.getPhoto(),person.getId()));
+        return src;
+    }
+
+    public void setSrc(String src) {
+        this.src = "http://localhost:8080/educube-1.0/DBImageServlet?mainPersonid="+Integer.parseInt(src);
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 }

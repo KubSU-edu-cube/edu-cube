@@ -1,7 +1,7 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this template, choose Tools | Templates
+* and open the template in the editor.
+*/
 
 package edu.kubsu.fpm.model;
 
@@ -10,9 +10,9 @@ import java.io.Serializable;
 import java.util.Collection;
 
 /**
- *
- * @author Марина
- */
+*
+* @author Марина
+*/
 @Entity
 @Table(name = "CLASSIFIER")
 @NamedQueries({
@@ -25,7 +25,7 @@ public class Classifier implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Integer id;
-    @Column(name = "CLASSIF_NAME", length = 300)
+    @Column(name = "NAME", length = 300)
     private String classifName;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "classifier")
     private Collection<FactClassifvalue> factClassifvalueCollection;

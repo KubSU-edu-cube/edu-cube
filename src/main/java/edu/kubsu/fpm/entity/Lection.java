@@ -37,6 +37,9 @@ public class Lection implements Serializable {
     )
     private List<Course> courses;
 
+    @Column(length = 2000)
+    private String description;
+
     @Lob
     private byte[] content;
 
@@ -142,5 +145,13 @@ public class Lection implements Serializable {
 
     public void setVariationList(List<Course_variation> variationList) {
         this.variationList = variationList;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

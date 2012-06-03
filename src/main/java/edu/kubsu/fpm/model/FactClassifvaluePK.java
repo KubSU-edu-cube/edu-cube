@@ -1,7 +1,7 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this template, choose Tools | Templates
+* and open the template in the editor.
+*/
 
 package edu.kubsu.fpm.model;
 
@@ -11,9 +11,9 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 /**
- *
- * @author Марина
- */
+*
+* @author Марина
+*/
 @Embeddable
 public class FactClassifvaluePK implements Serializable {
     @Column(name = "FACTID", nullable = false)

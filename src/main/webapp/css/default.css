@@ -189,42 +189,55 @@ body {
 }
 
 .menu {
-    background: transparent url(../img/menu_bkg.png) no-repeat;
+    background: transparent url(../img/menu_panel.png) no-repeat;
     height: 52px;
-    width: 842px;
-    min-width: 850px;
+    width: 863px;
+    min-width: 860px;
 }
 
 .menu_item {
     overflow: hidden;
     float: left;
-    margin-top: 11px;
+    margin-top: 9px;
+}
+
+.btn_main {
+    background: transparent url("../img/btn_main.png") no-repeat;
+    width: 126px;
+    height: 30px;
+    vertical-align: middle;
+    display: block;
+    margin-left: 13px;
+}
+
+.btn_main:active {
+    background-position: 0 2px;
 }
 
 .btn_course {
     background: transparent url(../img/btn_course.png) no-repeat;
     margin-left: 4px;
     width: 110px;
-    height: 21px;
+    height: 30px;
     vertical-align: middle;
     display: block;
 }
 
 .btn_course:active {
-    background-position: 0px 2px;
+    background-position: 0 2px;
 }
 
-.btn_prepod {
-    background: transparent url(../img/btn_prepod.png) no-repeat;
-    margin-left: 4px;
-    width: 234px;
-    height: 21px;
+.btn_refbook {
+    background: transparent url(../img/btn_refbook.png) no-repeat;
+    margin-left: 8px;
+    width: 184px;
+    height: 30px;
     vertical-align: middle;
     display: block;
 }
 
-.btn_prepod:active {
-    background-position: 0px 2px;
+.btn_refbook:active {
+    background-position: 0 2px;
 }
 
 .btn_tests {
@@ -239,28 +252,42 @@ body {
     background-position: 0px 2px;
 }
 
-.btn_certif {
-    background: transparent url(../img/btn_certif.png) no-repeat;
-    width: 204px;
-    height: 21px;
+.btn_lection {
+    background: transparent url(../img/btn_lection.png) no-repeat;
+    width: 132px;
+    height: 30px;
     vertical-align: middle;
     display: block;
 }
 
-.btn_certif:active {
-    background-position: 0px 2px;
+.btn_lection:active {
+    background-position: 0 2px;
+}
+
+.btn_people {
+    background: transparent url(../img/btn_people.png) no-repeat;
+    width: 100px;
+    height: 30px;
+    vertical-align: middle;
+    display: block;
+    margin-left: 5px;
+}
+
+.btn_people:active {
+    background-position: 0 2px;
 }
 
 .btn_about {
     background: transparent url(../img/btn_about.png) no-repeat;
-    width: 170px;
-    height: 21px;
+    width: 157px;
+    height: 30px;
     vertical-align: middle;
     display: block;
+    margin-left: 10px;
 }
 
 .btn_about:active {
-    background-position: 0px 2px;
+    background-position: 0 2px;
 }
 
 .header_text {
